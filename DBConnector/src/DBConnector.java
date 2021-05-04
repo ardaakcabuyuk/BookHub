@@ -38,10 +38,36 @@ public class DBConnector {
         try {
             stmt = connection.createStatement();
 
-            System.out.println("Dropping tables user.");
+            System.out.println("Dropping tables...");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Recommend_Book;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Participate_in;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Question;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Quiz;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Participate;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Challenge;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Responds;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Reads_book;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Likes_comment;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Likes_quote;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Comment;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Friends;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Replies;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Likes_post;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Post;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Recommend_Booklist;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Follows;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Contains;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Librarian;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Booklist;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Edit_request;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Quote;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Series;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Edition;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Book;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Author;");
             stmt.executeUpdate("DROP TABLE IF EXISTS User;");
 
-            System.out.println("Creating table student...");
+            System.out.println("Creating table user...");
             String createUserSQL = "CREATE TABLE User(" +
                     "user_id INT AUTO_INCREMENT, "+
                     "username VARCHAR(20) NOT NULL, " +
@@ -53,98 +79,359 @@ public class DBConnector {
                     "UNIQUE(username)) " +
                     "ENGINE=innodb;";
             stmt.executeUpdate(createUserSQL);
-            System.out.println("User table is successfully created.");
-            String insertUser = "INSERT INTO User (username, email, password, name, surname) Values (\"annen\", \"patates\", \"baban\", \"Ayse\", \"ali\")";
-            stmt.executeUpdate(insertUser);
-            /*
-            System.out.println("Creating table student...");
-            String createStudentSQL = "CREATE TABLE student(" +
-                    "sid CHAR(12), " +
-                    "sname VARCHAR(50), " +
-                    "bdate DATE, " +
-                    "address VARCHAR(50), " +
-                    "scity VARCHAR(20), " +
-                    "year CHAR(20), " +
-                    "gpa FLOAT, " +
-                    "nationality VARCHAR(20), " +
-                    "PRIMARY KEY(sid)) " +
+            System.out.println("User table is successfully created.\n");
+
+            System.out.println("Creating table author...");
+            String createAuthorSQL = "CREATE TABLE Author(" +
+                    "author_id INT AUTO_INCREMENT, " +
+                    "user_id INT NOT NULL, " +
+                    "num_book INT NOT NULL DEFAULT 0, " +
+                    "PRIMARY KEY( author_id ), " +
+                    "FOREIGN KEY( user_id ) references User( user_id))" +
                     "ENGINE=innodb;";
-            stmt.executeUpdate(createStudentSQL);
-            System.out.println("Student table is successfully created.");
+            stmt.executeUpdate(createAuthorSQL);
+            System.out.println("Author table is successfully created.\n");
 
-            System.out.println("Creating company table...");
-            String createCompanySQL = "CREATE TABLE company(" +
-                    "cid CHAR(8), " +
-                    "cname VARCHAR(20), " +
-                    "quota INT, " +
-                    "PRIMARY KEY(cid)) " +
+            System.out.println("Creating table book...");
+            String createBookSQL = "create table Book(" +
+                    "book_id int AUTO_INCREMENT," +
+                    "book_name varchar(75) NOT NULL," +
+                    "author varchar(50) NOT NULL," +
+                    "genre varchar(40) NOT NULL," +
+                    "year int NOT NULL," +
+                    "description varchar(600) NOT NULL," +
+                    "author_id int NOT NULL," +
+                    "primary key( book_id )," +
+                    "foreign key( author_id ) references Author(author_id))" +
+                    "engine=innodb;";
+            stmt.executeUpdate(createBookSQL);
+            System.out.println("Book table is successfully created.\n");
+
+            System.out.println("Creating table edition...");
+            String createEditionSQL = "create table Edition(" +
+                    "edition_no int AUTO_INCREMENT," +
+                    "book_id int NOT NULL," +
+                    "page_count int NOT NULL," +
+                    "publisher varchar(40) NOT NULL," +
+                    "language varchar(15) NOT NULL," +
+                    "format varchar(30) NOT NULL," +
+                    "cover_photo varbinary(50) NOT NULL," +
+                    "translator varchar(30)," +
+                    "primary key( edition_no, book_id )," +
+                    "foreign key( book_id ) references Book(book_id))" +
+                    "engine=innodb;";
+            stmt.executeUpdate(createEditionSQL);
+            System.out.println("Edition table is successfully created.\n");
+
+            System.out.println("Creating table series...");
+            String createSeriesSQL = "create table Series(" +
+                    "sequel_id int NOT NULL," +
+                    "original_id int NOT NULL," +
+                    "series_name varchar(30) NOT NULL," +
+                    "primary key( sequel_id, original_id )," +
+                    "foreign key( original_id ) references Book(book_id)," +
+                    "foreign key( sequel_id ) references Book(book_id))" +
+                    "engine=innodb;";
+            stmt.executeUpdate(createSeriesSQL);
+            System.out.println("Series table is successfully created.\n");
+
+            System.out.println("Creating table quote...");
+            String createQuoteSQL = "create table Quote(" +
+                    "quote_id int AUTO_INCREMENT," +
+                    "text varchar(300) NOT NULL," +
+                    "tag varchar(50) NOT NULL," +
+                    "book_id int NOT NULL," +
+                    "user_id int NOT NULL," +
+                    "primary key( quote_id )," +
+                    "foreign key( book_id ) references Book(book_id)," +
+                    "foreign key( user_id ) references User(user_id))" +
+                    "engine=innodb;";
+            stmt.executeUpdate(createQuoteSQL);
+            System.out.println("Quote table is successfully created.");
+
+            System.out.println("Creating table edit_request...");
+            String createEditRequestSQL = "create table Edit_Request(" +
+                    "edit_id int AUTO_INCREMENT," +
+                    "new_book_name varchar(75)," +
+                    "new_book_author varchar(50)," +
+                    "new_book_genre varchar(40)," +
+                    "new_book_year int," +
+                    "new_book_edition_no int NOT NULL," +
+                    "new_book_page_count int," +
+                    "new_book_publisher varchar(40)," +
+                    "new_book_language varchar(40)," +
+                    "new_book_format varchar(30)," +
+                    "new_book_cover_photo varbinary(40)," +
+                    "new_book_translator varchar(30)," +
+                    "additional_notes varchar(300)," +
+                    "user_id int NOT NULL," +
+                    "book_id int NOT NULL," +
+                    "date date NOT NULL," +
+                    "primary key( edit_id )," +
+                    "foreign key( new_book_edition_no, book_id ) references Edition(edition_no, book_id)," +
+                    "foreign key( book_id ) references Book(book_id)," +
+                    "foreign key( user_id ) references User(user_id))" +
+                    "engine=innodb;";
+            stmt.executeUpdate(createEditRequestSQL);
+            System.out.println("Edit Request table is successfully created.\n");
+
+            System.out.println("Creating table booklist...");
+            String createBookListSQL = "create table Booklist(" +
+                    "list_id int AUTO_INCREMENT," +
+                    "list_name varchar(30) DEFAULT \"Madness\"," +
+                    "description varchar(300) DEFAULT \"Description\"," +
+                    "user_id int NOT NULL," +
+                    "primary key( list_id )," +
+                    "foreign key( user_id ) references User(user_id))" +
+                    "engine=innodb;";
+            stmt.executeUpdate(createBookListSQL);
+            System.out.println("BookList table is successfully created.\n");
+
+            System.out.println("Creating table librarian...");
+            String createLibrarianSQL = "create table Librarian(" +
+                    "librarian_id int AUTO_INCREMENT, " +
+                    "user_id int, " +
+                    "primary key( librarian_id ), " +
+                    "foreign key( user_id ) references User (user_id))" +
+                    "engine=innodb;";
+            stmt.executeUpdate(createLibrarianSQL);
+            System.out.println("Librarian table is successfully created.\n");
+
+            System.out.println("Creating table Contains...");
+            String createContainsSQL = "create table Contains (" +
+                    "list_id int NOT NULL," +
+                    "book_id int NOT NULL," +
+                    "primary key( list_id, book_id )," +
+                    "foreign key( list_id ) references Booklist(list_id)," +
+                    "foreign key( book_id ) references Book(book_id))" +
                     "ENGINE=innodb;";
-            stmt.executeUpdate(createCompanySQL);
-            System.out.println("Company table is successfully created.");
+            stmt.executeUpdate(createContainsSQL);
+            System.out.println("Contains table is successfully created.\n");
 
-            System.out.println("Creating apply table...");
-            String createApplySQL = "CREATE TABLE apply(" +
-                    "sid CHAR(12), " +
-                    "cid CHAR(8), " +
-                    "PRIMARY KEY (sid,cid), " +
-                    "FOREIGN KEY (sid) REFERENCES student(sid), " +
-                    "FOREIGN KEY (cid) REFERENCES company(cid)) " +
-                    "ENGINE=innodb";
-            stmt.executeUpdate(createApplySQL);
-            System.out.println("Apply table is successfully created.");
+            System.out.println("Creating table Follows...");
+            String createFollowsSQL = "create table Follows (" +
+                    "list_id int NOT NULL," +
+                    "user_id int NOT NULL," +
+                    "primary key( list_id, user_id)," +
+                    "foreign key( list_id ) references Booklist(list_id)," +
+                    "foreign key( user_id) references User(user_id))" +
+                    "ENGINE=innodb;";
+            stmt.executeUpdate(createFollowsSQL);
+            System.out.println("Follows table is successfully created.\n");
 
-            System.out.println("Inserting values into student table...");
-            String insertStudentSQL = "INSERT INTO student VALUES" +
-                    "('21000001', 'John', '1999-05-14', 'Windy', 'Chicago', 'senior', 2.33, 'US'), " +
-                    "('21000002', 'Ali', '2001-09-30', 'Nisantasi', 'Istanbul', 'junior', 3.26, 'TC'), " +
-                    "('21000003', 'Veli', '2003-02-25', 'Nisantasi', 'Istanbul', 'freshman', 2.41, 'TC'), " +
-                    "('21000004', 'Ayse', '2003-01-15', 'Tunali', 'Ankara', 'freshman', 2.55, 'TC');";
-            stmt.executeUpdate(insertStudentSQL);
-            System.out.println("Values have been inserted into student table.");
+            System.out.println("Creating table Recommend_Booklist...");
+            String createRecommendBooklistSQL = "create table Recommend_Booklist (" +
+                    "list_id int NOT NULL," +
+                    "recommended_id int NOT NULL," +
+                    "recommender_id int NOT NULL," +
+                    "primary key( list_id, recommended_id, recommender_id )," +
+                    "foreign key( list_id ) references Booklist(list_id)," +
+                    "foreign key( recommended_id ) references User(user_id)," +
+                    "foreign key( recommender_id ) references User(user_id))" +
+                    "ENGINE=innodb;";
+            stmt.executeUpdate(createRecommendBooklistSQL);
+            System.out.println("Recommend_Booklist table is successfully created.\n");
 
-            System.out.println("Inserting values into company table...");
-            String insertCompanySQL = "INSERT INTO company VALUES" +
-                    "('C101', 'microsoft', 2), " +
-                    "('C102', 'merkez bankasi', 5), " +
-                    "('C103', 'tai', 3), " +
-                    "('C104', 'tubitak', 5), " +
-                    "('C105', 'aselsan', 3), " +
-                    "('C106', 'havelsan', 4), " +
-                    "('C107', 'milsoft', 2);";
-            stmt.executeUpdate(insertCompanySQL);
-            System.out.println("Values have been inserted into company table.");
+            System.out.println("Creating table Post...");
+            String createPostSQL = "create table Post (" +
+                    "post_id int AUTO_INCREMENT," +
+                    "book_id int NOT NULL," +
+                    "date date NOT NULL," +
+                    "content varchar(300) NOT NULL," +
+                    "rate int NOT NULL," +
+                    "user_id int NOT NULL," +
+                    "like_count int NOT NULL," +
+                    "comment_count int NOT NULL," +
+                    "primary key( post_id )," +
+                    "foreign key( user_id ) references User(user_id)," +
+                    "foreign key( book_id ) references Book(book_id))" +
+                    "ENGINE=innodb;";
+            stmt.executeUpdate(createPostSQL);
+            System.out.println("Post table is successfully created.\n");
 
-            System.out.println("Inserting values into apply table...");
-            String insertApplySQL = "INSERT INTO apply VALUES" +
-                    "('21000001', 'C101'), " +
-                    "('21000001', 'C102'), " +
-                    "('21000001', 'C103'), " +
-                    "('21000002', 'C101'), " +
-                    "('21000002', 'C105'), " +
-                    "('21000003', 'C104'), " +
-                    "('21000003', 'C105'), " +
-                    "('21000004', 'C107');";
-            stmt.executeUpdate(insertApplySQL);
-            System.out.println("Values have been inserted into apply table.");
+            System.out.println("Creating table Likes_post...");
+            String createLikesPostSQL = "create table Likes_post(" +
+                    "user_id int NOT NULL," +
+                    "post_id int NOT NULL," +
+                    "primary key( user_id, post_id )," +
+                    "foreign key( user_id ) references User(user_id)," +
+                    "foreign key( post_id ) references Post(post_id))" +
+                    "ENGINE=innodb;";
+            stmt.executeUpdate(createLikesPostSQL);
+            System.out.println("Likes_post table is successfully created.\n");
 
-            System.out.println("Printing student table: ");
+            System.out.println("Creating table Replies...");
+            String createRepliesSQL = "create table Replies(" +
+                    "post_id int NOT NULL," +
+                    "author_id int NOT NULL," +
+                    "reply varchar(300) NOT NULL," +
+                    "primary key( post_id )," +
+                    "foreign key( post_id) references Post(post_id)," +
+                    "foreign key( author_id) references Author(author_id))" +
+                    "ENGINE=innodb;";
+            stmt.executeUpdate(createRepliesSQL);
+            System.out.println("Replies table is successfully created.\n");
 
-            ResultSet students = stmt.executeQuery("SELECT * FROM student");
+            System.out.println("Creating table Friends...");
+            String createFriendsSQL = "create table Friends(" +
+                    "user_id int NOT NULL," +
+                    "friend_id int NOT NULL," +
+                    "primary key( user_id, friend_id )," +
+                    "foreign key( user_id ) references User(user_id)," +
+                    "foreign key( friend_id) references User(user_id))" +
+                    "ENGINE=innodb;";
+            stmt.executeUpdate(createFriendsSQL);
+            System.out.println("Friends table is successfully created.");
 
-            while(students.next()) {
-                System.out.printf("%12s | %12s | %12s | %12s | %12s | %12s | %12s | %12s%n",
-                        students.getString("sid"),
-                        students.getString("sname"),
-                        students.getString("bdate"),
-                        students.getString("address"),
-                        students.getString("scity"),
-                        students.getString("year"),
-                        students.getString("gpa"),
-                        students.getString("nationality"));
-            }
+            System.out.println("Creating table Comment...");
+            String createCommentSQL = "create table Comment (" +
+                    "comment_id int AUTO_INCREMENT," +
+                    "date date NOT NULL," +
+                    "content varchar(300) NOT NULL," +
+                    "user_id int NOT NULL," +
+                    "post_id int NOT NULL," +
+                    "primary key ( comment_id )," +
+                    "foreign key ( user_id ) references User(user_id)," +
+                    "foreign key ( post_id ) references Post(post_id))" +
+                    "ENGINE=innodb;";
+            stmt.executeUpdate(createCommentSQL);
+            System.out.println("Comment table is successfully created.\n");
 
-            System.out.println("Program completed!");
-        */
+            System.out.println("Creating table Likes_quote...");
+            String createLikesQuoteSQL = "create table Likes_quote(" +
+                    "user_id int NOT NULL," +
+                    "quote_id int NOT NULL," +
+                    "primary key( user_id, quote_id )," +
+                    "foreign key( user_id ) references User(user_id)," +
+                    "foreign key( quote_id ) references Quote(quote_id))" +
+                    "ENGINE=innodb;";
+            stmt.executeUpdate(createLikesQuoteSQL);
+            System.out.println("Likes_quote table is successfully created.\n");
+
+            System.out.println("Creating table Likes_comment...");
+            String createLikesCommentSQL = "create table Likes_comment(" +
+                    "user_id int NOT NULL," +
+                    "comment_id int NOT NULL," +
+                    "primary key( user_id, comment_id )," +
+                    "foreign key( user_id ) references User(user_id)," +
+                    "foreign key( comment_id ) references Comment(comment_id))" +
+                    "ENGINE=innodb;";
+
+            stmt.executeUpdate(createLikesCommentSQL);
+            System.out.println("Likes_comment table is successfully created.\n");
+
+            System.out.println("Creating table Reads...");
+            String createReadsSQL = "create table Reads_book(" +
+                    "book_id int NOT NULL," +
+                    "edition_no int NOT NULL," +
+                    "user_id int NOT NULL," +
+                    "progress int NOT NULL," +
+                    "date timestamp NOT NULL," +
+                    "primary key( book_id, user_id, edition_no, date)," +
+                    "foreign key(edition_no, book_id) references Edition(edition_no, book_id)," +
+                    "foreign key( user_id ) references User(user_id))" +
+                    "ENGINE=innodb;";
+            stmt.executeUpdate(createReadsSQL);
+            System.out.println("Reads table is successfully created.\n");
+
+            System.out.println("Creating table Responds...");
+            String createRespondsSQL = "create table Responds(" +
+                    "edit_id int NOT NULL," +
+                    "librarian_id int NOT NULL," +
+                    "response char(1) NOT NULL," +
+                    "primary key( edit_id )," +
+                    "foreign key( edit_id ) references User(user_id)," +
+                    "foreign key( librarian_id ) references Librarian(librarian_id))" +
+                    "ENGINE=innodb;";
+            stmt.executeUpdate(createRespondsSQL);
+            System.out.println("Responds table is successfully created.");
+
+            System.out.println("Creating table Challenge...");
+            String createChallengeSQL = "create table Challenge(" +
+                    "challenge_id int AUTO_INCREMENT," +
+                    "challenge_name varchar(40) NOT NULL," +
+                    "start_date date NOT NULL," +
+                    "end_date date NOT NULL," +
+                    "goal int NOT NULL," +
+                    "librarian_id int NOT NULL," +
+                    "primary key( challenge_id )," +
+                    "foreign key( librarian_id ) references Librarian (librarian_id))" +
+                    "ENGINE=innodb;";
+            stmt.executeUpdate(createChallengeSQL);
+            System.out.println("Challenge table is successfully created.");
+
+            System.out.println("Creating table Participate...");
+            String createParticipateSQL = "create table Participate(" +
+                    "list_id int NOT NULL," +
+                    "challenge_id int NOT NULL," +
+                    "user_id int NOT NULL," +
+                    "challlenge_progress int NOT NULL," +
+                    "primary key( list_id, challenge_id, user_id )," +
+                    "foreign key( list_id ) references Booklist (list_id)," +
+                    "foreign key( challenge_id) references Challenge (challenge_id)," +
+                    "foreign key( user_id ) references User (user_id))" +
+                    "ENGINE=innodb;";
+            stmt.executeUpdate(createParticipateSQL);
+            System.out.println("Participate table is successfully created.");
+
+            System.out.println("Creating table Quiz...");
+            String createQuizSQL = "create table Quiz(" +
+                    "quiz_id int AUTO_INCREMENT," +
+                    "quiz_name varchar(300) NOT NULL," +
+                    "librarian_id int NOT NULL," +
+                    "start_date date NOT NULL," +
+                    "end_date date NOT NULL," +
+                    "primary key( quiz_id )," +
+                    "foreign key( librarian_id ) references Librarian (librarian_id))" +
+                    "ENGINE=innodb;";
+            stmt.executeUpdate(createQuizSQL);
+            System.out.println("Quiz table is successfully created.\n");
+
+            System.out.println("Creating table Question...");
+            String createQuestionSQL = "create table Question(" +
+                    "question_id int AUTO_INCREMENT," +
+                    "quiz_id int NOT NULL," +
+                    "librarian_id int NOT NULL," +
+                    "question_text varchar(300) NOT NULL," +
+                    "answer char(1) NOT NULL," +
+                    "option_a varchar(200) NOT NULL," +
+                    "option_b varchar(200) NOT NULL," +
+                    "option_c varchar(200) NOT NULL," +
+                    "option_d varchar(200) NOT NULL," +
+                    "points int NOT NULL," +
+                    "primary key( question_id)," +
+                    "foreign key( quiz_id ) references Quiz (quiz_id)," +
+                    "foreign key( librarian_id ) references Librarian (librarian_id))" +
+                    "ENGINE=innodb;";
+            stmt.executeUpdate(createQuestionSQL);
+            System.out.println("Question table is successfully created.\n");
+
+            System.out.println("Creating table Participate_in...");
+            String createParticipateInSQL = "create table Participate_in(" +
+                    "quiz_id int NOT NULL," +
+                    "user_id int NOT NULL," +
+                    "question_id int NOT NULL," +
+                    "user_answer char(1)," +
+                    "primary key( quiz_id, user_id, question_id)," +
+                    "foreign key( quiz_id) references Quiz( quiz_id)," +
+                    "foreign key( user_id) references User( user_id)," +
+                    "foreign key( question_id) references Question( question_id))" +
+                    "ENGINE=innodb;";
+            stmt.executeUpdate(createParticipateInSQL);
+            System.out.println("Participate_in table is successfully created.");
+
+            System.out.println("Creating table Recommend_Book...");
+            String createRecommendBookSQL = "create table Recommend_Book (" +
+                    "book_id int NOT NULL," +
+                    "recommended_id int NOT NULL," +
+                    "recommender_id int NOT NULL," +
+                    "primary key( book_id, recommended_id, recommender_id )," +
+                    "foreign key( book_id ) references Book(book_id)," +
+                    "foreign key( recommended_id ) references User(user_id)," +
+                    "foreign key( recommender_id ) references User(user_id))" +
+                    "ENGINE=innodb;";
+            stmt.executeUpdate(createRecommendBookSQL);
+            System.out.println("Recommend_Book table is successfully created.");
         }
         catch (SQLException e) {
             System.out.println("SQLException: " + e.getMessage());
