@@ -26,7 +26,23 @@ if(isset($_POST['button'])) {
     else {
       $insert_sql = "insert into user (username, email, password, name, surname) values (\"$username\", \"$email\", \"$password\", \"$name\", \"$surname\")";
       $student = mysqli_query($db,$insert_sql);
-      echo "<script type='text/javascript'>alert('Success!');window.location.href='register.php';</script>";
+
+      $get_user = "select * from user where username='$username'";
+      $user_query = mysqli_query($db, $get_user);
+      $user_id = mysqli_fetch_array($user_query)['user_id'];
+
+      if ($log_in_type == "Author") {
+        echo "<script type='text/javascript'>alert('Author Ekledi!, $log_in_type');</script>";
+        $insert_author_sql = "insert into author (user_id) values (\"$user_id\")";
+        $author = mysqli_query($db, $insert_author_sql);
+      }
+      else if ($log_in_type == "Librarian") {
+        echo "<script type='text/javascript'>alert('Librarian Ekledi!, $log_in_type, $user_id');</script>";
+        $insert_librarian_sql = "insert into librarian (user_id) values (\"$user_id\")";
+        $librarian = mysqli_query($db, $insert_librarian_sql);
+      }
+
+      echo "<script type='text/javascript'>alert('Success!, $log_in_type');window.location.href='register.php';</script>";
     }
   }
 }
