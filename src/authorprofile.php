@@ -1,7 +1,12 @@
 <?php
 include('config.php');
-session_start();
-
+include_once "navbar.php";
+$own_profile = false;
+if (isset($_GET['uname'])) {
+  if ($_GET['uname'] == $_SESSION['username']) {
+    $own_profile = true;
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -18,71 +23,45 @@ session_start();
 </head>
 
 <body>
-
-    <div class="container-fluid">
-
-        <script src="js/bootstrap.js"></script>
-
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="home.php"><img alt="Qries" src="logo.png"
-                    width="150" height="70"></a>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="home.php">Home Page</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Challenges</a>
-                        </li>
-                        <li class="nav-item">
-                          <?php
-                          session_start();
-                          $user_id = $_SESSION['user_id'];
-                          $author_check_sql = "select * from Author where user_id = '$user_id'";
-                          $author = mysqli_query($db, $author_check_sql);
-
-                          $librarian_check_sql = "select * from Librarian where user_id = '$user_id'";
-                          $librarian = mysqli_query($db, $librarian_check_sql);
-
-                          if(mysqli_num_rows($author) == 1) {
-                            echo "<a class=\"nav-link active\" href=\"./authorprofile.php\">Profile ( Arda Akça Büyük )</a>";
-                          }
-                          else if(mysqli_num_rows($librarian) == 1) {
-                            echo "<a class=\"nav-link active\" href=\"./librarianprofile.php\">Profile ( Arda Akça Büyük )</a>";
-                          }
-                          else {
-                            echo "<a class=\"nav-link active\" href=\"./userprofile.php\">Profile ( Arda Akça Büyük )</a>";
-                          }
-                          ?>
-                        </li>
-                    </ul>
-                    <form class="d-flex">
-                        <button class="btn btn-outline-success" type="submit">Logout</button>
-                    </form>
-                </div>
-            </div>
-        </nav>
-    </div>
-
     <!-- ******HEADER****** -->
       <header class="header">
         <div class="container">
 
-            <div class="row justify-content-center" style="margin-top:20px;">
-                <div class="col-md-3"> <!-- Image -->
-                  <p style="text-align:center;"><img src="./images/ben.jpg" alt="Logo"></p>
-                  <h4 style="text-align: center;"><strong>Emin Adem Buran</strong> - Author</h2>
-                  <h5 style="text-align: center;"><strong>@username </strong></h5>
-                  <h5 style="text-align: center;"> ademsan99@gmail.com</h5>
-                </div>
+          <div class="row justify-content-center" style="margin-top:20px;">
+              <div class="col-md-3"> <!-- Image -->
+                <p style="text-align:center;"><img src="./images/writer.png" width="200" height="200" alt="Logo"></p>
+                <?php
+                if ($own_profile) {
+                  $user_id = $_SESSION['user_id'];
+                  $get_author_info_query = "select name, surname, email from Author natural join User where user_id = '$user_id'";
+                  $query_run = mysqli_query($db, $get_author_info_query);
+                  $author = mysqli_fetch_array($query_run);
+                  $name = $author['name'];
+                  $surname = $author['surname'];
+                  $email = $author['email'];
+                  $username = $_SESSION['username'];
+                  echo "<h4 style=\"text-align: center;\"><strong>$name $surname</strong> - Author</h2>";
+                  echo "<h5 style=\"text-align: center;\"><strong>@$username</strong></h5>";
+                  echo "<h5 style=\"text-align: center;\">$email</h5>";
+                }
+                else {
+                  $get_author_info_query = "select name, surname, username, email from Author natural join User where username = '".$_GET['uname']."'";
+                  $query_run = mysqli_query($db, $get_author_info_query);
+                  $author = mysqli_fetch_array($query_run);
+                  $name = $author['name'];
+                  $surname = $author['surname'];
+                  $email = $author['email'];
+                  $username = $author['username'];
+                  echo "<h4 style=\"text-align: center;\"><strong>$name $surname</strong> - Author</h2>";
+                  echo "<h5 style=\"text-align: center;\"><strong>@$username</strong></h5>";
+                  echo "<h5 style=\"text-align: center;\">$email</h5>";
+                }
+                ?>
               </div>
-
-
-
+            </div>
         </div>
       </header>
-        <!--End of Header-->
+      <!--End of Header-->
 
         <br>
         <br>
@@ -105,12 +84,42 @@ session_start();
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row">2011</th>
-                        <td>A Dance with Dragons</td>
-                        <td><a href="#" class="btn btn-outline-success btn-sm">List Reviews </a></td>
-                        <td><a href="#" class="btn btn-outline-success btn-sm">Create Edition </a></td>
-                      </tr>
+                        <?php
+                          if (!$own_profile) {
+                            $uname = $_GET['uname'];
+                            $get_books_query = "select *
+                                                from Book
+                                                where author_id = (select author_id
+                                                                   from author natural join user
+                                                                   where username = '$uname')";
+                            $get_books = mysqli_query($db, $get_books_query);
+
+                            while ($row = mysqli_fetch_array($get_books)) {
+                              echo "<tr>";
+                              echo "<th scope=\"row\">".$row['year']."</th>";
+                              echo "<td>".$row['book_name']."</td>";
+                              echo "<td><a href=\"#\" class=\"btn btn-outline-success btn-sm\">List Reviews </a></td>";
+                              echo "<td><a href=\"#\" class=\"btn btn-outline-success btn-sm\">Create Edition </a></td>";
+                              echo "</tr>";
+                            }
+                          }
+                          else {
+                            $get_books_query = "select *
+                                                from Book
+                                                where author_id = (select author_id
+                                                                    from author natural join user
+                                                                    where user_id = '". $_SESSION['user_id'] . "')";
+                            $get_books = mysqli_query($db, $get_books_query);
+                            while ($row = mysqli_fetch_array($get_books)) {
+                              echo "<tr>";
+                              echo "<th scope=\"row\">".$row['year']."</th>";
+                              echo "<td>".$row['book_name']."</td>";
+                              echo "<td><a href=\"#\" class=\"btn btn-outline-success btn-sm\">List Reviews </a></td>";
+                              echo "<td><a href=\"#\" class=\"btn btn-outline-success btn-sm\">Create Edition </a></td>";
+                              echo "</tr>";
+                            }
+                          }
+                        ?>
                     </tbody>
                   </table>
               </div>
