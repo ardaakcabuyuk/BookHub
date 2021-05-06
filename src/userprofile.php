@@ -1,7 +1,12 @@
 <?php
 include('config.php');
-
 include_once "navbar.php";
+$own_profile = false;
+if (isset($_GET['uname'])) {
+  if ($_GET['uname'] == $_SESSION['username']) {
+    $own_profile = true;
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -22,22 +27,38 @@ include_once "navbar.php";
     <!-- ******HEADER****** -->
       <header class="header">
         <div class="container">
-          <?php
-          $user_id = $_SESSION['user_id'];
-          $get_user_sql = "select * from User where user_id =$user_id";
-          $user = mysqli_fetch_array(mysqli_query($db, $get_user_sql));
-           ?>
-            <div class="row justify-content-center" style="margin-top:20px;">
-                <div class="col-md-3"> <!-- Image -->
-                  <p style="text-align:center;"><img src="./images/ben.jpg" alt="Logo"></p>
-                  <h4 style="text-align: center;"><strong><?php echo $user['name']; ?></strong> - User</h2>
-                  <h5 style="text-align: center;"><strong><?php echo $user['username']; ?></strong></h5>
-                  <h5 style="text-align: center;"><?php echo $user['email']; ?></h5>
-                </div>
-              </div>
-
-
-
+          <div class="row justify-content-center" style="margin-top:20px;">
+            <div class="col-md-3"> <!-- Image -->
+              <p style="text-align:center;"><img src="./images/reader.png" alt="Logo" height="200"></p>
+              <?php
+              if ($own_profile) {
+                $user_id = $_SESSION['user_id'];
+                $get_user_info_query = "select name, surname, email from User where user_id = '$user_id'";
+                $query_run = mysqli_query($db, $get_user_info_query);
+                $user = mysqli_fetch_array($query_run);
+                $name = $user['name'];
+                $surname = $user['surname'];
+                $email = $user['email'];
+                $username = $_SESSION['username'];
+                echo "<h4 style=\"text-align: center;\"><strong>$name $surname</strong> - User</h2>";
+                echo "<h5 style=\"text-align: center;\"><strong>@$username</strong></h5>";
+                echo "<h5 style=\"text-align: center;\">$email</h5>";
+              }
+              else {
+                $get_user_info_query = "select name, surname, username, email from User where username = '".$_GET['uname']."'";
+                $query_run = mysqli_query($db, $get_user_info_query);
+                $user = mysqli_fetch_array($query_run);
+                $name = $user['name'];
+                $surname = $user['surname'];
+                $email = $user['email'];
+                $username = $user['username'];
+                echo "<h4 style=\"text-align: center;\"><strong>$name $surname</strong> - User</h2>";
+                echo "<h5 style=\"text-align: center;\"><strong>@$username</strong></h5>";
+                echo "<h5 style=\"text-align: center;\">$email</h5>";
+              }
+              ?>
+            </div>
+          </div>
         </div>
       </header>
         <!--End of Header-->
