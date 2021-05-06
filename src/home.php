@@ -18,22 +18,40 @@ include_once "navbar.php";
     <br/>
     <br/>
 
-    <div class="d-flex justify-space-between">
+    <div class="d-flex justify-content-around align-items-center">
+      <form class="form-inline" action="searchresult.php" method="post">
         <div class="input-group">
+          <div class="col-xs-4">
             <input type="search" class="form-control rounded" placeholder="Search Books" aria-label="Search"
-              aria-describedby="search-addon" />
-              <a href="searchresult.php" class="btn btn-info" role="button">Search</a>
+            aria-describedby="search-addon" name="search_book" id="search1">
+          </div>
+            <span class="input-group-addon"><button class="btn btn-warning mb-2 pull-right" type="submit" name="search_book_button">
+               Search
+            </button></span>
         </div>
+      </form>
+      <form class="form-inline" action="#" method="post">
         <div class="input-group">
+          <div class="col-xs-3">
             <input type="search" class="form-control rounded" placeholder="Search Authors" aria-label="Search"
-              aria-describedby="search-addon" />
-              <a href="#link" class="btn btn-info" role="button">Search</a>
-        </div>
+            aria-describedby="search-addon" name="search_author">
+          </div>
+            <span class="input-group-addon"><button class="btn btn-warning mb-2 pull-right" type="submit" name="search_author_button">
+                 Search
+            </button></span>
+          </div>
+      </form>
+      <form class="form-inline" action="#" method="post">
         <div class="input-group">
+          <div class="col-xs-3">
             <input type="search" class="form-control rounded" placeholder="Search Users" aria-label="Search"
-              aria-describedby="search-addon" />
-              <a href="#link" class="btn btn-info" role="button">Search</a>
+            aria-describedby="search-addon" name="search_user">
+          </div>
+            <span class="input-group-addon"><button class="btn btn-warning mb-2 pull-right" type="submit" name="search_user_button">
+                   Search
+            </button></span>
         </div>
+      </form>
     </div>
 
     <br/>
@@ -67,7 +85,7 @@ include_once "navbar.php";
                         </div>
                         <div class="btn-toolbar justify-content-between">
                             <div class="btn-group">
-                                <a href="#link" class="btn btn-info" role="button">Post</a>
+                                <a href="#link" class="btn btn-warning" role="button">Post</a>
                             </div>
                         </div>
                     </div>
@@ -103,8 +121,8 @@ include_once "navbar.php";
                     </div>
                     <div class="card-footer">
                         <label>6 like</label>
-                        <button type="submit" class="btn btn-primary">Like</button>
-                        <button type="submit" class="btn btn-primary">Comment</button>
+                        <button type="submit" class="btn btn-warning">Like</button>
+                        <button type="submit" class="btn btn-warning">Comment</button>
                     </div>
 
                     <div class="form-group">
@@ -142,8 +160,8 @@ include_once "navbar.php";
                     </div>
                     <div class="card-footer">
                         <label>6 like</label>
-                        <button type="submit" class="btn btn-primary">Like</button>
-                        <button type="submit" class="btn btn-primary">Comment</button>
+                        <button type="submit" class="btn btn-warning">Like</button>
+                        <button type="submit" class="btn btn-warning">Comment</button>
                     </div>
 
                     <div class="form-group">
@@ -181,8 +199,8 @@ include_once "navbar.php";
                     </div>
                     <div class="card-footer">
                         <label>6 like</label>
-                        <button type="submit" class="btn btn-primary">Like</button>
-                        <button type="submit" class="btn btn-primary">Comment</button>
+                        <button type="submit" class="btn btn-warning">Like</button>
+                        <button type="submit" class="btn btn-warning">Comment</button>
                     </div>
 
                     <div class="form-group">

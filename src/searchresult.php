@@ -1,7 +1,6 @@
 <?php
 include('config.php');
-session_start();
-
+include_once "navbar.php";
 ?>
 
 <!DOCTYPE html>
@@ -19,121 +18,75 @@ session_start();
 
     <body>
 
-        <div class="container-fluid">
-
-            <script src="js/bootstrap.js"></script>
-
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="home.php"><img alt="Qries" src="logo.png"
-                        width="150" height="70"></a>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="home.php">Home Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#">Challenges</a>
-                            </li>
-                            <li class="nav-item">
-                              <?php
-                              session_start();
-                              $user_id = $_SESSION['user_id'];
-                              $author_check_sql = "select * from Author where user_id = '$user_id'";
-                              $author = mysqli_query($db, $author_check_sql);
-
-                              $librarian_check_sql = "select * from Librarian where user_id = '$user_id'";
-                              $librarian = mysqli_query($db, $librarian_check_sql);
-
-                              if(mysqli_num_rows($author) == 1) {
-                                echo "<a class=\"nav-link active\" href=\"./authorprofile.php\">Profile ( Arda Akça Büyük )</a>";
-                              }
-                              else if(mysqli_num_rows($librarian) == 1) {
-                                echo "<a class=\"nav-link active\" href=\"./librarianprofile.php\">Profile ( Arda Akça Büyük )</a>";
-                              }
-                              else {
-                                echo "<a class=\"nav-link active\" href=\"./userprofile.php\">Profile ( Arda Akça Büyük )</a>";
-                              }
-                              ?>
-                            </li>
-                        </ul>
-                        <form class="d-flex">
-                            <button class="btn btn-outline-success" type="submit">Logout</button>
-                        </form>
-                    </div>
-                </div>
-            </nav>
-        </div>
-
         <div class="container bootstrap snippets bootdey">
 
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <br/>
                     <br/>
-                    <div class="well search-result">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search by Title">
-                            <span class="input-group-btn">
-                            <a href="searchresult.php" class="btn btn-info" role="button">Search</a>
-                            </span>
-                        </div>
-                    </div>
-
+                    <form class="form-inline" action="searchresult.php" method="post">
+                      <div class="form-group mb-2">
+                      <input type="search" class="form-control rounded" placeholder="Search Books" aria-label="Search"
+                        aria-describedby="search-addon" name="search_book">
+                      </div>
+                      <div class="form-group mb-2">
+    						        <button class="btn btn-warning mb-2 pull-right" type="submit" name="search_book_button">
+    					                 Search
+    						        </button>
+                      </div>
+                    </form>
 
                     <br/>
                     <br/>
 
+                    <h2>Search Results</h2>
                     <hr>
-                    <ol class="breadcrumb">
-                        <li>Book Search Results</li>
-                    </ol>
+                    <?php
+                      if(isset($_POST['search_book_button'])) {
+                        $searchkey = $_POST['search_book'];
+                        if ($searchkey != "") {
+                          $search_book_query = "select * from book where book_name like '%$searchkey%'";
+                          $search_book = mysqli_query($db, $search_book_query);
+                          if (mysqli_num_rows($search_book) != 0) {
+                            while ($row = mysqli_fetch_array($search_book)) {
+                              echo "<div class=\"well search-result\">";
+                                  echo "<div class=\"row\">";
+                                      echo "<div class=\"col-xs-6 col-sm-9 col-md-9 col-lg-10 title\">";
+                                          echo "<h3>".$row['book_name']."</h3>";
+                                          echo "<h5>by ".$row['author']."</h5>";
+                                          echo "<p>".$row['description']."</p>";
 
-                    <hr>
-                    <br/>
-                    <br/>
-                    <hr>
-
-                    <div class="well search-result">
-                        <div class="row">
-                            <a href="#">
-                                <div class="col-xs-6 col-sm-3 col-md-3 col-lg-2">
-                                    <img class="img-responsive" src="projeresim.png" alt="">
-
-                                </div>
-                            </a>
-
-                            <div class="col-xs-6 col-sm-9 col-md-9 col-lg-10 title">
-
-                                <h3>BookHub Book Bayilerde</h3>
-                                <h5>by Muzaffer Muzo</h3>
-                                <p>Descriptipn yok.</p>
-                                <span class="fa fa-star checked"></span>  <!--Parlak yıldızlar için bunu kullanıcaz-->
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star"></span><!--Parlak olmayan yıldızlar için bunu kullanıcaz-->
-                                <span class="fa fa-star"></span>
-                                <label>Average Ratings (3.2)</label>
-                                <br>
-                                <br>
-                                <div class="btn-group me-2" role="group" aria-label="First group">
-                                    <button type="button" class="btn btn-primary">1</button>
-                                    <button type="button" class="btn btn-primary">2</button>
-                                    <button type="button" class="btn btn-primary">3</button>
-                                    <button type="button" class="btn btn-primary">4</button>
-                                    <button type="button" class="btn btn-primary">5</button>
-                                    <label>Rate Book</label>
-                                </div>
-                                <br/>
-                                <br/>
-                                <a href="#link" class="btn btn-info" role="button">Show Detailed Info</a>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr>
-
+                                          echo "<!-- todo post post gezip rating hesapla -->";
+                                          echo "<span class=\"fa fa-star checked\"></span>";
+                                          echo "<span class=\"fa fa-star checked\"></span>";
+                                          echo "<span class=\"fa fa-star checked\"></span>";
+                                          echo "<span class=\"fa fa-star\"></span>";
+                                          echo "<span class=\"fa fa-star\"></span>";
+                                          echo "<br>";
+                                          echo "<p>Average Ratings (3.2)</p>";
+                                          echo "<p>Rate Book:</p>";
+                                          echo "<div class=\"btn-group me-2\" role=\"group\" aria-label=\"First group\">";
+                                            echo "<button type=\"button\" class=\"btn bg-transparent\"><span class=\"fa fa-star\"></span></button>";
+                                            echo "<button type=\"button\" class=\"btn bg-transparent\"><span class=\"fa fa-star\"></span></button>";
+                                            echo "<button type=\"button\" class=\"btn bg-transparent\"><span class=\"fa fa-star\"></span></button>";
+                                            echo "<button type=\"button\" class=\"btn bg-transparent\"><span class=\"fa fa-star\"></span></button>";
+                                            echo "<button type=\"button\" class=\"btn bg-transparent\"><span class=\"fa fa-star\"></span></button>";
+                                          echo "</div>";
+                                          echo "<br/>";
+                                          echo "<br/>";
+                                          echo "<a href=\"#link\" class=\"btn btn-warning\" role=\"button\">Show Detailed Info</a>";
+                                      echo "</div>";
+                                  echo "</div>";
+                              echo "</div>";
+                              echo "<hr>";
+                            }
+                          }
+                          else {
+                            echo "<p>No results.</p>";
+                          }
+                        }
+                      }
+                    ?>
                 </div>
             </div>
         </div>
