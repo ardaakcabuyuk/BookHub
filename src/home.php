@@ -1,7 +1,6 @@
 <?php
 include('config.php');
-session_start();
-
+include_once "navbar.php";
 ?>
 
 <!DOCTYPE html>
@@ -15,52 +14,6 @@ session_start();
     </head>
 
     <body>
-
-    <div class="container-fluid">
-
-            <script src="js/bootstrap.js"></script>
-
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="home.php"><img alt="Qries" src="logo.png"
-                        width=150" height="70"></a>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="home.php">Home Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#">Challenges</a>
-                            </li>
-                            <li class="nav-item">
-                                <?php
-                                session_start();
-                                $user_id = $_SESSION['user_id'];
-                                $author_check_sql = "select * from Author where user_id = '$user_id'";
-                                $author = mysqli_query($db, $author_check_sql);
-
-                                $librarian_check_sql = "select * from Librarian where user_id = '$user_id'";
-                                $librarian = mysqli_query($db, $librarian_check_sql);
-
-                                if(mysqli_num_rows($author) == 1) {
-                                  echo "<a class=\"nav-link active\" href=\"./authorprofile.php\">Profile ( Arda Akça Büyük )</a>";
-                                }
-                                else if(mysqli_num_rows($librarian) == 1) {
-                                  echo "<a class=\"nav-link active\" href=\"./librarianprofile.php\">Profile ( Arda Akça Büyük )</a>";
-                                }
-                                else {
-                                  echo "<a class=\"nav-link active\" href=\"./userprofile.php\">Profile ( Arda Akça Büyük )</a>";
-                                }
-                                ?>
-                            </li>
-                        </ul>
-                        <form class="d-flex" action="index.php">
-                            <button class="btn btn-outline-success" type="submit">Logout</button>
-                        </form>
-                    </div>
-                </div>
-            </nav>
-    </div>
 
     <br/>
     <br/>
