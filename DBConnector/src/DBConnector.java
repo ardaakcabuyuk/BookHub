@@ -14,9 +14,9 @@ public class DBConnector {
         }
 
         final String USERNAME = "root";
-        final String PASSWORD = "";
+        final String PASSWORD = "root";
         final String DBNAME = "book_hub";
-        final String URL = "jdbc:mysql://localhost/" + DBNAME;
+        final String URL = "jdbc:mysql://localhost:8889/" + DBNAME;
 
 
         try{
