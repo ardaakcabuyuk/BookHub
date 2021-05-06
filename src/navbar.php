@@ -22,13 +22,13 @@ session_start();
                         <li class="nav-item">
                             <?php
                             if($_SESSION['type'] == "author") {
-                              echo "<a class=\"nav-link active\" href=\"./authorprofile.php\">Profile ( Arda Akça Büyük )</a>";
+                              echo "<a class=\"nav-link active\" href=\"./authorprofile.php?uname=". $_SESSION['username']. "\">Profile (". $_SESSION['username']. ")</a>";
                             }
                             else if($_SESSION['type'] == "librarian") {
-                              echo "<a class=\"nav-link active\" href=\"./librarianprofile.php\">Profile ( Arda Akça Büyük )</a>";
+                              echo "<a class=\"nav-link active\" href=\"./librarianprofile.php?uname=". $_SESSION['username']. "\">Profile (". $_SESSION['username']. ")</a>";
                             }
                             else {
-                              echo "<a class=\"nav-link active\" href=\"./userprofile.php\">Profile ( Arda Akça Büyük )</a>";
+                              echo "<a class=\"nav-link active\" href=\"./userprofile.php?uname=". $_SESSION['username']. "\">Profile (". $_SESSION['username']. ")</a>";
                             }
                             ?>
                         </li>

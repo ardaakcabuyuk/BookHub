@@ -2,7 +2,6 @@
 include('config.php');
 
 include_once "navbar.php";
-
 ?>
 
 <!DOCTYPE html>
@@ -23,13 +22,17 @@ include_once "navbar.php";
     <!-- ******HEADER****** -->
       <header class="header">
         <div class="container">
-          <?php  ?>
+          <?php
+          $user_id = $_SESSION['user_id'];
+          $get_user_sql = "select * from User where user_id =$user_id";
+          $user = mysqli_fetch_array(mysqli_query($db, $get_user_sql));
+           ?>
             <div class="row justify-content-center" style="margin-top:20px;">
                 <div class="col-md-3"> <!-- Image -->
                   <p style="text-align:center;"><img src="./images/ben.jpg" alt="Logo"></p>
-                  <h4 style="text-align: center;"><strong>Emin Adem Buran</strong> - User</h2>
-                  <h5 style="text-align: center;"><strong>@username </strong></h5>
-                  <h5 style="text-align: center;"> ademsan99@gmail.com</h5>
+                  <h4 style="text-align: center;"><strong><?php echo $user['name']; ?></strong> - User</h2>
+                  <h5 style="text-align: center;"><strong><?php echo $user['username']; ?></strong></h5>
+                  <h5 style="text-align: center;"><?php echo $user['email']; ?></h5>
                 </div>
               </div>
 
