@@ -65,14 +65,23 @@ include_once "navbar.php";
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row">01.04.2021</th>
-                        <td>1984</td>
-                        <td>George Orwell</td>
-                        <td>174</td>
-                        <td>54</td>
-                        <td><a href="#" class="btn btn-outline-success btn-sm">Edit </a></td>
-                      </tr>
+                      <?php
+                      $reads_sql = "select * from reads_book R where R.user_id = $user_id ".
+                       "and R.progress < (select E.page_count from edition E where E.edition_no = R.edition_no and E.book_id = R.book_id)";
+                      $reads_user = mysqli_query($db, $reads_sql);
+                      while( $row = mysqli_fetch_array($reads_user)) {
+                      $current_book_sql = "select * from book natural join edition where book_id =" . $row['book_id'];
+                      $row_book = mysqli_fetch_array(mysqli_query($db, $current_book_sql));
+                      echo "<tr>";
+                      echo "<th scope=\"row\">". $row['date']. "</th>";
+                      echo "<td>". $row_book['book_name']. "</td>";
+                      echo "<td>". $row_book['author']. "</td>";
+                      echo "<td>". $row_book['page_count']. "</td>";
+                      echo "<td>". $row['progress']. "</td>";
+                      echo "<td><a href=\"\" class=\"btn btn-outline-success btn-sm\">Edit </a></td>";
+                      echo "</tr>";
+                      }
+                    ?>
                     </tbody>
                   </table>
               </div>
@@ -98,19 +107,25 @@ include_once "navbar.php";
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">10.02.2021</th>
-                    <td>Heidi</td>
-                    <td>Johanna Spyri</td>
-                    <td>
-                        <span class="fa fa-star checked"></span>  <!--Parlak yıldızlar için bunu kullanıcaz-->
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span><!--Parlak olmayan yıldızlar için bunu kullanıcaz-->
-                        <span class="fa fa-star"></span>
-                    </td>
-                    <td><a href="#" class="btn btn-outline-success btn-sm">Post Review </a></td>
-                  </tr>
+                  <?php
+                  $finished_book_sql = "select * from reads_book R natural join book Where R.user_id = 1 AND progress = ( Select page_count From Edition Where edition_no = R. edition_no AND book_id = R.book_id)";
+                  $finished_book_query = mysqli_query($db, $finished_book_sql);
+                  while( $row = mysqli_fetch_array($finished_book_query)) {
+                  echo "<tr>";
+                  echo "<th scope=\"row\">". $row["date"]. "</th>";
+                  echo "<td>". $row['book_name']. "</td>";
+                  echo "<td>". $row['author']. "</td>";
+                  echo "<td>";
+                  echo "<span class=\"fa fa-star checked\"></span>  <!--Parlak yıldızlar için bunu kullanıcaz-->";
+                  echo "<span class=\"fa fa-star checked\"></span>";
+                  echo "<span class=\"fa fa-star checked\"></span>";
+                  echo "<span class=\"fa fa-star\"></span><!--Parlak olmayan yıldızlar için bunu kullanıcaz-->";
+                  echo "<span class=\"fa fa-star\"></span>";
+                  echo "</td>";
+                  echo "<td><a href=\"\" class=\"btn btn-outline-success btn-sm\">Post Review </a></td>";
+                  echo "</tr>";
+                }
+                ?>
                 </tbody>
               </table>
           </div>
@@ -197,9 +212,15 @@ include_once "navbar.php";
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th scope="row">Onur Oruç</th>
-                    </tr>
+                    <?php
+                    $friend_sql = "select * from friends F, user U where F.user_id = $user_id and F.friend_id = U.user_id";
+                    $friend_query = mysqli_query($db, $friend_sql);
+                    while( $row = mysqli_fetch_array($friend_query)) {
+                      echo "<tr>";
+                      echo "<th scope=\"row\">". $row['name'] ." ". $row['surname']. "</th>";
+                      echo "</tr>";
+                    }
+                    ?>
                     </tbody>
                 </table>
                 <a href="#" class="btn btn-outline-success btn-sm">Add </a>
