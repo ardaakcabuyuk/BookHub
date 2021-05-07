@@ -6,6 +6,7 @@ if (isset($_GET['uname'])) {
   if ($_GET['uname'] == $_SESSION['username']) {
     $own_profile = true;
   }
+  $user_id = $_GET['user_id'];
 }
 ?>
 
@@ -32,7 +33,6 @@ if (isset($_GET['uname'])) {
               <p style="text-align:center;"><img src="./images/reader.png" alt="Logo" height="200"></p>
               <?php
               if ($own_profile) {
-                $user_id = $_SESSION['user_id'];
                 $get_user_info_query = "select name, surname, email from User where user_id = '$user_id'";
                 $query_run = mysqli_query($db, $get_user_info_query);
                 $user = mysqli_fetch_array($query_run);
