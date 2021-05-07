@@ -157,7 +157,7 @@ include_once "navbar.php";
                                   echo "<div class=\"row\">";
                                       echo "<div class=\"col-xs-6 col-sm-9 col-md-9 col-lg-10 title\">";
                                           echo "<h3>".$row['name']." ".$row['surname']."</h3>";
-                                          echo "<h6 style=\"color:gray;\"\">@".$row['username']."</h6>";
+                                          echo "<h6 style=\"color:#A9A9A9;\"\">@".$row['username']."</h6>";
                                           echo "<br/>";
                                           echo "<br/>";
                                           echo "<a href=\"./userprofile.php?uname=".$row['username']."\" class=\"btn btn-warning\" role=\"button\">Profile</a>";

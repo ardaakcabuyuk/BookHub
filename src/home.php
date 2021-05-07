@@ -10,7 +10,7 @@ include_once "navbar.php";
         <meta name="viewport" content="width-device-width, initial-scale=1.0">
         <title>BookHub</title>
         <link rel="stylesheet" href="css/bootstrap.css">
-
+        <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     </head>
 
     <body>
@@ -94,119 +94,59 @@ include_once "navbar.php";
                 <br/>
                 <br/>
 
-                <div class="card gedf-card">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="mr-2">
-                                    <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
-                                </div>
-                                <div class="ml-2">
-                                    <div class="h5 m-0">@ademburan</div>
-                                    <div class="h7 text-muted">Emin Adem Buran</div>
-                                </div>
-                            </div>
-                        </div>
+                <?php
+                  $friends_query = "select *
+                                    from post P natural join user U
+                                    where P.user_id in (select friend_id
+                                                        from user U2 natural join friends F
+                                                        where F.user_id ='" . $_SESSION['user_id'] . "')
+                                    order by P.date desc";
 
-                    </div>
-                    <div class="card-body">
-                        <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>1 hours ago</div>
-                        <a class="card-link" href="#">
-                            <h5 class="card-title">Plato Hakkında.</h5>
-                        </a>
+                  $query_run = mysqli_query($db, $friends_query);
+                  while ($row = mysqli_fetch_array($query_run)) {
+                    echo "<div class=\"card gedf-card\">";
+                        echo "<div class=\"card-header\">";
+                            echo "<div class=\"d-flex justify-content-between align-items-center\">";
+                                echo "<div class=\"d-flex justify-content-between align-items-center\">";
+                                    echo "<div class=\"mr-2\">";
+                                        echo "<img class=\"rounded-circle\" width=\"45\" src=\"images/reader.png\" alt=\"\">";
+                                    echo "</div>";
+                                    echo "<div class=\"ml-2\">";
+                                        echo "<div class=\"h5 m-0\">".$row['name']." ". $row['surname']."</div>";
+                                        echo "<div class=\"h7 text-muted\" style=\"color:#A9A9A9;\">".$row['username']."</div>";
+                                    echo "</div>";
+                                echo "</div>";
+                            echo "</div>";
+                        echo "</div>";
+                        echo "<div class=\"card-body\">";
+                            echo "<div class=\"text-muted h7 mb-2\"> <i class=\"fa fa-clock-o\"></i> ".$row['date']."</div>";
+                            echo "<a class=\"card-link\" href=\"#\">";
+                                $book_name_query = "select * from book where book_id ='".$row['book_id']."'";
+                                $result = mysqli_query($db, $book_name_query);
+                                $book = mysqli_fetch_array($result);
+                                echo "<h5 class=\"card-title\">".$book['book_name']."</h5>";
+                            echo "</a>";
 
-                        <p class="card-text">
-                            İyi adamdı.
-                        </p>
-                    </div>
-                    <div class="card-footer">
-                        <label>6 like</label>
-                        <button type="submit" class="btn btn-warning">Like</button>
-                        <button type="submit" class="btn btn-warning">Comment</button>
-                    </div>
+                            echo "<p class=\"card-text\">";
+                                echo $row['content'];
+                            echo "</p>";
+                        echo "</div>";
+                        echo "<div class=\"card-footer\">";
+                            echo "<p style=\"vertical-align: middle;\"><i class=\"fa fa-thumbs-o-up\" style=\"color:orange;\"></i> ".$row['like_count']." likes";
+                            echo "&emsp;<i class=\"fa fa-comment-o\" style=\"color:orange;\"></i> ".$row['comment_count']." comments";
+                            echo "<button type=\"submit\" class=\"btn btn-warning pull-right\"><i class=\"fa fa-comment-o\"></i> Comment</button>";
+                            echo "<button type=\"submit\" class=\"btn btn-warning pull-right\"><i class=\"fa fa-thumbs-o-up\"></i> Like</button></p>";
+                        echo "</div>";
 
-                    <div class="form-group">
-                        <textarea class="form-control" id="message" rows="3" placeholder="I think"></textarea>
-                    </div>
-                </div>
+                        echo "<div class=\"form-group\">";
+                            echo "<textarea class=\"form-control\" id=\"message\" rows=\"3\" placeholder=\"I think\"></textarea>";
+                        echo "</div>";
+                    echo "</div>";
 
-                <br/>
-                <br/>
-
-                <div class="card gedf-card">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="mr-2">
-                                    <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
-                                </div>
-                                <div class="ml-2">
-                                    <div class="h5 m-0">@adilmeric </div>
-                                    <div class="h7 text-muted">Adil Meriç</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="card-body">
-                        <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i> 10 min ago</div>
-                        <a class="card-link" href="#">
-                            <h5 class="card-title"> Okul hakkında.</h5>
-                        </a>
-
-                        <p class="card-text">
-                            Okul berbat bir şey.
-                        </p>
-                    </div>
-                    <div class="card-footer">
-                        <label>6 like</label>
-                        <button type="submit" class="btn btn-warning">Like</button>
-                        <button type="submit" class="btn btn-warning">Comment</button>
-                    </div>
-
-                    <div class="form-group">
-                        <textarea class="form-control" id="message" rows="3" placeholder="I think"></textarea>
-                    </div>
-                </div>
-
-                <br/>
-                <br/>
-
-                <div class="card gedf-card">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="mr-2">
-                                    <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
-                                </div>
-                                <div class="ml-2">
-                                    <div class="h5 m-0">@oruconur</div>
-                                    <div class="h7 text-muted">Onur Oruç</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="card-body">
-                        <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i> 1 day ago</div>
-                        <a class="card-link" href="#">
-                            <h5 class="card-title">Hayat Hakkında.</h5>
-                        </a>
-
-                        <p class="card-text">
-                            Hayat iyi bişey gibi
-                        </p>
-                    </div>
-                    <div class="card-footer">
-                        <label>6 like</label>
-                        <button type="submit" class="btn btn-warning">Like</button>
-                        <button type="submit" class="btn btn-warning">Comment</button>
-                    </div>
-
-                    <div class="form-group">
-                        <textarea class="form-control" id="message" rows="3" placeholder="I think"></textarea>
-                    </div>
-                </div>
+                    echo "<br/>";
+                    echo "<br/>";
+                  }
+                ?>
             </div>
         </div>
     </div>
