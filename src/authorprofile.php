@@ -40,9 +40,12 @@ if (isset($_GET['uname'])) {
                   $surname = $author['surname'];
                   $email = $author['email'];
                   $username = $_SESSION['username'];
-                  echo "<h4 style=\"text-align: center;\"><strong>$name $surname</strong> - Author</h2>";
-                  echo "<h5 style=\"text-align: center;\"><strong>@$username</strong></h5>";
-                  echo "<h5 style=\"text-align: center;\">$email</h5>";
+                  echo "<h4 style=\"text-align: center;\">Author</h2>";
+                  echo "<br>";
+                  echo "<h4 style=\"text-align: center;\"><strong>$name $surname</strong></h2>";
+                  echo "<h5 style=\"text-align: center; color:#A9A9A9;\">@$username</h5>";
+                  echo "<br>";
+                  echo "<h6 style=\"text-align: center;\">e-mail: $email</h6>";
                 }
                 else {
                   $get_author_info_query = "select name, surname, username, email from Author natural join User where username = '".$_GET['uname']."'";
@@ -52,9 +55,12 @@ if (isset($_GET['uname'])) {
                   $surname = $author['surname'];
                   $email = $author['email'];
                   $username = $author['username'];
-                  echo "<h4 style=\"text-align: center;\"><strong>$name $surname</strong> - Author</h2>";
-                  echo "<h5 style=\"text-align: center;\"><strong>@$username</strong></h5>";
-                  echo "<h5 style=\"text-align: center;\">$email</h5>";
+                  echo "<h4 style=\"text-align: center;\">Author</h2>";
+                  echo "<br>";
+                  echo "<h4 style=\"text-align: center;\"><strong>$name $surname</strong></h2>";
+                  echo "<h5 style=\"text-align: center; color:#A9A9A9;\">@$username</h5>";
+                  echo "<br>";
+                  echo "<h6 style=\"text-align: center;\">e-mail: $email</h6>";
                 }
                 ?>
               </div>
