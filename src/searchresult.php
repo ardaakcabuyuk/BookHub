@@ -1,6 +1,22 @@
 <?php
 include('config.php');
 include_once "navbar.php";
+if (isset($_POST['search_user_button'])) {
+  $_SESSION['search_post'] = $_POST;
+  $local_post = $_POST;
+}
+else {
+  $local_post = $_SESSION['search_post'];
+}
+
+if (isset($_POST['add_friend_button'])) {
+  $user_id = $_SESSION['user_id'];
+  $friend_id = $_POST['add_friend_button'];
+  $add_friend_query = "insert into friends (user_id, friend_id) values ($user_id, $friend_id)";
+  $add_back_query = "insert into friends (user_id, friend_id) values ($friend_id, $user_id)";
+  $add_friend = mysqli_query($db, $add_friend_query);
+  $add_back = mysqli_query($db, $add_back_query);
+}
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +42,7 @@ include_once "navbar.php";
                     <br/>
                     <form class="form-inline" action="searchresult.php" method="post">
                       <?php
-                        if (isset($_POST['search_book_button'])) {
+                        if (isset($local_post['search_book_button'])) {
                           echo "<div class=\"form-group mb-2\">";
                           echo "<input type=\"search\" class=\"form-control rounded\" placeholder=\"Search Books\" aria-label=\"Search\"";
                             echo "aria-describedby=\"search-addon\" name=\"search_book\">";
@@ -37,7 +53,7 @@ include_once "navbar.php";
         						        echo "</button>";
                           echo "</div>";
                         }
-                        else if (isset($_POST['search_author_button'])) {
+                        else if (isset($local_post['search_author_button'])) {
                           echo "<div class=\"form-group mb-2\">";
                           echo "<input type=\"search\" class=\"form-control rounded\" placeholder=\"Search Authors\" aria-label=\"Search\"";
                             echo "aria-describedby=\"search-addon\" name=\"search_author\">";
@@ -48,7 +64,7 @@ include_once "navbar.php";
         						        echo "</button>";
                           echo "</div>";
                         }
-                        else if (isset($_POST['search_user_button'])) {
+                        else if (isset($local_post['search_user_button'])) {
                           echo "<div class=\"form-group mb-2\">";
                           echo "<input type=\"search\" class=\"form-control rounded\" placeholder=\"Search Users\" aria-label=\"Search\"";
                             echo "aria-describedby=\"search-addon\" name=\"search_user\">";
@@ -68,8 +84,8 @@ include_once "navbar.php";
                     <h2>Search Results</h2>
                     <hr>
                     <?php
-                      if(isset($_POST['search_book_button'])) {
-                        $searchkey = $_POST['search_book'];
+                      if(isset($local_post['search_book_button'])) {
+                        $searchkey = $local_post['search_book'];
                         if ($searchkey != "") {
                           $search_book_query = "select * from book where book_name like '%$searchkey%'";
                           $search_book = mysqli_query($db, $search_book_query);
@@ -112,8 +128,8 @@ include_once "navbar.php";
                           }
                         }
                       }
-                      else if(isset($_POST['search_author_button'])) {
-                        $searchkey = $_POST['search_author'];
+                      else if(isset($local_post['search_author_button'])) {
+                        $searchkey = $local_post['search_author'];
                         if ($searchkey != "") {
                           $search_author_query = "select * from author natural join user where name or surname like '%$searchkey%'";
                           $search_author = mysqli_query($db, $search_author_query);
@@ -140,8 +156,8 @@ include_once "navbar.php";
                           }
                         }
                       }
-                      else if(isset($_POST['search_user_button'])) {
-                        $searchkey = $_POST['search_user'];
+                      else if(isset($local_post['search_user_button'])) {
+                        $searchkey = $local_post['search_user'];
                         if ($searchkey != "") {
                           $search_user_query = "select * from user
                                                 where user_id not in (select A.user_id
@@ -149,7 +165,8 @@ include_once "navbar.php";
                                                                       union
                                                                       select L.user_id
                                                                       from librarian L)
-                                                and (name like '%$searchkey%' or surname like '%$searchkey%')";
+                                                and (name like '%$searchkey%' or surname like '%$searchkey%')
+                                                and user_id <>'" .$_SESSION['user_id']. "'";
                           $search_user = mysqli_query($db, $search_user_query);
                           if (mysqli_num_rows($search_user) != 0) {
                             while ($row = mysqli_fetch_array($search_user)) {
@@ -160,9 +177,18 @@ include_once "navbar.php";
                                           echo "<h6 style=\"color:#A9A9A9;\"\">@".$row['username']."</h6>";
                                           echo "<br/>";
                                           echo "<br/>";
-                                          echo "<a href=\"./userprofile.php?uname=".$row['username']."\" class=\"btn btn-warning\" role=\"button\">Profile</a>";
-                                          echo "   ";
-                                          echo "<a href=\"#\" class=\"btn btn-warning\" role=\"button\">Add Friend</a>";
+                                          echo "<form action=\"\" method=\"post\">";
+                                              echo "<a href=\"./userprofile.php?uname=".$row['username']."\" class=\"btn btn-warning\" role=\"button\">Profile</a>";
+                                              echo "   ";
+                                              $friend_check_query = "select * from user U natural join friends F where U.user_id = ". $_SESSION['user_id'] . " and F.friend_id = ". $row['user_id'];
+                                              $check = mysqli_query($db, $friend_check_query);
+                                              if (mysqli_num_rows($check) == 0) {
+                                                echo "<button class=\"btn btn-warning\" type=\"submit\" name=\"add_friend_button\" value=\"". $row['user_id']. "\">";
+                                                     echo "Add Friend";
+                                                echo "</button>";
+                                              }
+                                            echo "</div>";
+                                          echo "</form>";
                                       echo "</div>";
                                   echo "</div>";
                               echo "</div>";
@@ -178,7 +204,5 @@ include_once "navbar.php";
                 </div>
             </div>
         </div>
-
     </body>
-
 </html>
