@@ -33,7 +33,7 @@ session_start();
                             ?>
                         </li>
                     </ul>
-                    <form class="d-flex" action="index.php">
+                    <form class="d-flex" action="logout.php">
                         <button class="btn btn-outline-success" type="submit">Logout</button>
                     </form>
                 </div>

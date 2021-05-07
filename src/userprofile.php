@@ -1,11 +1,24 @@
 <?php
+session_start();
 include('config.php');
+require_once "helper_functions.php";
+
+if( sessionNotExists()) {
+  echo "<script type='text/javascript'>alert('Please login first!');window.location.href='index.php';</script>";
+}
+
+
 include_once "navbar.php";
+
+
+
 $own_profile = false;
+
 if (isset($_GET['uname'])) {
   if ($_GET['uname'] == $_SESSION['username']) {
     $own_profile = true;
   }
+
   $username = $_GET['uname'];
   $user_id_sql = "select user_id from user where username = \"$username\"";
   $usr_query = mysqli_query($db, $user_id_sql);
@@ -112,7 +125,8 @@ if (isset($_GET['uname'])) {
                       echo "<td>". $row_book['author']. "</td>";
                       echo "<td>". $row_book['page_count']. "</td>";
                       echo "<td>". $row['progress']. "</td>";
-                      echo "<td><a href=\"\" class=\"btn btn-outline-success btn-sm\">Edit </a></td>";
+                      if($own_profile)
+                        echo "<td><a href=\"\" class=\"btn btn-outline-success btn-sm\">Edit </a></td>";
                       echo "</tr>";
                       }
                     ?>
@@ -156,7 +170,8 @@ if (isset($_GET['uname'])) {
                   echo "<span class=\"fa fa-star\"></span><!--Parlak olmayan yıldızlar için bunu kullanıcaz-->";
                   echo "<span class=\"fa fa-star\"></span>";
                   echo "</td>";
-                  echo "<td><a href=\"\" class=\"btn btn-outline-success btn-sm\">Post Review </a></td>";
+                  if($own_profile)
+                    echo "<td><a href=\"\" class=\"btn btn-outline-success btn-sm\">Post Review </a></td>";
                   echo "</tr>";
                 }
                 ?>
@@ -211,7 +226,7 @@ if (isset($_GET['uname'])) {
     <div class="row">
         <div class="col-md-12">
         <div class="card card-block text-xs-left">
-            <h3 class="card-title" style="color:#009688"> Book Lists</h3>
+            <h3 class="card-title" style="color:#009688"> Owned Book Lists</h3>
             <div style="height: 15px"></div>
             <table class="table">
                 <thead class="thead-dark">
@@ -239,12 +254,50 @@ if (isset($_GET['uname'])) {
                 ?>
                 </tbody>
             </table>
-            <a href="#" class="btn btn-outline-success btn-sm">Create </a>
-
+            <?php
+              if($own_profile)
+                echo "<a href=\"\" class=\"btn btn-outline-success btn-sm\">Create </a>";
+            ?>
         </div>
         </div>
     </div>
     <!-- End:Biography -->
+    <br>
+    <br>
+
+    <div class="row">
+        <div class="col-md-12">
+        <div class="card card-block text-xs-left">
+            <h3 class="card-title" style="color:#009688"> Followed Book Lists</h3>
+            <div style="height: 15px"></div>
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Number of Books</th>
+                    <th scope="col">List Owner</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                  $booklist_sql = "Select * From Booklist inner join follows on booklist.list_id = follows.user_id, user Where follows.user_id = $user_id and user.user_id = booklist.user_id";
+                  $booklist_query = mysqli_query($db, $booklist_sql);
+
+                  while($row = mysqli_fetch_array($booklist_query)) {
+                    echo "<tr>";
+                    echo "<th scope=\"row\">". $row['list_name'] ."</th>";
+                    echo "<td>" . $row['num_books'] ."</td>";
+                    echo "<td>". $row['name']. " ". $row['surname'] ."</td>";
+                    echo "<td><a href=\"booklist.php\" class=\"btn btn-outline-success btn-sm\">Show Booklist</a></td>";
+                    echo "</tr>";
+                  }
+                ?>
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
     <br>
     <br>
 
@@ -271,7 +324,10 @@ if (isset($_GET['uname'])) {
                     ?>
                     </tbody>
                 </table>
-                <a href="#" class="btn btn-outline-success btn-sm">Add </a>
+                <?php
+                  if($own_profile)
+                    echo "<a href=\"#\" class=\"btn btn-outline-success btn-sm\">Add </a>";
+                ?>
 
             </div>
             </div>

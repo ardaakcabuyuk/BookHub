@@ -1,6 +1,6 @@
 <?php
 include('config.php');
-session_start();
+#session_start();
 
 function emptyInputLogin($username, $pwd) {
     return (empty($username) || empty($pwd));
@@ -10,7 +10,7 @@ function emptyInputRegister($name, $email, $username, $userType, $password, $rep
     return (empty($name) || empty($email) || empty($username) || empty($userType) || empty($password) || empty($repeatPassword));
 }
 
-function sessionExists() {
+function sessionNotExists() {
   return( empty($_SESSION['username']) || empty($_SESSION['user_id']) || empty($_SESSION['type']));
 }
 
