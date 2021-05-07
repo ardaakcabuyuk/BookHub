@@ -123,10 +123,46 @@ include_once "navbar.php";
                                   echo "<div class=\"row\">";
                                       echo "<div class=\"col-xs-6 col-sm-9 col-md-9 col-lg-10 title\">";
                                           echo "<h3>".$row['name']." ".$row['surname']."</h3>";
-                                          echo "<h5>Books: ".$row['num_book']."</h5>";
+                                          echo "<h6 style=\"color:gray;\"\">@".$row['username']."</h6>";
+                                          echo "<br/>";
+                                          echo "<h6>Books: ".$row['num_book']."</h6>";
                                           echo "<br/>";
                                           echo "<br/>";
                                           echo "<a href=\"./authorprofile.php?uname=".$row['username']."\" class=\"btn btn-warning\" role=\"button\">Profile</a>";
+                                      echo "</div>";
+                                  echo "</div>";
+                              echo "</div>";
+                              echo "<hr>";
+                            }
+                          }
+                          else {
+                            echo "<p>No results.</p>";
+                          }
+                        }
+                      }
+                      else if(isset($_POST['search_user_button'])) {
+                        $searchkey = $_POST['search_user'];
+                        if ($searchkey != "") {
+                          $search_user_query = "select * from user
+                                                where user_id not in (select A.user_id
+                                                                      from author A
+                                                                      union
+                                                                      select L.user_id
+                                                                      from librarian L)
+                                                and (name like '%$searchkey%' or surname like '%$searchkey%')";
+                          $search_user = mysqli_query($db, $search_user_query);
+                          if (mysqli_num_rows($search_user) != 0) {
+                            while ($row = mysqli_fetch_array($search_user)) {
+                              echo "<div class=\"well search-result\">";
+                                  echo "<div class=\"row\">";
+                                      echo "<div class=\"col-xs-6 col-sm-9 col-md-9 col-lg-10 title\">";
+                                          echo "<h3>".$row['name']." ".$row['surname']."</h3>";
+                                          echo "<h6 style=\"color:gray;\"\">@".$row['username']."</h6>";
+                                          echo "<br/>";
+                                          echo "<br/>";
+                                          echo "<a href=\"./userprofile.php?uname=".$row['username']."\" class=\"btn btn-warning\" role=\"button\">Profile</a>";
+                                          echo "   ";
+                                          echo "<a href=\"#\" class=\"btn btn-warning\" role=\"button\">Add Friend</a>";
                                       echo "</div>";
                                   echo "</div>";
                               echo "</div>";

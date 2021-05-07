@@ -27,7 +27,7 @@ if (isset($_GET['uname'])) {
     <!-- ******HEADER****** -->
       <header class="header">
         <div class="container">
-          <div class="row justify-content-center" style="margin-top:20px;">
+          <div class="row justify-content-center" style="margin-top:20px; white-space:nowrap;">
             <div class="col-md-3"> <!-- Image -->
               <p style="text-align:center;"><img src="./images/reader.png" alt="Logo" height="200"></p>
               <?php
@@ -40,9 +40,12 @@ if (isset($_GET['uname'])) {
                 $surname = $user['surname'];
                 $email = $user['email'];
                 $username = $_SESSION['username'];
-                echo "<h4 style=\"text-align: center;\"><strong>$name $surname</strong> - User</h2>";
-                echo "<h5 style=\"text-align: center;\"><strong>@$username</strong></h5>";
-                echo "<h5 style=\"text-align: center;\">$email</h5>";
+                echo "<h4 style=\"text-align: center;\">User</h2>";
+                echo "<br>";
+                echo "<h4 style=\"text-align: center;\"><strong>$name $surname</strong></h2>";
+                echo "<h5 style=\"text-align: center; color:#A9A9A9;\">@$username</h5>";
+                echo "<br>";
+                echo "<h6 style=\"text-align: center;\">e-mail: $email</h6>";
               }
               else {
                 $get_user_info_query = "select name, surname, username, email from User where username = '".$_GET['uname']."'";
@@ -52,9 +55,12 @@ if (isset($_GET['uname'])) {
                 $surname = $user['surname'];
                 $email = $user['email'];
                 $username = $user['username'];
-                echo "<h4 style=\"text-align: center;\"><strong>$name $surname</strong> - User</h2>";
-                echo "<h5 style=\"text-align: center;\"><strong>@$username</strong></h5>";
-                echo "<h5 style=\"text-align: center;\">$email</h5>";
+                echo "<h4 style=\"text-align: center;\">User</h4>";
+                echo "<br>";
+                echo "<h4 style=\"text-align: center;\"><strong>$name $surname</strong></h4>";
+                echo "<h5 style=\"text-align: center; color:#A9A9A9;\">@$username</h5>";
+                echo "<br>";
+                echo "<h6 style=\"text-align: center;\">e-mail: $email</h6>";
               }
               ?>
             </div>
