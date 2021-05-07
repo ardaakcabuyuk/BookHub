@@ -178,14 +178,20 @@ if (isset($_GET['uname'])) {
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">10.02.2021</th>
-                    <td>Heidi</td>
-                    <td>Johanna Spyri</td>
-                    <td>27</td>
-                    <td>3</td>
-                    <td>3/5</td>
-                </tr>
+                <?php
+                $post_info_sql = "select * from post natural join book where user_id = $user_id";
+                $post_query = mysqli_query($db,$post_info_sql);
+                while( $row = mysqli_fetch_array($post_query)) {
+                echo "<tr>";
+                echo "<th scope=\"row\">". $row['date']. "</th>";
+                echo "<td>". $row['book_name']. "</td>";
+                echo "<td>". $row['author']. "</td>";
+                echo "<td>". $row['like_count']. "</td>";
+                echo "<td>". $row['comment_count']. "</td>";
+                echo "<td>". $row['rate'] ."/5</td>";
+                echo "</tr>";
+                }
+                ?>
                 </tbody>
             </table>
         </div>
@@ -203,19 +209,27 @@ if (isset($_GET['uname'])) {
             <table class="table">
                 <thead class="thead-dark">
                 <tr>
-                    <th scope="col">Last Update</th>
                     <th scope="col">Name</th>
                     <th scope="col">Number of Books</th>
+                    <th scope="col">Number of Followers</th>
                     <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">01.04.2021</th>
-                    <td>Classics</td>
-                    <td>21</td>
-                    <td><a href="booklist.php" class="btn btn-outline-success btn-sm">Show Booklist</a></td>
-                </tr>
+                <?php
+                  $booklist_sql = "with f_count(cnt) as ( select count(*) From Booklist inner join follows on booklist.list_id = follows.list_id Where booklist.user_id = $user_id)".
+                  "Select * From Booklist, f_count Where user_id = $user_id";
+                  $booklist_query = mysqli_query($db, $booklist_sql);
+
+                  while($row = mysqli_fetch_array($booklist_query)) {
+                    echo "<tr>";
+                    echo "<th scope=\"row\">". $row['list_name'] ."</th>";
+                    echo "<td>" . $row['num_books'] ."</td>";
+                    echo "<td>". $row['cnt']. "</td>";
+                    echo "<td><a href=\"booklist.php\" class=\"btn btn-outline-success btn-sm\">Show Booklist</a></td>";
+                    echo "</tr>";
+                  }
+                ?>
                 </tbody>
             </table>
             <a href="#" class="btn btn-outline-success btn-sm">Create </a>
