@@ -30,7 +30,7 @@ include_once "navbar.php";
             </button></span>
         </div>
       </form>
-      <form class="form-inline" action="#" method="post">
+      <form class="form-inline" action="searchresult.php" method="post">
         <div class="input-group">
           <div class="col-xs-3">
             <input type="search" class="form-control rounded" placeholder="Search Authors" aria-label="Search"

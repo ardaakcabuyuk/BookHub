@@ -25,15 +25,41 @@ include_once "navbar.php";
                     <br/>
                     <br/>
                     <form class="form-inline" action="searchresult.php" method="post">
-                      <div class="form-group mb-2">
-                      <input type="search" class="form-control rounded" placeholder="Search Books" aria-label="Search"
-                        aria-describedby="search-addon" name="search_book">
-                      </div>
-                      <div class="form-group mb-2">
-    						        <button class="btn btn-warning mb-2 pull-right" type="submit" name="search_book_button">
-    					                 Search
-    						        </button>
-                      </div>
+                      <?php
+                        if (isset($_POST['search_book_button'])) {
+                          echo "<div class=\"form-group mb-2\">";
+                          echo "<input type=\"search\" class=\"form-control rounded\" placeholder=\"Search Books\" aria-label=\"Search\"";
+                            echo "aria-describedby=\"search-addon\" name=\"search_book\">";
+                          echo "</div>";
+                          echo "<div class=\"form-group mb-2\">";
+        						        echo "<button class=\"btn btn-warning mb-2 pull-right\" type=\"submit\" name=\"search_book_button\">";
+        					                 echo "Search";
+        						        echo "</button>";
+                          echo "</div>";
+                        }
+                        else if (isset($_POST['search_author_button'])) {
+                          echo "<div class=\"form-group mb-2\">";
+                          echo "<input type=\"search\" class=\"form-control rounded\" placeholder=\"Search Authors\" aria-label=\"Search\"";
+                            echo "aria-describedby=\"search-addon\" name=\"search_author\">";
+                          echo "</div>";
+                          echo "<div class=\"form-group mb-2\">";
+        						        echo "<button class=\"btn btn-warning mb-2 pull-right\" type=\"submit\" name=\"search_author_button\">";
+        					                 echo "Search";
+        						        echo "</button>";
+                          echo "</div>";
+                        }
+                        else if (isset($_POST['search_user_button'])) {
+                          echo "<div class=\"form-group mb-2\">";
+                          echo "<input type=\"search\" class=\"form-control rounded\" placeholder=\"Search Users\" aria-label=\"Search\"";
+                            echo "aria-describedby=\"search-addon\" name=\"search_user\">";
+                          echo "</div>";
+                          echo "<div class=\"form-group mb-2\">";
+        						        echo "<button class=\"btn btn-warning mb-2 pull-right\" type=\"submit\" name=\"search_user_button\">";
+        					                 echo "Search";
+        						        echo "</button>";
+                          echo "</div>";
+                        }
+                      ?>
                     </form>
 
                     <br/>
@@ -75,6 +101,32 @@ include_once "navbar.php";
                                           echo "<br/>";
                                           echo "<br/>";
                                           echo "<a href=\"#link\" class=\"btn btn-warning\" role=\"button\">Show Detailed Info</a>";
+                                      echo "</div>";
+                                  echo "</div>";
+                              echo "</div>";
+                              echo "<hr>";
+                            }
+                          }
+                          else {
+                            echo "<p>No results.</p>";
+                          }
+                        }
+                      }
+                      else if(isset($_POST['search_author_button'])) {
+                        $searchkey = $_POST['search_author'];
+                        if ($searchkey != "") {
+                          $search_author_query = "select * from author natural join user where name or surname like '%$searchkey%'";
+                          $search_author = mysqli_query($db, $search_author_query);
+                          if (mysqli_num_rows($search_author) != 0) {
+                            while ($row = mysqli_fetch_array($search_author)) {
+                              echo "<div class=\"well search-result\">";
+                                  echo "<div class=\"row\">";
+                                      echo "<div class=\"col-xs-6 col-sm-9 col-md-9 col-lg-10 title\">";
+                                          echo "<h3>".$row['name']." ".$row['surname']."</h3>";
+                                          echo "<h5>Books: ".$row['num_book']."</h5>";
+                                          echo "<br/>";
+                                          echo "<br/>";
+                                          echo "<a href=\"./authorprofile.php?uname=".$row['username']."\" class=\"btn btn-warning\" role=\"button\">Profile</a>";
                                       echo "</div>";
                                   echo "</div>";
                               echo "</div>";
