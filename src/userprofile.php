@@ -6,7 +6,14 @@ if (isset($_GET['uname'])) {
   if ($_GET['uname'] == $_SESSION['username']) {
     $own_profile = true;
   }
-  $user_id = $_GET['user_id'];
+  $username = $_GET['uname'];
+  $user_id_sql = "select user_id from user where username = \"$username\"";
+  $usr_query = mysqli_query($db, $user_id_sql);
+  if(mysqli_num_rows($usr_query) != 1) {
+    echo "<script type='text/javascript'>alert('User with username = $user_id does not exist!');window.location.href='home.php';</script>";
+  }
+
+  $user_id = mysqli_fetch_array($usr_query)['user_id'];
 }
 ?>
 
@@ -33,13 +40,13 @@ if (isset($_GET['uname'])) {
               <p style="text-align:center;"><img src="./images/reader.png" alt="Logo" height="200"></p>
               <?php
               if ($own_profile) {
-                $get_user_info_query = "select name, surname, email from User where user_id = '$user_id'";
+                $get_user_info_query = "select * from User where user_id = '$user_id'";
                 $query_run = mysqli_query($db, $get_user_info_query);
                 $user = mysqli_fetch_array($query_run);
                 $name = $user['name'];
                 $surname = $user['surname'];
                 $email = $user['email'];
-                $username = $_SESSION['username'];
+                $username = $user['username'];
                 echo "<h4 style=\"text-align: center;\">User</h2>";
                 echo "<br>";
                 echo "<h4 style=\"text-align: center;\"><strong>$name $surname</strong></h2>";
