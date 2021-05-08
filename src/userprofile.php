@@ -281,7 +281,7 @@ if (isset($_GET['uname'])) {
                 </thead>
                 <tbody>
                 <?php
-                  $booklist_sql = "Select * From Booklist inner join follows on booklist.list_id = follows.user_id, user Where follows.user_id = $user_id and user.user_id = booklist.user_id";
+                  $booklist_sql = "Select * From Booklist inner join follows on booklist.list_id = follows.list_id, user Where follows.user_id = $user_id and user.user_id = booklist.user_id";
                   $booklist_query = mysqli_query($db, $booklist_sql);
 
                   while($row = mysqli_fetch_array($booklist_query)) {
