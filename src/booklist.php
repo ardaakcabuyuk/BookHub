@@ -10,7 +10,7 @@ if(isset($_GET['list_id'])) {
   $list = mysqli_fetch_array($list_query);
 }
 else {
-  echo "<script type='text/javascript'>alert('Bad credentials!');window.location.href='index.php';</script>";
+  echo "<script type='text/javascript'>alert('Bad credentials!');window.location.href='home.php';</script>";
 }
 
 ?>

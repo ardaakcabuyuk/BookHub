@@ -156,7 +156,7 @@
                     </thead>
                     <tbody>
                       <?php
-                      $finished_book_sql = "select * from reads_book R natural join book Where R.user_id = 1 AND progress = ( Select page_count From Edition Where edition_no = R. edition_no AND book_id = R.book_id)";
+                      $finished_book_sql = "select * from reads_book R natural join book Where R.user_id = $user_id AND progress = ( Select page_count From Edition Where edition_no = R. edition_no AND book_id = R.book_id)";
                       $finished_book_query = mysqli_query($db, $finished_book_sql);
                       while( $row = mysqli_fetch_array($finished_book_query)) {
                       echo "<tr>";
@@ -247,7 +247,7 @@
                         echo "<th scope=\"row\">". $row['list_name'] ."</th>";
                         echo "<td>" . $row['num_books'] ."</td>";
                         echo "<td>". $row['cnt']. "</td>";
-                        echo "<td><a href=\"booklist.php\" class=\"btn btn-outline-success btn-sm\">Show Booklist</a></td>";
+                        echo "<td><a href=\"booklist.php?list_id=". $row['list_id']. "\" class=\"btn btn-outline-success btn-sm\">Show Booklist</a></td>";
                         echo "</tr>";
                       }
                     ?>
