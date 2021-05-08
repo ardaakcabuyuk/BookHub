@@ -105,7 +105,7 @@ include_once "navbar.php";
                         echo "<div class=\"card-footer\">";
                             echo "<p style=\"vertical-align: middle;\"><i class=\"fa fa-thumbs-o-up\" style=\"color:orange;\"></i> ".$row['like_count']." likes";
                             echo "&emsp;<i class=\"fa fa-comment-o\" style=\"color:orange;\"></i> ".$row['comment_count']." comments";
-                            echo "<button type=\"submit\" class=\"btn btn-warning pull-right\"><i class=\"fa fa-comment-o\"></i> Comment</button>";
+                            echo "<button type=\"submit\" class=\"btn btn-warning pull-right\" style=\"margin-left: 10px;\"><i class=\"fa fa-comment-o\"></i> Comment</button>";
                             echo "<button type=\"submit\" class=\"btn btn-warning pull-right\"><i class=\"fa fa-thumbs-o-up\"></i> Like</button></p>";
                         echo "</div>";
 
