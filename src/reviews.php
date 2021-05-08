@@ -1,6 +1,10 @@
 <?php
 include('config.php');
 include_once "navbar.php";
+
+if (isset($_GET['book_id'])) {
+  $book_id = $_GET['book_id'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -20,41 +24,36 @@ include_once "navbar.php";
 
     <br/>
     <br/>
-    <div class="d-flex justify-content-around align-items-center">
-      <form class="form-inline" action="searchresult.php" method="post">
-        <div class="input-group">
-          <div class="col-xs-4">
-            <input type="search" class="form-control rounded" placeholder="Search Books" aria-label="Search"
-            aria-describedby="search-addon" name="search_book" id="search1">
-          </div>
-            <span class="input-group-addon"><button class="btn btn-warning mb-2 pull-right" type="submit" name="search_book_button">
-               Search
-            </button></span>
+    <header class="header">
+      <div class="container">
+        <div class="book-name" style="padding-top:20px;">
+          <div class="row" style="margin-top:0px;">
+          <?php
+            $get_book_info_query = "select * from book natural join author where book_id = $book_id";
+            $get_book = mysqli_query($db, $get_book_info_query);
+            $book = mysqli_fetch_array($get_book);
+            echo "<div class=\"col-md-9\">";
+              echo "<h2 style=\"font-size:38px\"><strong>".$book['book_name']."</strong></h2>";
+              echo "<h3>by <strong>". $book['author'] ."</strong></h3>";
+              echo "<h5>Genre: <strong>". $book['genre']. " </strong></h5>";
+              echo "<h5>". $book['year'] ."</h5>";
+            echo "</div>";
+          echo "</div>";
+        echo "</div>";
+
+        echo "<div class=\"row\" style=\"margin-top:20px;\">";
+          echo "<div class=\"col-md-3\"> <!-- Image -->";
+            echo "<a href=\"#\"> <img class=\"img-responsive\" src=\"https://picsum.photos/200\" alt=\"Kamal\" style=\"width:200px;height:200px\"></a>";
+          echo "</div>";
+
+        echo "<div class=\"col-md-6\"> <!-- Rank & Qualifications -->";
+          echo "<h5>Description:</h5>";
+          echo "<small>".$book['description']."</small>";
+        echo "</div>";
+          ?>
         </div>
-      </form>
-      <form class="form-inline" action="searchresult.php" method="post">
-        <div class="input-group">
-          <div class="col-xs-3">
-            <input type="search" class="form-control rounded" placeholder="Search Authors" aria-label="Search"
-            aria-describedby="search-addon" name="search_author">
-          </div>
-            <span class="input-group-addon"><button class="btn btn-warning mb-2 pull-right" type="submit" name="search_author_button">
-                 Search
-            </button></span>
-          </div>
-      </form>
-      <form class="form-inline" action="searchresult.php" method="post">
-        <div class="input-group">
-          <div class="col-xs-3">
-            <input type="search" class="form-control rounded" placeholder="Search Users" aria-label="Search"
-            aria-describedby="search-addon" name="search_user">
-          </div>
-            <span class="input-group-addon"><button class="btn btn-warning mb-2 pull-right" type="submit" name="search_user_button">
-                   Search
-            </button></span>
-        </div>
-      </form>
-    </div>
+      </div>
+    </header>
 
     <br/>
     <br/>
@@ -65,7 +64,7 @@ include_once "navbar.php";
             <script src="js/bootstrap.js"></script>
 
             <div class="col-md-6 gedf-main">
-              <h2>Feed</h2>
+              <h2>Reviews</h2>
               <hr>
                 <?php
                   $friends_query = "select *

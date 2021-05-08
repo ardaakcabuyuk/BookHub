@@ -72,7 +72,7 @@ if (isset($_GET['book_id'])) {
                     echo "<a href=\"mailto:ahmkctg@yahoo.com\" class=\"btn btn-outline-success btn-block\">Quotes</a>";
                 echo "</div>";
                 echo "<div class=\"button\" style=\"padding-top:18px\">";
-                    echo "<a href=\"mailto:ahmkctg@yahoo.com\" class=\"btn btn-outline-success btn-block\">Reviews</a>";
+                    echo "<a href=\"reviews.php?book_id=".$book['book_id']."\" class=\"btn btn-outline-success btn-block\">Reviews</a>";
                 echo "</div>";
             echo "</div>";
           ?>
