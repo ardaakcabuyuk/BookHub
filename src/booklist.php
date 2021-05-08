@@ -36,8 +36,8 @@ else {
 
                 <div class="row justify-content-center" style="margin-top:20px;">
                     <div class="col-md-3"> <!-- Image -->
-                      <h5 style="text-align: center;"> <strong><?php echo $list['list_name']; ?></strong></h2>
-                      <h5 style="text-align: center;">Readlist by <strong><?php echo $list['name']. " " . $list['surname']; ?></strong></h2>
+                      <h2 style="text-align: center;"> <strong><?php echo $list['list_name']; ?></strong></h2>
+                      <h5 style="text-align: center;">Book List by <strong><?php echo $list['name']. " " . $list['surname']; ?></strong></h2>
                     </div>
                   </div>
             </div>
@@ -47,55 +47,50 @@ else {
         <div class="container bootstrap snippets bootdey">
 
             <div class="row">
-                        <?php
-                        $book_in_list_sql = "select * from contains natural join book where list_id=$list_id";
-                        $book_in_list_query = mysqli_query($db,$book_in_list_sql);
-                        while( $row = mysqli_fetch_array($book_in_list_query)) {
-                          echo "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\">";
-                          echo "<br/>";
-                          echo "<br/>";
-                          echo "<hr>";
-
-                          echo "<div class=\"well search-result\">";
-                          echo "<div class=\"row\">";
-
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <br/>
+                <br/>
+                <hr/>
+                <?php
+                $book_in_list_sql = "select * from contains natural join book where list_id=$list_id";
+                $book_in_list_query = mysqli_query($db,$book_in_list_sql);
+                while( $row = mysqli_fetch_array($book_in_list_query)) {
+                  echo "<div class=\"well search-result\">";
+                      echo "<div class=\"row\">";
                           echo "<div class=\"col-xs-6 col-sm-9 col-md-9 col-lg-10 title\">";
-                          echo "<h3> ". $row['book_name']. "</h3>";
-                          echo "<h5> by ". $row['author']. "</h3>";
-                          echo "<h5>". $row['year']. "</h3>";
+                              echo "<h3>".$row['book_name']."</h3>";
+                              echo "<h5>by ".$row['author']."</h5>";
+                              echo "<p>".$row['description']."</p>";
 
-                          echo "<span class=\"fa fa-star checked\"></span>  <!--Parlak yıldızlar için bunu kullanıcaz-->";
-                          echo "<span class=\"fa fa-star checked\"></span>";
-                          echo "<span class=\"fa fa-star checked\"></span>";
-                          echo "<span class=\"fa fa-star\"></span><!--Parlak olmayan yıldızlar için bunu kullanıcaz-->";
-                          echo "<span class=\"fa fa-star\"></span>";
-                          echo "<label>Average Ratings (BURASI YAPILACAK!)</label>";
-                          echo "<br>";
-                          echo "<br>";
-                          echo "<div class=\"btn-group me-2\" role=\"group\" aria-label=\"First group\">";
-                          echo "<button type=\"button\" class=\"btn btn-primary\">1</button>";
-                          echo "<button type=\"button\" class=\"btn btn-primary\">2</button>";
-                          echo "<button type=\"button\" class=\"btn btn-primary\">3</button>";
-                          echo "<button type=\"button\" class=\"btn btn-primary\">4</button>";
-                          echo "<button type=\"button\" class=\"btn btn-primary\">5</button>";
-                          echo "<label>Rate this Book</label>";
+                              echo "<!-- todo post post gezip rating hesapla -->";
+                              echo "<span class=\"fa fa-star checked\"></span>";
+                              echo "<span class=\"fa fa-star checked\"></span>";
+                              echo "<span class=\"fa fa-star checked\"></span>";
+                              echo "<span class=\"fa fa-star\"></span>";
+                              echo "<span class=\"fa fa-star\"></span>";
+                              echo "<br>";
+                              echo "<p>Average Ratings (3.2)</p>";
+                              echo "<p>Rate Book:</p>";
+                              echo "<div class=\"btn-group me-2\" role=\"group\" aria-label=\"First group\">";
+                                echo "<button type=\"button\" class=\"btn bg-transparent\"><span class=\"fa fa-star\"></span></button>";
+                                echo "<button type=\"button\" class=\"btn bg-transparent\"><span class=\"fa fa-star\"></span></button>";
+                                echo "<button type=\"button\" class=\"btn bg-transparent\"><span class=\"fa fa-star\"></span></button>";
+                                echo "<button type=\"button\" class=\"btn bg-transparent\"><span class=\"fa fa-star\"></span></button>";
+                                echo "<button type=\"button\" class=\"btn bg-transparent\"><span class=\"fa fa-star\"></span></button>";
+                              echo "</div>";
+                              echo "<br/>";
+                              echo "<br/>";
+                              echo "<a href=\"bookprofile.php?book_id=" .$row['book_id']. "\" class=\"btn btn-warning\" role=\"button\">Show Detailed Info</a>";
                           echo "</div>";
-                          echo "<br/>";
-                          echo "<br/>";
-                          echo "<a href=\"./bookprofile.php?book_id=". $row['book_id']. "\" class=\"btn btn-info\" role=\"button\">Book Page</a>";
+                      echo "</div>";
+                  echo "</div>";
+                  echo "<hr>";
+                }
+                ?>
+              </div>
 
-                          echo "</div>";
-                          echo "</div>";
-                        }
-                        ?>
-                    </div>
-
-                    <hr>
-
-                </div>
             </div>
+          </div>
         </div>
-
     </body>
-
 </html>
