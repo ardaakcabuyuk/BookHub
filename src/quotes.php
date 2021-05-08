@@ -27,7 +27,7 @@ if (isset($_GET['book_id'])) {
         <div class="book-name" style="padding-top:20px;">
           <div class="row" style="margin-top:0px;">
             <div class="col-md-9">
-              <h2>Reviews</h2>
+              <h2>Quotes</h2>
             </div>
           </div>
           <hr>
@@ -41,12 +41,12 @@ if (isset($_GET['book_id'])) {
 
             <div class="col-md-6 gedf-main">
                 <?php
-                  $reviews_query = "select *
-                                    from post P natural join user U
-                                    where P.book_id = '$book_id'
-                                    order by P.date desc";
+                  $quotes_query = "select *
+                                    from Quote Q natural join user U
+                                    where Q.book_id = '$book_id'
+                                    order by Q.q_date desc";
 
-                  $query_run = mysqli_query($db, $reviews_query);
+                  $query_run = mysqli_query($db, $quotes_query);
                   while ($row = mysqli_fetch_array($query_run)) {
                     echo "<div class=\"card gedf-card\">";
                         echo "<div class=\"card-header\">";
@@ -69,27 +69,13 @@ if (isset($_GET['book_id'])) {
                                 $book = mysqli_fetch_array($result);
                             echo "</a>";
                             echo "<p class=\"card-text\">";
-                                echo $row['content'];
+                                echo $row['text'];
                             echo "</p>";
-                            echo "<p class=\"card-text\">";
-                                for ($i = 0; $i < $row['rate']; $i++) {
-                                  echo "<span class=\"fa fa-star checked\" style=\"font-size:30px\"></span>";
-                                }
-                                for ($i = 0; $i < 5 - $row['rate']; $i++) {
-                                  echo "<span class=\"fa fa-star\" style=\"font-size:30px\"></span>";
-                                }
-                            echo "</p>";
-                            echo "<div class=\"text-muted h7 mb-2 pull-right\"> <i class=\"fa fa-clock-o\"></i> ".$row['date']."</div>";
+                            echo "<div class=\"text-muted h7 mb-2 pull-right\"> <i class=\"fa fa-clock-o\"></i> ".$row['q_date']."</div>";
                         echo "</div>";
                         echo "<div class=\"card-footer\">";
-                            echo "<p style=\"vertical-align: middle;\"><i class=\"fa fa-thumbs-o-up\" style=\"color:orange;\"></i> ".$row['like_count']." likes";
-                            echo "&emsp;<i class=\"fa fa-comment-o\" style=\"color:orange;\"></i> ".$row['comment_count']." comments";
-                            echo "<button type=\"submit\" class=\"btn btn-warning pull-right\" style=\"margin-left: 10px;\"><i class=\"fa fa-comment-o\"></i> Comment</button>";
+                            echo "<p style=\"vertical-align: middle;\"><i class=\"fa fa-thumbs-o-up\" style=\"color:orange;\"></i> ".$row['q_like_count']." likes";
                             echo "<button type=\"submit\" class=\"btn btn-warning pull-right\"><i class=\"fa fa-thumbs-o-up\"></i> Like</button></p>";
-                        echo "</div>";
-
-                        echo "<div class=\"form-group\">";
-                            echo "<textarea class=\"form-control\" id=\"message\" rows=\"3\" placeholder=\"Comment here...\"></textarea>";
                         echo "</div>";
                     echo "</div>";
 
