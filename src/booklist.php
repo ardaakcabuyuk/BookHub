@@ -1,9 +1,19 @@
 <?php
 include('config.php');
 session_start();
+require_once "navbar.php";
+
+if(isset($_GET['list_id'])) {
+  $list_id = $_GET['list_id'];
+  $list_sql = "select * from booklist natural join user where list_id = $list_id";
+  $list_query = mysqli_query($db,$list_sql);
+  $list = mysqli_fetch_array($list_query);
+}
+else {
+  echo "<script type='text/javascript'>alert('Bad credentials!');window.location.href='index.php';</script>";
+}
 
 ?>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,59 +29,15 @@ session_start();
 
     <body>
 
-        <div class="container-fluid">
 
-            <script src="js/bootstrap.js"></script>
-
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="#"><img alt="Qries" src="images/logo.png"
-                        width="150" height="70"></a>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="home.php">Home Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#">Challenges</a>
-                            </li>
-                            <li class="nav-item">
-                              <?php
-                              session_start();
-                              $user_id = $_SESSION['user_id'];
-                              $author_check_sql = "select * from Author where user_id = '$user_id'";
-                              $author = mysqli_query($db, $author_check_sql);
-
-                              $librarian_check_sql = "select * from Librarian where user_id = '$user_id'";
-                              $librarian = mysqli_query($db, $librarian_check_sql);
-
-                              if(mysqli_num_rows($author) == 1) {
-                                echo "<a class=\"nav-link active\" href=\"./authorprofile.php\">Profile ( Arda Akça Büyük )</a>";
-                              }
-                              else if(mysqli_num_rows($librarian) == 1) {
-                                echo "<a class=\"nav-link active\" href=\"./librarianprofile.php\">Profile ( Arda Akça Büyük )</a>";
-                              }
-                              else {
-                                echo "<a class=\"nav-link active\" href=\"./userprofile.php\">Profile ( Arda Akça Büyük )</a>";
-                              }
-                              ?>
-                            </li>
-                        </ul>
-                        <form class="d-flex">
-                            <button class="btn btn-outline-success" type="submit">Logout</button>
-                        </form>
-                    </div>
-                </div>
-            </nav>
-        </div>
 
         <header class="header">
             <div class="container">
 
                 <div class="row justify-content-center" style="margin-top:20px;">
                     <div class="col-md-3"> <!-- Image -->
-                      <h5 style="text-align: center;"> <strong> Kitap Listesinin İsmi</strong></h2>
-                      <h5 style="text-align: center;">Readlist by <strong> Emin Adem Buran</strong></h2>
+                      <h5 style="text-align: center;"> <strong><?php echo $list['list_name']; ?></strong></h2>
+                      <h5 style="text-align: center;">Readlist by <strong><?php echo $list['name']. " " . $list['surname']; ?></strong></h2>
                     </div>
                   </div>
             </div>
@@ -81,42 +47,47 @@ session_start();
         <div class="container bootstrap snippets bootdey">
 
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <br/>
-                    <br/>
-                    <hr>
+                        <?php
+                        $book_in_list_sql = "select * from contains natural join book where list_id=$list_id";
+                        $book_in_list_query = mysqli_query($db,$book_in_list_sql);
+                        while( $row = mysqli_fetch_array($book_in_list_query)) {
+                        echo "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\">";
+                        echo "<br/>";
+                        echo "<br/>";
+                        echo "<hr>";
 
-                    <div class="well search-result">
-                        <div class="row">
+                        echo "<div class=\"well search-result\">";
+                        echo "<div class=\"row\">";
 
-                            <div class="col-xs-6 col-sm-9 col-md-9 col-lg-10 title">
+                          echo "<div class=\"col-xs-6 col-sm-9 col-md-9 col-lg-10 title\">";
+                          echo "<h3> ". $row['book_name']. "</h3>";
+                          echo "<h5> by ". $row['author']. "</h3>";
+                          echo "<h5>". $row['year']. "</h3>";
 
-                                <h3>BookHub Book Bayilerde</h3>
-                                <h5>by Muzaffer Muzo</h3>
-                                <h5>2002-222 Edition</h3>
+                          echo "<span class=\"fa fa-star checked\"></span>  <!--Parlak yıldızlar için bunu kullanıcaz-->";
+                          echo "<span class=\"fa fa-star checked\"></span>";
+                          echo "<span class=\"fa fa-star checked\"></span>";
+                          echo "<span class=\"fa fa-star\"></span><!--Parlak olmayan yıldızlar için bunu kullanıcaz-->";
+                          echo "<span class=\"fa fa-star\"></span>";
+                          echo "<label>Average Ratings (BURASI YAPILACAK!)</label>";
+                          echo "<br>";
+                          echo "<br>";
+                          echo "<div class=\"btn-group me-2\" role=\"group\" aria-label=\"First group\">";
+                          echo "<button type=\"button\" class=\"btn btn-primary\">1</button>";
+                          echo "<button type=\"button\" class=\"btn btn-primary\">2</button>";
+                          echo "<button type=\"button\" class=\"btn btn-primary\">3</button>";
+                          echo "<button type=\"button\" class=\"btn btn-primary\">4</button>";
+                          echo "<button type=\"button\" class=\"btn btn-primary\">5</button>";
+                          echo "<label>Rate this Book</label>";
+                          echo "</div>";
+                          echo "<br/>";
+                          echo "<br/>";
+                          echo "<a href=\"./bookprofile.php?book_id=". $row['book_id']. "\" class=\"btn btn-info\" role=\"button\">Book Page</a>";
 
-                                <span class="fa fa-star checked"></span>  <!--Parlak yıldızlar için bunu kullanıcaz-->
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star"></span><!--Parlak olmayan yıldızlar için bunu kullanıcaz-->
-                                <span class="fa fa-star"></span>
-                                <label>Average Ratings (3.2)</label>
-                                <br>
-                                <br>
-                                <div class="btn-group me-2" role="group" aria-label="First group">
-                                    <button type="button" class="btn btn-primary">1</button>
-                                    <button type="button" class="btn btn-primary">2</button>
-                                    <button type="button" class="btn btn-primary">3</button>
-                                    <button type="button" class="btn btn-primary">4</button>
-                                    <button type="button" class="btn btn-primary">5</button>
-                                    <label>Rate this Book</label>
-                                </div>
-                                <br/>
-                                <br/>
-                                <a href="#link" class="btn btn-info" role="button">Track</a>
-
-                            </div>
-                        </div>
+                          echo "</div>";
+                         echo "</div>";
+                        }
+                        ?>
                     </div>
 
                     <hr>
