@@ -51,13 +51,13 @@ else {
                         $book_in_list_sql = "select * from contains natural join book where list_id=$list_id";
                         $book_in_list_query = mysqli_query($db,$book_in_list_sql);
                         while( $row = mysqli_fetch_array($book_in_list_query)) {
-                        echo "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\">";
-                        echo "<br/>";
-                        echo "<br/>";
-                        echo "<hr>";
+                          echo "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\">";
+                          echo "<br/>";
+                          echo "<br/>";
+                          echo "<hr>";
 
-                        echo "<div class=\"well search-result\">";
-                        echo "<div class=\"row\">";
+                          echo "<div class=\"well search-result\">";
+                          echo "<div class=\"row\">";
 
                           echo "<div class=\"col-xs-6 col-sm-9 col-md-9 col-lg-10 title\">";
                           echo "<h3> ". $row['book_name']. "</h3>";
@@ -85,7 +85,7 @@ else {
                           echo "<a href=\"./bookprofile.php?book_id=". $row['book_id']. "\" class=\"btn btn-info\" role=\"button\">Book Page</a>";
 
                           echo "</div>";
-                         echo "</div>";
+                          echo "</div>";
                         }
                         ?>
                     </div>
