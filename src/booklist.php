@@ -13,7 +13,7 @@ session_start();
         <link rel="stylesheet" href="js/bootstrap.bundle.js">
         <link rel="stylesheet" href="css/bootstrap.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="searchresult.css" />
+        <link rel="stylesheet" href="css/searchresult.css" />
 
     </head>
 
@@ -25,7 +25,7 @@ session_start();
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#"><img alt="Qries" src="logo.png"
+                    <a class="navbar-brand" href="#"><img alt="Qries" src="images/logo.png"
                         width="150" height="70"></a>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">

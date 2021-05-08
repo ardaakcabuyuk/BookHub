@@ -28,7 +28,7 @@ if (isset($_POST['add_friend_button'])) {
         <link rel="stylesheet" href="js/bootstrap.bundle.js">
         <link rel="stylesheet" href="css/bootstrap.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="searchresult.css" />
+        <link rel="stylesheet" href="css/searchresult.css" />
 
     </head>
 
@@ -116,7 +116,7 @@ if (isset($_POST['add_friend_button'])) {
                                           echo "</div>";
                                           echo "<br/>";
                                           echo "<br/>";
-                                          echo "<a href=\"#link\" class=\"btn btn-warning\" role=\"button\">Show Detailed Info</a>";
+                                          echo "<a href=\"bookprofile.php?book_id=" .$row['book_id']. "\" class=\"btn btn-warning\" role=\"button\">Show Detailed Info</a>";
                                       echo "</div>";
                                   echo "</div>";
                               echo "</div>";

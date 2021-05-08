@@ -17,7 +17,6 @@ include_once "navbar.php";
 
     <br/>
     <br/>
-
     <div class="d-flex justify-content-around align-items-center">
       <form class="form-inline" action="searchresult.php" method="post">
         <div class="input-group">
@@ -63,37 +62,8 @@ include_once "navbar.php";
             <script src="js/bootstrap.js"></script>
 
             <div class="col-md-6 gedf-main">
-
-                <!--- \\\\\\\Post-->
-                <div class="card gedf-card" >
-                    <div class="card-header">
-                        <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">Time to post?</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="card-body">
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
-                                <div class="form-group">
-                                    <label class="sr-only" for="message">Type Here</label>
-                                    <textarea class="form-control" id="message" rows="3" placeholder="What are you thinking?"></textarea>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="btn-toolbar justify-content-between">
-                            <div class="btn-group">
-                                <a href="#link" class="btn btn-warning" role="button">Post</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <br/>
-                <br/>
-
+              <h2>Feed</h2>
+              <hr>
                 <?php
                   $friends_query = "select *
                                     from post P natural join user U

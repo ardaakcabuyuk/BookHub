@@ -9,8 +9,8 @@ session_start();
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="home.php"><img alt="Qries" src="logo.png"
-                    width=150" height="70"></a>
+                <a class="navbar-brand" href="home.php"><img alt="Qries" src="images/logo2.png"
+                    width="300" height="70"></a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
