@@ -289,7 +289,7 @@ if (isset($_GET['uname'])) {
                     echo "<th scope=\"row\">". $row['list_name'] ."</th>";
                     echo "<td>" . $row['num_books'] ."</td>";
                     echo "<td>". $row['name']. " ". $row['surname'] ."</td>";
-                    echo "<td><a href=\"booklist.php\" class=\"btn btn-outline-success btn-sm\">Show Booklist</a></td>";
+                    echo "<td><a href=\"booklist.php?list_id=". $row['list_id'] ."\" class=\"btn btn-outline-success btn-sm\">Show Booklist</a></td>";
                     echo "</tr>";
                   }
                 ?>
