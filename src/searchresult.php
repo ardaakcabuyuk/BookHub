@@ -42,7 +42,7 @@ if (isset($_POST['add_friend_button'])) {
                     <br/>
                     <form class="form-inline" action="searchresult.php" method="post">
                       <?php
-                        if (isset($local_post['search_book_button'])) {
+                        if (isset($_POST['search_book_button'])) {
                           echo "<div class=\"form-group mb-2\">";
                           echo "<input type=\"search\" class=\"form-control rounded\" placeholder=\"Search Books\" aria-label=\"Search\"";
                             echo "aria-describedby=\"search-addon\" name=\"search_book\">";
@@ -53,7 +53,7 @@ if (isset($_POST['add_friend_button'])) {
         						        echo "</button>";
                           echo "</div>";
                         }
-                        else if (isset($local_post['search_author_button'])) {
+                        else if (isset($_POST['search_author_button'])) {
                           echo "<div class=\"form-group mb-2\">";
                           echo "<input type=\"search\" class=\"form-control rounded\" placeholder=\"Search Authors\" aria-label=\"Search\"";
                             echo "aria-describedby=\"search-addon\" name=\"search_author\">";
@@ -84,8 +84,8 @@ if (isset($_POST['add_friend_button'])) {
                     <h2>Search Results</h2>
                     <hr>
                     <?php
-                      if(isset($local_post['search_book_button'])) {
-                        $searchkey = $local_post['search_book'];
+                      if(isset($_POST['search_book_button'])) {
+                        $searchkey = $_POST['search_book'];
                         if ($searchkey != "") {
                           $search_book_query = "select * from book where book_name like '%$searchkey%'";
                           $search_book = mysqli_query($db, $search_book_query);
@@ -128,8 +128,8 @@ if (isset($_POST['add_friend_button'])) {
                           }
                         }
                       }
-                      else if(isset($local_post['search_author_button'])) {
-                        $searchkey = $local_post['search_author'];
+                      else if(isset($_POST['search_author_button'])) {
+                        $searchkey = $_POST['search_author'];
                         if ($searchkey != "") {
                           $search_author_query = "select * from author natural join user where name or surname like '%$searchkey%'";
                           $search_author = mysqli_query($db, $search_author_query);
@@ -187,7 +187,6 @@ if (isset($_POST['add_friend_button'])) {
                                                      echo "Add Friend";
                                                 echo "</button>";
                                               }
-                                            echo "</div>";
                                           echo "</form>";
                                       echo "</div>";
                                   echo "</div>";

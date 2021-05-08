@@ -100,6 +100,7 @@ include_once "navbar.php";
                                     where P.user_id in (select friend_id
                                                         from user U2 natural join friends F
                                                         where F.user_id ='" . $_SESSION['user_id'] . "')
+                                    or P.user_id ='". $_SESSION['user_id'] . "'
                                     order by P.date desc";
 
                   $query_run = mysqli_query($db, $friends_query);
@@ -111,15 +112,14 @@ include_once "navbar.php";
                                     echo "<div class=\"mr-2\">";
                                         echo "<img class=\"rounded-circle\" width=\"45\" src=\"images/reader.png\" alt=\"\">";
                                     echo "</div>";
-                                    echo "<div class=\"ml-2\">";
+                                    echo "<div class=\"ml-2\" style=\"margin-left: 10px;\">";
                                         echo "<div class=\"h5 m-0\">".$row['name']." ". $row['surname']."</div>";
-                                        echo "<div class=\"h7 text-muted\" style=\"color:#A9A9A9;\">".$row['username']."</div>";
+                                        echo "<div class=\"h7 text-muted\" style=\"color:#A9A9A9;\">@".$row['username']."</div>";
                                     echo "</div>";
                                 echo "</div>";
                             echo "</div>";
                         echo "</div>";
                         echo "<div class=\"card-body\">";
-                            echo "<div class=\"text-muted h7 mb-2\"> <i class=\"fa fa-clock-o\"></i> ".$row['date']."</div>";
                             echo "<a class=\"card-link\" href=\"#\">";
                                 $book_name_query = "select * from book where book_id ='".$row['book_id']."'";
                                 $result = mysqli_query($db, $book_name_query);
@@ -130,6 +130,7 @@ include_once "navbar.php";
                             echo "<p class=\"card-text\">";
                                 echo $row['content'];
                             echo "</p>";
+                            echo "<div class=\"text-muted h7 mb-2 pull-right\"> <i class=\"fa fa-clock-o\"></i> ".$row['date']."</div>";
                         echo "</div>";
                         echo "<div class=\"card-footer\">";
                             echo "<p style=\"vertical-align: middle;\"><i class=\"fa fa-thumbs-o-up\" style=\"color:orange;\"></i> ".$row['like_count']." likes";
