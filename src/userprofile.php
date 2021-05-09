@@ -126,7 +126,7 @@
                           echo "<td>". $row_book['page_count']. "</td>";
                           echo "<td>". $row['progress']. "</td>";
                           if($own_profile)
-                            echo "<td><a href=\"\" class=\"btn btn-outline-success btn-sm\">Edit </a></td>";
+                            echo "<td><a href=\"\" class=\"btn btn-outline-success btn-sm pull-right\">Edit </a></td>";
                           echo "</tr>";
                           }
                         ?>
@@ -164,14 +164,9 @@
                       echo "<td>". $row['book_name']. "</td>";
                       echo "<td>". $row['author']. "</td>";
                       echo "<td>";
-                      echo "<span class=\"fa fa-star checked\"></span>  <!--Parlak yıldızlar için bunu kullanıcaz-->";
-                      echo "<span class=\"fa fa-star checked\"></span>";
-                      echo "<span class=\"fa fa-star checked\"></span>";
-                      echo "<span class=\"fa fa-star\"></span><!--Parlak olmayan yıldızlar için bunu kullanıcaz-->";
-                      echo "<span class=\"fa fa-star\"></span>";
                       echo "</td>";
                       if($own_profile)
-                        echo "<td><a href=\"\" class=\"btn btn-outline-success btn-sm\">Post Review </a></td>";
+                        echo "<td><a href=\"\" class=\"btn btn-outline-success btn-sm pull-right\">Post Review </a></td>";
                       echo "</tr>";
                     }
                     ?>
@@ -247,7 +242,7 @@
                         echo "<th scope=\"row\">". $row['list_name'] ."</th>";
                         echo "<td>" . $row['num_books'] ."</td>";
                         echo "<td>". $row['cnt']. "</td>";
-                        echo "<td><a href=\"booklist.php?list_id=". $row['list_id']. "\" class=\"btn btn-outline-success btn-sm\">Show Booklist</a></td>";
+                        echo "<td><a href=\"booklist.php?list_id=". $row['list_id']. "\" class=\"btn btn-outline-success btn-sm pull-right\">Show Booklist</a></td>";
                         echo "</tr>";
                       }
                     ?>
@@ -255,7 +250,7 @@
                 </table>
                 <?php
                   if($own_profile)
-                    echo "<a href=\"\" class=\"btn btn-outline-success btn-sm\">Create </a>";
+                    echo "<a href=\"\" class=\"btn btn-outline-success btn-sm pull-right\">Create </a>";
                 ?>
             </div>
             </div>
@@ -288,7 +283,7 @@
                         echo "<th scope=\"row\">". $row['list_name'] ."</th>";
                         echo "<td>" . $row['num_books'] ."</td>";
                         echo "<td>". $row['name']. " ". $row['surname'] ."</td>";
-                        echo "<td><a href=\"booklist.php?list_id=". $row['list_id'] ."\" class=\"btn btn-outline-success btn-sm\">Show Booklist</a></td>";
+                        echo "<td><a href=\"booklist.php?list_id=". $row['list_id'] ."\" class=\"btn btn-outline-success btn-sm pull-right\">Show Booklist</a></td>";
                         echo "</tr>";
                       }
                     ?>
@@ -325,7 +320,7 @@
                     </table>
                     <?php
                       if($own_profile)
-                        echo "<a href=\"#\" class=\"btn btn-outline-success btn-sm\">Add </a>";
+                        echo "<a href=\"#\" class=\"btn btn-outline-success btn-sm pull-right\">Add </a>";
                     ?>
 
                 </div>
