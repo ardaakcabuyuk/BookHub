@@ -120,6 +120,9 @@
                               echo "<p style=\"vertical-align: middle; display:inline;\"><i class=\"fa fa-thumbs-o-up\" style=\"color:orange;\"></i> ".$row['like_count']." likes";
                               echo "&emsp;<i class=\"fa fa-comment-o\" style=\"color:orange;\"></i> ".$row['comment_count']." comments";
                               echo "<form style=\"display:inline;\" action=\"like.php\" method=\"post\">";
+                              echo "<div class=\"form-group\" style=\"margin-top:20px; margin-bottom:20px;\">";
+                                  echo "<textarea class=\"form-control\" id=\"message\" rows=\"3\" placeholder=\"Comment here...\"></textarea>";
+                              echo "</div>";
                               echo "<button type=\"submit\" class=\"btn btn-warning pull-right\" style=\"margin-left: 10px;\"><i class=\"fa fa-comment-o\"></i> Comment</button>";
                               echo "</form>";
                               if(mysqli_num_rows(mysqli_query($db,$liked_sql)) == 0) {
@@ -134,9 +137,7 @@
                               }
                           echo "</div>";
 
-                          echo "<div class=\"form-group\">";
-                              echo "<textarea class=\"form-control\" id=\"message\" rows=\"3\" placeholder=\"Comment here...\"></textarea>";
-                          echo "</div>";
+
                       echo "</div>";
 
                       echo "<br/>";
