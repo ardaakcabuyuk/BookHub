@@ -37,7 +37,7 @@ else {
                 <div class="row justify-content-center" style="margin-top:20px;">
                     <div class="col-md-3"> <!-- Image -->
                       <h2 style="text-align: center;"> <strong><?php echo $list['list_name']; ?></strong></h2>
-                      <h5 style="text-align: center;">Book List by <strong><?php echo $list['name']. " " . $list['surname']; ?></strong></h2>
+                      <h5 style="text-align: center;">Book List by <strong><?php echo $list['name']. " " . $list['surname']; ?></strong></h5>
                     </div>
                   </div>
             </div>
