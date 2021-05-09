@@ -56,22 +56,19 @@ if (isset($_GET['book_id'])) {
                                         echo "<img class=\"rounded-circle\" width=\"45\" src=\"images/reader.png\" alt=\"\">";
                                     echo "</div>";
                                     echo "<div class=\"ml-2\" style=\"margin-left: 10px;\">";
-                                        echo "<div class=\"h5 m-0\">".$row['name']." ". $row['surname']."</div>";
-                                        echo "<div class=\"h7 text-muted\" style=\"color:#A9A9A9;\">@".$row['username']."</div>";
-                                    echo "</div>";
+                                    echo "<div class=\"h5 m-0\"><a style=\"color:orange; text-decoration: none;\" href=\"userprofile.php?uname=".$row['username']."\">".$row['name']." ". $row['surname']."</a></div>";
+                                    echo "<div class=\"h7 text-muted\"><a style=\"text-decoration: none;color:#A9A9A9;\" href=\"userprofile.php?uname=".$row['username']."\">@".$row['username']."</a></div>";
                                 echo "</div>";
                             echo "</div>";
                         echo "</div>";
-                        echo "<div class=\"card-body\">";
-                            echo "<a class=\"card-link\" href=\"bookprofile.php?book_id=".$row['book_id']."\" style=\"color:orange;\">";
-                                $book_name_query = "select * from book where book_id ='".$row['book_id']."'";
-                                $result = mysqli_query($db, $book_name_query);
-                                $book = mysqli_fetch_array($result);
-                            echo "</a>";
-                            echo "<p class=\"card-text\">";
-                                echo $row['content'];
-                            echo "</p>";
-                            echo "<p class=\"card-text\">";
+                    echo "</div>";
+                    echo "<div class=\"card-body\">";
+                        echo "<p class=\"card-text\">";
+                            echo "<div class=\"h7 m-0\"><strong>Review:</strong></div>";
+                            echo $row['content'];
+                        echo "</p>";
+                        echo "<p class=\"card-text\">";
+                            echo "<div class=\"h7 mb-1\"><strong>Rating:</strong></div>";
                                 for ($i = 0; $i < $row['rate']; $i++) {
                                   echo "<span class=\"fa fa-star checked\" style=\"font-size:30px\"></span>";
                                 }
