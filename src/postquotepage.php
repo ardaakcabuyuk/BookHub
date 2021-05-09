@@ -39,12 +39,12 @@ if (isset($_GET['book_id'])) {
             <div class="u-layout-col">
               <div class="u-align-left u-container-style u-layout-cell u-left-cell u-size-30 u-layout-cell-1">
                 <div class="u-container-layout u-container-layout-1">
-                  <h2 class="u-text u-text-1">Post Quote</h2>
+                  <h2 class="u-text u-text-1"><strong>Post Quote</strong></h2>
                   <?php
                     $book_query = "select * from book where book_id = $book_id";
                     $query_run = mysqli_query($db, $book_query);
                     $book = mysqli_fetch_array($query_run);
-                    echo "<h4 class=\"u-text u-text-2\">".$book['book_name']." by " .$book['author']. "</h4>";
+                    echo "<h4 class=\"u-text u-text-2\" style=\"white-space:nowrap;\"><strong>".$book['book_name']."</strong> by <strong>" .$book['author']. "</strong></h4>";
                     echo "<p class=\"u-text u-text-3\">".$book['description']."</p>";
                   ?>
                 </div>
