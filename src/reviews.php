@@ -82,10 +82,22 @@ if (isset($_GET['book_id'])) {
                             echo "<div class=\"text-muted h7 mb-2 pull-right\"> <i class=\"fa fa-clock-o\"></i> ".$row['date']."</div>";
                         echo "</div>";
                         echo "<div class=\"card-footer\">";
-                            echo "<p style=\"vertical-align: middle;\"><i class=\"fa fa-thumbs-o-up\" style=\"color:orange;\"></i> ".$row['like_count']." likes";
+                            echo "<p style=\"vertical-align: middle; display:inline;\"><i class=\"fa fa-thumbs-o-up\" style=\"color:orange;\"></i> ".$row['like_count']." likes";
                             echo "&emsp;<i class=\"fa fa-comment-o\" style=\"color:orange;\"></i> ".$row['comment_count']." comments";
+                            echo "<form style=\"display:inline;\" action=\"like.php\" method=\"post\">";
                             echo "<button type=\"submit\" class=\"btn btn-warning pull-right\" style=\"margin-left: 10px;\"><i class=\"fa fa-comment-o\"></i> Comment</button>";
-                            echo "<button type=\"submit\" class=\"btn btn-warning pull-right\"><i class=\"fa fa-thumbs-o-up\"></i> Like</button></p>";
+                            echo "</form>";
+                            $liked_sql = "select * from likes_post where post_id = " . $row['post_id']. " and user_id = ". $_SESSION['user_id'];
+                            if(mysqli_num_rows(mysqli_query($db,$liked_sql)) == 0) {
+                              echo "<form style=\"display:inline;\" action=\"like.php\" method=\"post\">";
+                              echo "<button type=\"submit\" name=\"like_button\" value=\"reviews.php?book_id=".$row['book_id']."-".$row['post_id'] ."\" class=\"btn btn-warning pull-right\"><i class=\"fa fa-thumbs-o-up\"></i> Like</button></p>";
+                              echo "</form>";
+                            }
+                            else {
+                              echo "<form style=\"display:inline;\" action=\"unlike.php\" method=\"post\">";
+                              echo "<button type=\"submit\" name=\"like_button\" value=\"reviews.php?book_id=".$row['book_id']."-". $row['post_id']. "\" class=\"btn btn-warning pull-right\"><i class=\"fa fa-thumbs-o-up\"></i> Unlike</button></p>";
+                              echo "</form>";
+                            }
                         echo "</div>";
 
                         echo "<div class=\"form-group\">";

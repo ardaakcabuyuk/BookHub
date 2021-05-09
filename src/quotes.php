@@ -74,8 +74,18 @@ if (isset($_GET['book_id'])) {
                             echo "<div class=\"text-muted h7 mb-2 pull-right\"> <i class=\"fa fa-clock-o\"></i> ".$row['q_date']."</div>";
                         echo "</div>";
                         echo "<div class=\"card-footer\">";
-                            echo "<p style=\"vertical-align: middle;\"><i class=\"fa fa-thumbs-o-up\" style=\"color:orange;\"></i> ".$row['q_like_count']." likes";
-                            echo "<button type=\"submit\" class=\"btn btn-warning pull-right\"><i class=\"fa fa-thumbs-o-up\"></i> Like</button></p>";
+                            echo "<p style=\"vertical-align: middle; display:inline;\"><i class=\"fa fa-thumbs-o-up\" style=\"color:orange;\"></i> ".$row['q_like_count']." likes";
+                            $liked_sql = "select * from likes_quote where quote_id = " . $row['quote_id']. " and user_id = ". $_SESSION['user_id'];
+                            if(mysqli_num_rows(mysqli_query($db,$liked_sql)) == 0) {
+                              echo "<form style=\"display:inline;\" action=\"like.php\" method=\"post\">";
+                              echo "<button type=\"submit\" name=\"like_button_quote\" value=\"quotes.php?book_id=".$row['book_id']."-". $row['quote_id'] ."\" class=\"btn btn-warning pull-right\"><i class=\"fa fa-thumbs-o-up\"></i> Like</button></p>";
+                              echo "</form>";
+                            }
+                            else {
+                              echo "<form style=\"display:inline;\" action=\"unlike.php\" method=\"post\">";
+                              echo "<button type=\"submit\" name=\"like_button_quote\" value=\"quotes.php?book_id=".$row['book_id']."-". $row['quote_id']. "\" class=\"btn btn-warning pull-right\"><i class=\"fa fa-thumbs-o-up\"></i> Unlike</button></p>";
+                              echo "</form>";
+                            }
                         echo "</div>";
                     echo "</div>";
 
