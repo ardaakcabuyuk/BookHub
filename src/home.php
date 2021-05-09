@@ -123,7 +123,7 @@
                               echo "<div class=\"form-group\" style=\"margin-top:20px; margin-bottom:20px;\">";
                                   echo "<textarea class=\"form-control\" id=\"message\" rows=\"3\" placeholder=\"Comment here...\"></textarea>";
                               echo "</div>";
-                              echo "<button type=\"submit\" class=\"btn btn-warning pull-right\" style=\"margin-left: 10px;\"><i class=\"fa fa-comment-o\"></i> Comment</button>";
+                              echo "<button type=\"submit\" class=\"btn btn-warning pull-right\" style=\"margin-left: 10px; margin-bottom:10px;\"><i class=\"fa fa-comment-o\"></i> Comment</button>";
                               echo "</form>";
                               if(mysqli_num_rows(mysqli_query($db,$liked_sql)) == 0) {
                                 echo "<form style=\"display:inline;\" action=\"like.php\" method=\"post\">";
