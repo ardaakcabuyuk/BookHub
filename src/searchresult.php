@@ -165,7 +165,7 @@ if (isset($_POST['add_friend_button'])) {
                                                                       union
                                                                       select L.user_id
                                                                       from librarian L)
-                                                and (name like '%$searchkey%' or surname like '%$searchkey%')
+                                                and (name like '%$searchkey%' or surname like '%$searchkey%' or username like '%$searchkey%')
                                                 and user_id <>'" .$_SESSION['user_id']. "'";
                           $search_user = mysqli_query($db, $search_user_query);
                           if (mysqli_num_rows($search_user) != 0) {
