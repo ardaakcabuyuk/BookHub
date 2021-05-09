@@ -14,9 +14,9 @@ public class DBConnector {
         }
 
         final String USERNAME = "root";
-        final String PASSWORD = "root";
+        final String PASSWORD = "";
         final String DBNAME = "book_hub";
-        final String URL = "jdbc:mysql://localhost:8889/" + DBNAME;
+        final String URL = "jdbc:mysql://localhost/" + DBNAME;
 
 
         try{
@@ -138,6 +138,8 @@ public class DBConnector {
             System.out.println("Creating table quote...");
             String createQuoteSQL = "create table Quote(" +
                     "quote_id int AUTO_INCREMENT," +
+                    "q_like_count int NOT NULL DEFAULT 0," +
+                    "q_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP," +
                     "text varchar(300) NOT NULL," +
                     "tag varchar(50) NOT NULL," +
                     "book_id int NOT NULL," +
@@ -179,6 +181,7 @@ public class DBConnector {
             String createBookListSQL = "create table Booklist(" +
                     "list_id int AUTO_INCREMENT," +
                     "list_name varchar(30) DEFAULT \"Madness\"," +
+                    "num_books int NOT NULL DEFAULT 0," +
                     "description varchar(300) DEFAULT \"Description\"," +
                     "user_id int NOT NULL," +
                     "primary key( list_id )," +
@@ -236,12 +239,12 @@ public class DBConnector {
             String createPostSQL = "create table Post (" +
                     "post_id int AUTO_INCREMENT," +
                     "book_id int NOT NULL," +
-                    "date date NOT NULL," +
+                    "date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP," +
                     "content varchar(300) NOT NULL," +
                     "rate int NOT NULL," +
                     "user_id int NOT NULL," +
-                    "like_count int NOT NULL," +
-                    "comment_count int NOT NULL," +
+                    "like_count int NOT NULL DEFAULT 0," +
+                    "comment_count int NOT NULL DEFAULT 0," +
                     "primary key( post_id )," +
                     "foreign key( user_id ) references User(user_id)," +
                     "foreign key( book_id ) references Book(book_id))" +
@@ -432,6 +435,39 @@ public class DBConnector {
                     "ENGINE=innodb;";
             stmt.executeUpdate(createRecommendBookSQL);
             System.out.println("Recommend_Book table is successfully created.");
+
+            String likeAddTrigger =
+                    "CREATE TRIGGER like_add " +
+                            "AFTER INSERT ON likes_post " +
+                            "FOR EACH ROW " +
+                            "UPDATE post SET post.like_count = post.like_count+1 where post.post_id = NEW.post_id; ";
+            stmt.executeUpdate(likeAddTrigger);
+
+            System.out.println("trigger \"like_add\" is successfully created.");
+
+            String unlikeTrigger =
+                    "CREATE TRIGGER unlike " +
+                            "AFTER DELETE ON likes_post " +
+                            "FOR EACH ROW " +
+                            "UPDATE post SET post.like_count = post.like_count-1 where post.post_id = OLD.post_id; ";
+            stmt.executeUpdate(unlikeTrigger);
+            System.out.println("trigger \"unlike\" is successfully created.");
+
+            String unlikeQuoteTrigger =
+                    "CREATE TRIGGER unlike_quote " +
+                            "AFTER DELETE ON likes_quote " +
+                            "FOR EACH ROW " +
+                            "UPDATE quote SET quote.q_like_count = quote.q_like_count-1 where quote.quote_id = OLD.quote_id;";
+            stmt.executeUpdate(unlikeQuoteTrigger);
+            System.out.println("trigger \"unlike_quote\" is successfully created.");
+
+            String likeQuoteTrigger =
+                    "CREATE TRIGGER like_add_quote " +
+                            "AFTER INSERT ON likes_quote " +
+                            "FOR EACH ROW " +
+                            "UPDATE quote SET quote.q_like_count = quote.q_like_count+1 where quote.quote_id = NEW.quote_id;";
+            stmt.executeUpdate(likeQuoteTrigger);
+            System.out.println("trigger \"like_add_quote\" is successfully created.");
         }
         catch (SQLException e) {
             System.out.println("SQLException: " + e.getMessage());
