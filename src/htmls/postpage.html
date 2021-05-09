@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width-device-width, initial-scale=1.0">
+    <title>BookHub</title>
+    <link rel="stylesheet" href="js/bootstrap.bundle.js">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="searchresult.css" />
+</head>
+
+<body>
+
+    <div class="container-fluid"> 
+
+        <script src="js/bootstrap.js"></script>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="mainmenu.html"><img alt="Qries" src="projeresim.png"
+                    width=150" height="70"></a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="mainmenu.html">Home Page</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Challenges</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Profile ( Arda Akça Büyük )</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex">
+                        <button class="btn btn-outline-success" type="submit">Logout</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <br/>
+    <br/>
+
+    <div class="container-fluid gedf-wrapper">
+
+        <div class="row justify-content-center">
+            <script src="js/bootstrap.js"></script>
+            
+            <div class="col-md-6 gedf-main">
+
+                <div class="card gedf-card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="mr-2">
+                                    <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
+                                </div>
+                                <div class="ml-2">
+                                    <div class="h5 m-0">@ademburan</div>
+                                    <div class="h7 text-muted">Emin Adem Buran</div>
+                                </div>
+                            </div> 
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>1 hours ago</div>
+                        <a class="card-link" href="#">
+                            <h5 class="card-title">Plato Hakkında.</h5>
+                        </a>
+
+                        <p class="card-text">
+                            İyi adamdı.
+                        </p>
+                    </div> 
+                    <div class="card-footer">
+                        <button type="submit" name="like_button"  class="btn btn-warning pull-left">2 <i class="fa fa-thumbs-o-up"></i> Like</button></p> 
+                        <button type="submit" name="like_button"  class="btn btn-warning pull-right">3 <i class="fa fa-comment-o"></i> Comment</button></p>
+                    </div>
+
+
+                    <div class="coment-bottom bg-white p-2 px-4">
+                        
+                        
+                        <div class="commented-section mt-3">
+                            <div class=" flex-row align-items-center commented-user">
+                                <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>1 hours ago</div>
+                                <div class="d-flex">
+                                    <h5 class="mr-2">Cevantes</h5><span class="dot mb-1"></span><span class="mb-1 ml-2">-Author Reply</span>
+                                </div>
+                            </div>
+                            <div class="comment-text-sm"><span>Yorum yaptım haha.</span></div>
+                            <div class="reply-section">
+                                <div>
+                                    <button type="submit" name="like_button"  class="btn btn-warning pull-left">2 <i class="fa fa-thumbs-o-up"></i> Like</button></p>     
+                                </div>
+                            </div>
+                        </div>
+                        <br>   
+                        
+                        <div class="commented-section mt-5">
+                            <div class=" flex-row align-items-center commented-user">
+                                <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>1 hours ago</div>
+                                <div class="d-flex">
+                                    <h5 class="mr-2">Adil Meriç</h5><span class="dot mb-1"></span>
+                                </div>
+                            </div>
+                            <div class="comment-text-sm"><span>Yorum yaptım haha.</span></div>
+                            <div class="reply-section">
+                                <div>
+                                    <button type="submit" name="like_button"  class="btn btn-warning pull-left">2 <i class="fa fa-thumbs-o-up"></i> Like</button></p>     
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <br>
+                        
+                        <div class="commented-section mt-5">
+                            <div class=" flex-row align-items-center commented-user">
+                                <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>1 hours ago</div>
+                                <div class="d-flex">
+                                    <h5 class="mr-2">AdemBuran</h5><span class="dot mb-1"></span>
+                                </div>
+                            </div>
+                            <div class="comment-text-sm"><span>Yorum yaptım haha.</span></div>
+                            <div class="reply-section">
+                                <div>
+                                    <button type="submit" name="like_button"  class="btn btn-warning pull-left">2 <i class="fa fa-thumbs-o-up"></i> Like</button></p>     
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="form-group">
+                        <textarea class="form-control" id="message" rows="3" placeholder="I think"></textarea>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    
+    
+      
+    </body>
+</html>
