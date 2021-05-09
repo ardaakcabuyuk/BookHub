@@ -150,8 +150,15 @@
                         <th scope="col">Finished</th>
                         <th scope="col">Title</th>
                         <th scope="col">Author</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
+                        <?php
+                          if($own_profile) {
+                            $check_review_query = "select * from post where book_id =".$row['book_id']." and user_id =".$_SESSION['user_id'];
+                            $check_review = mysqli_query($db, $check_review_query);
+                            if (mysqli_num_rows($check_review) != 0) {
+                              echo "<th scope=\"col\"></th>";
+                            }
+                          }
+                        ?>
                       </tr>
                     </thead>
                     <tbody>
@@ -163,12 +170,15 @@
                       echo "<th scope=\"row\">". $row["date"]. "</th>";
                       echo "<td>". $row['book_name']. "</td>";
                       echo "<td>". $row['author']. "</td>";
-                      echo "<td>";
-                      echo "</td>";
-                      if($own_profile)
-                        echo "<td><a href=\"\" class=\"btn btn-outline-success btn-sm pull-right\">Post Review </a></td>";
+                        if($own_profile) {
+                          $check_review_query = "select * from post where book_id =".$row['book_id']." and user_id =".$_SESSION['user_id'];
+                          $check_review = mysqli_query($db, $check_review_query);
+                          if (mysqli_num_rows($check_review) == 0) {
+                            echo "<td><a href=\"postreviewpage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">Post Review</a></td>";
+                          }
+                        }
                       echo "</tr>";
-                    }
+                      }
                     ?>
                     </tbody>
                   </table>
