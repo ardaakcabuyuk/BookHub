@@ -93,16 +93,19 @@
                               echo "</div>";
                           echo "</div>";
                           echo "<div class=\"card-body\">";
-                              echo "<a class=\"card-link\" href=\"bookprofile.php?book_id=".$row['book_id']."\" style=\"color:orange;\">";
+                              echo "<div class=\"h7 m-0\"><strong>On:</strong></div>";
+                              echo "<a class=\"card-link\" href=\"bookprofile.php?book_id=".$row['book_id']."\" style=\"color:orange; text-decoration: none;\">";
                                   $book_name_query = "select * from book where book_id ='".$row['book_id']."'";
                                   $result = mysqli_query($db, $book_name_query);
                                   $book = mysqli_fetch_array($result);
                                   echo "<h5 class=\"card-title\">".$book['book_name']."</h5>";
                               echo "</a>";
                               echo "<p class=\"card-text\">";
+                                  echo "<div class=\"h7 m-0\"><strong>Review:</strong></div>";
                                   echo $row['content'];
                               echo "</p>";
                               echo "<p class=\"card-text\">";
+                                  echo "<div class=\"h7 mb-1\"><strong>Rating:</strong></div>";
                                   for ($i = 0; $i < $row['rate']; $i++) {
                                     echo "<span style=\"font-size:30px\" class=\"fa fa-star checked\"></span>";
                                   }
