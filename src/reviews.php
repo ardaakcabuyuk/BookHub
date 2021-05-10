@@ -62,7 +62,7 @@ if (isset($_GET['book_id'])) {
                             echo "</div>";
                         echo "</div>";
                     echo "</div>";
-                    echo "<div class=\"card-body\">";
+                    echo "<div class=\"card-body\" onclick=\"location.href='review.php?post_id=".$row['post_id']."';\" style=\"cursor: pointer;\">";
                         echo "<p class=\"card-text\">";
                             echo "<div class=\"h7 m-0\"><strong>Review:</strong></div>";
                             echo $row['content'];
@@ -100,7 +100,7 @@ if (isset($_GET['book_id'])) {
                             }
                         echo "</div>";
                     echo "</div>";
-
+                    echo "</a>";
                     echo "<br/>";
                     echo "<br/>";
                   }

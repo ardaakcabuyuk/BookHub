@@ -92,7 +92,7 @@
                                   echo "</div>";
                               echo "</div>";
                           echo "</div>";
-                          echo "<div class=\"card-body\">";
+                          echo "<div class=\"card-body\" onclick=\"location.href='review.php?post_id=".$row['post_id']."';\" style=\"cursor: pointer;\">";
                               echo "<div class=\"h7 m-0\"><strong>On:</strong></div>";
                               echo "<a class=\"card-link\" href=\"bookprofile.php?book_id=".$row['book_id']."\" style=\"color:orange; text-decoration: none;\">";
                                   $book_name_query = "select * from book where book_id ='".$row['book_id']."'";
