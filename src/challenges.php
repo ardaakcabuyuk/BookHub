@@ -51,6 +51,9 @@ require_once "helper_functions.php";
                                     echo "<button class=\"btn btn-warning\" type = \"submit\" name = \"join_challenge_button\" value = \"\"" . $_SESSION['user_id'] . ">";
                                     echo "Join";
                                     echo "</button >";
+                                } else {
+                                    $fetch_progress = mysqli_fetch_array($result);
+                                    echo "<p style = \"font-size:15px;\" ><span style = \"font-weight: bold;\" > Progress: </span >" .$fetch_progress['challlenge_progress']." / ".$row['goal']." </p >";
                                 }
 
                                 $succeeded = "select * 
