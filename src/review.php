@@ -79,20 +79,20 @@ if (isset($_GET['post_id'])) {
                           $liked_sql = "select * from likes_post where post_id = " . $post['post_id']. " and user_id = ". $_SESSION['user_id'];
                           echo "<p style=\"vertical-align: middle; display:inline;\"><i class=\"fa fa-thumbs-o-up\" style=\"color:orange;\"></i> ".$post['like_count']." likes";
                           echo "&emsp;<i class=\"fa fa-comment-o\" style=\"color:orange;\"></i> ".$post['comment_count']." comments";
-                          echo "<form style=\"display:inline;\" action=\"like.php\" method=\"post\">";
+                          echo "<form style=\"display:inline;\" action=\"comment_post.php\" method=\"post\">";
                           echo "<div class=\"form-group\" style=\"margin-top:20px; margin-bottom:20px;\">";
-                              echo "<textarea class=\"form-control\" id=\"message\" rows=\"3\" placeholder=\"Comment here...\"></textarea>";
+                              echo "<input class=\"form-control\" name= \"content\" id=\"message\" rows=\"3\" placeholder=\"Comment here...\"></input>";
                           echo "</div>";
-                          echo "<button type=\"submit\" class=\"btn btn-warning pull-right\" style=\"margin-left: 10px; margin-bottom:10px;\"><i class=\"fa fa-comment-o\"></i> Comment</button>";
+                          echo "<button type=\"submit\" name=\"comment_button\" value=\"review.php?post_id=". $post['post_id']. "-". $post['post_id'] ."\" class=\"btn btn-warning pull-right\" style=\"margin-left: 10px; margin-bottom:10px;\"><i class=\"fa fa-comment-o\"></i> Comment</button>";
                           echo "</form>";
                           if(mysqli_num_rows(mysqli_query($db,$liked_sql)) == 0) {
                             echo "<form style=\"display:inline;\" action=\"like.php\" method=\"post\">";
-                            echo "<button type=\"submit\" name=\"like_button\" value=\"home.php-". $post['post_id'] ."\" class=\"btn btn-warning pull-right\"><i class=\"fa fa-thumbs-o-up\"></i> Like</button></p>";
+                            echo "<button type=\"submit\" name=\"like_button\" value=\"review.php?post_id=". $post['post_id']. "-". $post['post_id'] ."\" class=\"btn btn-warning pull-right\"><i class=\"fa fa-thumbs-o-up\"></i> Like</button></p>";
                             echo "</form>";
                           }
                           else {
                             echo "<form style=\"display:inline;\" action=\"unlike.php\" method=\"post\">";
-                            echo "<button type=\"submit\" name=\"like_button\" value=\"home.php-". $post['post_id']. "\" class=\"btn btn-warning pull-right\"><i class=\"fa fa-thumbs-o-up\"></i> Unlike</button></p>";
+                            echo "<button type=\"submit\" name=\"like_button\" value=\"review.php?post_id=". $post['post_id']. "-". $post['post_id'] ."\" class=\"btn btn-warning pull-right\"><i class=\"fa fa-thumbs-o-up\"></i> Unlike</button></p>";
                             echo "</form>";
                           }
                       echo "</div>";
@@ -110,7 +110,7 @@ if (isset($_GET['post_id'])) {
                                                                                       and P.post_id = $post_id)
                                         and A.user_id = U.user_id";
 
-                        $comment_query = "select * from comment natural join user where post_id = $post_id";
+                        $comment_query = "select * from comment natural join user where post_id = $post_id order by date desc;";
 
                         $reply_query_run = mysqli_query($db, $reply_query);
                         $comment_query_run = mysqli_query($db, $comment_query);
