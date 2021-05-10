@@ -180,6 +180,9 @@
                           if (mysqli_num_rows($check_review) == 0) {
                             echo "<td><a href=\"postreviewpage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">Post Review</a></td>";
                           }
+                          else {
+                            echo "<td></td>";
+                          }
                           echo "<td><a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">Post Quote</a></td>";
                         }
                       echo "</tr>";
