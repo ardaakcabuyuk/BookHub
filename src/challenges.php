@@ -44,9 +44,15 @@ require_once "helper_functions.php";
                                 echo "<p style = \"font-size:15px;\" ><span style = \"font-weight: bold;\" > Deadline: </span >" .formattedDate($row['end_date']). "</p >";
 
 
-                                echo "<button class=\"btn btn-warning\" type = \"submit\" name = \"join_challenge_button\" value = \"\"" . $_SESSION['user_id'].  ">";
-                                echo "Join";
-                                echo "</button >";
+
+
+                                $joined = "select * from participate P where P.challenge_id = " .$row['challenge_id']. " and P.user_id = " .$_SESSION['user_id'];
+                                $result = mysqli_query($db, $joined);
+                                if (mysqli_num_rows($result) == 0) {
+                                    echo "<button class=\"btn btn-warning\" type = \"submit\" name = \"join_challenge_button\" value = \"\"" . $_SESSION['user_id'] . ">";
+                                    echo "Join";
+                                    echo "</button >";
+                                }
                                 echo "<label class=\"control-label\" style = \"float:right\" ><span style = \"font-weight: bold;\" > Start Date: </span >" .formattedDate($row['start_date']). "</label >";
                             echo "</div >";
                         echo "</div >";
