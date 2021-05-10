@@ -151,14 +151,17 @@
                         <th scope="col">Title</th>
                         <th scope="col">Author</th>
                         <?php
-                        #  if($own_profile) {
-                        #    $check_review_query = "select * from post where book_id =".$row['book_id']." and user_id =".$_SESSION['user_id'];
-                        #    $check_review = mysqli_query($db, $check_review_query);
-                        #    if (mysqli_num_rows($check_review) != 0) {
-                        #      echo "<th scope=\"col\"></th>";
-                        #    }
-                        #    echo "<th scope=\"col\"></th>";
-                        #  }
+                          if($own_profile) {
+                            $check_review_query = "select * from post where user_id =".$_SESSION['user_id'];
+                            $check_review = mysqli_query($db, $check_review_query);
+
+                            $finished_book_sql = "select * from reads_book R natural join book Where R.user_id = $user_id AND progress = ( Select page_count From Edition Where edition_no = R. edition_no AND book_id = R.book_id)";
+                            $finished_book_query = mysqli_query($db, $finished_book_sql);
+                            if (mysqli_num_rows($check_review) < mysqli_num_rows($finished_book_query)) {
+                              echo "<th scope=\"col\"></th>";
+                            }
+                            echo "<th scope=\"col\"></th>";
+                          }
                         ?>
                       </tr>
                     </thead>
