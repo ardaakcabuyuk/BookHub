@@ -106,8 +106,8 @@
                             <th scope="col">Last Update</th>
                             <th scope="col">Title</th>
                             <th scope="col">Author</th>
-                            <th scope="col">Edition</th>
-                            <th scope="col">Page</th>
+                            <th scope="col">Total Page Count</th>
+                            <th scope="col">Current Page</th>
                             <th scope="col"></th>
                           </tr>
                         </thead>
