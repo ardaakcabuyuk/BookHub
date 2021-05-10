@@ -8,6 +8,24 @@ if(isset($_GET['list_id'])) {
   $list_sql = "select * from booklist natural join user where list_id = $list_id";
   $list_query = mysqli_query($db,$list_sql);
   $list = mysqli_fetch_array($list_query);
+
+  if(isset($_POST['follow_but'])) {
+    $follow_list_sql = "insert into follows(list_id, user_id) values($list_id,". $_SESSION['user_id']. ")";
+    mysqli_query($db,$follow_list_sql);
+
+  }
+  if(isset($_POST['unfol_but'])) {
+    $delete_follow_sql = "delete from follows where user_id = ".$_SESSION['user_id']." and list_id = $list_id";
+    mysqli_query($db,$delete_follow_sql);
+
+  }
+  $follows = false;
+  $follow_sql = "select * from follows where list_id = $list_id and user_id =" . $_SESSION['user_id'];
+  $follow_query = mysqli_query($db, $follow_sql);
+
+  if(mysqli_num_rows($follow_query) == 1)
+    $follows = true;
+
 }
 else {
   echo "<script type='text/javascript'>alert('Bad credentials!');window.location.href='home.php';</script>";
@@ -39,11 +57,26 @@ else {
                       <h2 style="text-align: center;"> <strong><?php echo $list['list_name']; ?></strong></h2>
                       <h5 style="text-align: center;">Book List by <strong><?php echo $list['name']. " " . $list['surname']; ?></strong></h5>
                     </div>
+
+                    <div class="col-md-3">
+                    <?php  if(!$follows) {?>
+                      <form style="display:inline;" action="" method="post">
+                      <div class="button" style="float:right; margin-left: 10px; padding-top:18px;">
+                        <button href="#" value= <?php echo "\"$list_id\""; ?> name="follow_but" class="btn btn-outline-success btn-sm">Follow </button>
+                      </div>
+                    </form>
+                  <?php }
+                  else { ?>
+                    <form style="display:inline;" action="" method="post">
+                    <div class="button" style="float:right; margin-left: 10px; padding-top:18px;">
+                      <button href="#" value= <?php echo "\"home.php-$list_id\""; ?> name="unfol_but" class="btn btn-outline-success btn-sm">Unfollow </button>
+                    </div>
+                    </form>
+                  <?php } ?>
+                    </div>
                   </div>
             </div>
         </header>
-
-
         <div class="container bootstrap snippets bootdey">
 
             <div class="row">
@@ -70,14 +103,6 @@ else {
                               echo "<span class=\"fa fa-star\"></span>";
                               echo "<br>";
                               echo "<p>Average Ratings (3.2)</p>";
-                              echo "<p>Rate Book:</p>";
-                              echo "<div class=\"btn-group me-2\" role=\"group\" aria-label=\"First group\">";
-                                echo "<button type=\"button\" class=\"btn bg-transparent\"><span class=\"fa fa-star\"></span></button>";
-                                echo "<button type=\"button\" class=\"btn bg-transparent\"><span class=\"fa fa-star\"></span></button>";
-                                echo "<button type=\"button\" class=\"btn bg-transparent\"><span class=\"fa fa-star\"></span></button>";
-                                echo "<button type=\"button\" class=\"btn bg-transparent\"><span class=\"fa fa-star\"></span></button>";
-                                echo "<button type=\"button\" class=\"btn bg-transparent\"><span class=\"fa fa-star\"></span></button>";
-                              echo "</div>";
                               echo "<br/>";
                               echo "<br/>";
                               echo "<a href=\"bookprofile.php?book_id=" .$row['book_id']. "\" class=\"btn btn-warning\" role=\"button\">Show Detailed Info</a>";
