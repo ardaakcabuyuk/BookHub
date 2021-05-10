@@ -95,12 +95,20 @@ if (isset($_GET['uname'])) {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row">07.03.2021</th>
-                        <td>Arda Akça Büyük</td>
-                        <td>A Dance with Dragons</td>
-                        <td><a href="#" class="btn btn-outline-success btn-sm">Details </a></td>
-                      </tr>
+                        <?php
+                          $request_query = "select *
+                                            from edit_request E natural join user U, Book B
+                                            where E.book_id = B.book_id";
+                          $query_run = mysqli_query($db, $request_query);
+                          while ($row = mysqli_fetch_array($query_run)) {
+                            echo "<tr>";
+                            echo "<td scope=\"col\">".$row['date']."</th>";
+                            echo "<td scope=\"col\">".$row['name']. " " .$row['surname']."</th>";
+                            echo "<td scope=\"col\">".$row['book_name']."</th>";
+                            echo "<td><a href=\"#\" class=\"btn btn-outline-success btn-sm pull-right\">Details</a></td>";
+                            echo "</tr>";
+                          }
+                         ?>
                     </tbody>
                   </table>
               </div>
