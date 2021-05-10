@@ -34,9 +34,11 @@ if(isset($_POST['button'])) {
 
     if(mysqli_num_rows($author) == 1) {
       $_SESSION['type'] = "author";
+      $_SESSION['a_id'] = mysqli_fetch_array($author)['author_id'];
     }
     else if(mysqli_num_rows($librarian) == 1) {
       $_SESSION['type'] = "librarian";
+      $_SESSION['l_id'] = mysqli_fetch_array($librarian)['librarian_id'];
     }
     else {
       $_SESSION['type'] = "user";
