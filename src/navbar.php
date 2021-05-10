@@ -17,7 +17,7 @@ session_start();
                             <a class="nav-link active" aria-current="page" href="home.php">Home Page</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Challenges</a>
+                            <a class="nav-link active" href="challenges.php">Challenges</a>
                         </li>
                         <li class="nav-item">
                             <?php
