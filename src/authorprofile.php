@@ -122,7 +122,7 @@ if (isset($_GET['uname'])) {
                               echo "<th scope=\"row\">".$row['year']."</th>";
                               echo "<td>".$row['book_name']."</td>";
                               echo "<td><a href=\"reviews.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">List Reviews </a></td>";
-                              echo "<td><a href=\"#\" class=\"btn btn-outline-success btn-sm pull-right\">Create Edition </a></td>";
+                              echo "<td><a href=\"addedition.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">Create Edition </a></td>";
                               echo "</tr>";
                             }
                           }
