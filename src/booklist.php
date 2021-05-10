@@ -1,6 +1,5 @@
 <?php
 include('config.php');
-session_start();
 require_once "navbar.php";
 
 if(isset($_GET['list_id'])) {
@@ -54,27 +53,28 @@ else {
 
                 <div class="row justify-content-center" style="margin-top:20px;">
                     <div class="col-md-3"> <!-- Image -->
-                      <h2 style="text-align: center;"> <strong><?php echo $list['list_name']; ?></strong></h2>
+                      <h2 style="text-align: center;"><strong><?php echo $list['list_name']; ?></strong></h2>
                       <h5 style="text-align: center;">Book List by <strong><?php echo $list['name']. " " . $list['surname']; ?></strong></h5>
                     </div>
-
-                    <div class="col-md-3">
+                </div>
+                <div class="row justify-content-center" style="margin-top:20px;">
+                  <div class="col-md-1"> <!-- Image -->
                     <?php  if(!$follows) {?>
-                      <form style="display:inline;" action="" method="post">
-                      <div class="button" style="float:right; margin-left: 10px; padding-top:18px;">
-                        <button href="#" value= <?php echo "\"$list_id\""; ?> name="follow_but" class="btn btn-outline-success btn-sm">Follow </button>
+                      <form action="" method="post">
+                      <div class="button">
+                        <button href="#" value= <?php echo "\"$list_id\""; ?> name="follow_but" class="btn btn-outline-success">Follow </button>
                       </div>
                     </form>
                   <?php }
                   else { ?>
-                    <form style="display:inline;" action="" method="post">
-                    <div class="button" style="float:right; margin-left: 10px; padding-top:18px;">
-                      <button href="#" value= <?php echo "\"home.php-$list_id\""; ?> name="unfol_but" class="btn btn-outline-success btn-sm">Unfollow </button>
+                    <form action="" method="post">
+                    <div class="button">
+                      <button href="#" value= <?php echo "\"home.php-$list_id\""; ?> name="unfol_but" class="btn btn-outline-success">Unfollow </button>
                     </div>
                     </form>
                   <?php } ?>
-                    </div>
                   </div>
+              </div>
             </div>
         </header>
         <div class="container bootstrap snippets bootdey">
