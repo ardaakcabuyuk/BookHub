@@ -26,6 +26,8 @@ function isLibrarian() {
   return($_SESSION['type'] == "librarian");
 }
 
-
+function formattedDate($date) {
+    return date("d-m-Y", strtotime($date));
+}
 
 ?>
