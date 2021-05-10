@@ -9,6 +9,10 @@ else if (isset($_POST['like_button_quote'])) {
   list($url, $quote_id) = explode("-", $_POST['like_button_quote'], 2);
   $delete_like_sql = "delete from likes_quote where user_id = ".$_SESSION['user_id']." and quote_id = $quote_id";
 }
+else if (isset($_POST['like_comment_button'])) {
+  list($url, $comment_id) = explode("-", $_POST['like_comment_button'], 2);
+  $delete_like_sql = "delete from likes_comment where user_id = ".$_SESSION['user_id']." and comment_id = $comment_id";
+}
 $delete_like_query = mysqli_query($db, $delete_like_sql);
 header("location: $url");
 ?>

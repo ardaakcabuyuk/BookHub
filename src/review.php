@@ -155,11 +155,23 @@ if (isset($_GET['post_id'])) {
                               echo "<div class=\"comment-text-sm\"><span>".$row['content']."</span></div>";
                               echo "<div class=\"text-muted h7 mb-2 pull-right\"> <i class=\"fa fa-clock-o\"></i>   ".$row['date']."</div>";
                               echo "<br>";
+
                               echo "<div class=\"reply-section\">";
                                   echo "<div>";
-                                      echo "<button type=\"submit\" name=\"like_button\"  class=\"btn btn-warning pull-right\"><i class=\"fa fa-thumbs-o-up\"></i> Like ".$row['comment_like_count']."</button></p>";
+                                      $liked_sql = "select * from likes_comment where comment_id = " . $row['comment_id']. " and user_id = ". $_SESSION['user_id'];
+                                      if (mysqli_num_rows(mysqli_query($db, $liked_sql)) == 0) {
+                                        echo "<form action=\"like.php\" method=\"post\">";
+                                        echo "<button value=\"review.php?post_id=".$post_id."-".$row['comment_id']."\" type=\"submit\" name=\"like_comment_button\"  class=\"btn btn-warning pull-right\"><i class=\"fa fa-thumbs-o-up\"></i> Like ".$row['comment_like_count']."</button></p>";
+                                        echo "</form>";
+                                      }
+                                      else {
+                                        echo "<form action=\"unlike.php\" method=\"post\">";
+                                        echo "<button value=\"review.php?post_id=".$post_id."-".$row['comment_id']."\" type=\"submit\" name=\"like_comment_button\"  class=\"btn btn-warning pull-right\"><i class=\"fa fa-thumbs-o-up\"></i> Unlike ".$row['comment_like_count']."</button></p>";
+                                        echo "</form>";
+                                      }
                                   echo "</div>";
                               echo "</div>";
+                              echo "</form>";
                           echo "</div>";
                           echo "<br>";
                           echo "<br>";
