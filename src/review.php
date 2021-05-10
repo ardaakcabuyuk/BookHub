@@ -130,14 +130,7 @@ if (isset($_GET['post_id'])) {
                               echo "<div class=\"comment-text-sm\"><span>".$author_reply['reply']."</span></div>";
                               echo "<div class=\"text-muted h7 mb-2 pull-right\"> <i class=\"fa fa-clock-o\"></i>   ".$author_reply['date']."</div>";
                               echo "<br>";
-                              echo "<div class=\"reply-section\">";
-                                  echo "<div>";
-                                      echo "<button type=\"submit\" name=\"like_button\"  class=\"btn btn-warning pull-right\"><i class=\"fa fa-thumbs-o-up\"></i> Like ".$author_reply['reply_like_count']."</button></p>";
-                                  echo "</div>";
-                              echo "</div>";
                           echo "</div>";
-                          echo "<br>";
-                          echo "<br>";
                           echo "<hr>";
                         }
                         while ($row = mysqli_fetch_array($comment_query_run)) {
