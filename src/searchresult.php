@@ -106,14 +106,6 @@ if (isset($_POST['add_friend_button'])) {
                                           echo "<span class=\"fa fa-star\"></span>";
                                           echo "<br>";
                                           echo "<p>Average Ratings (3.2)</p>";
-                                          echo "<p>Rate Book:</p>";
-                                          echo "<div class=\"btn-group me-2\" role=\"group\" aria-label=\"First group\">";
-                                            echo "<button type=\"button\" class=\"btn bg-transparent\"><span class=\"fa fa-star\"></span></button>";
-                                            echo "<button type=\"button\" class=\"btn bg-transparent\"><span class=\"fa fa-star\"></span></button>";
-                                            echo "<button type=\"button\" class=\"btn bg-transparent\"><span class=\"fa fa-star\"></span></button>";
-                                            echo "<button type=\"button\" class=\"btn bg-transparent\"><span class=\"fa fa-star\"></span></button>";
-                                            echo "<button type=\"button\" class=\"btn bg-transparent\"><span class=\"fa fa-star\"></span></button>";
-                                          echo "</div>";
                                           echo "<br/>";
                                           echo "<br/>";
                                           echo "<a href=\"bookprofile.php?book_id=" .$row['book_id']. "\" class=\"btn btn-warning\" role=\"button\">Show Detailed Info</a>";
