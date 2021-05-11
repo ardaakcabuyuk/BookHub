@@ -18,7 +18,7 @@ if (isset($_GET['book_id'])) {
           $book = mysqli_fetch_array($get_book);
           echo "<div class=\"col-md-9\">";
             echo "<h2 style=\"font-size:38px\"><strong>".$book['book_name']."</strong></h2>";
-            echo "<h3>by <strong>". $book['author'] ."</strong></h3>";
+            echo "<h3>by <strong><a style=\"color:orange; text-decoration: none;\" href=\"authorprofile.php?uname=".mysqli_fetch_array(mysqli_query($db, "select * from author natural join user where author_id =".$book['author_id']))['username']."\">".$book['author']."</a></strong></h3>";
             echo "<h5>Genre: <strong>". $book['genre']. " </strong></h5>";
             echo "<h5>". $book['year'] ."</h5>";
           echo "</div>";
@@ -50,10 +50,12 @@ if (isset($_GET['book_id'])) {
         echo "<div class=\"col-md-3 text-center\"> <!-- Phone & Social -->";
             echo "<div class=\"button\" style=\"padding-top:18px\">";
                 echo "<a href=\"reviews.php?book_id=".$book['book_id']."\" class=\"btn btn-outline-success btn-block\">Reviews</a>";
-                $check_review_query = "select * from post where book_id =".$book['book_id']." and user_id =".$_SESSION['user_id'];
-                $check_review = mysqli_query($db, $check_review_query);
-                if (mysqli_num_rows($check_review) == 0) {
-                  echo "<a href=\"postreviewpage.php?book_id=".$book['book_id']."\" class=\"btn btn-outline-success btn-block\" style=\"margin-left:10px;\">Post Review</a>";
+                if ($_SESSION['user_id'] != $book['user_id']) {
+                  $check_review_query = "select * from post where book_id =".$book['book_id']." and user_id =".$_SESSION['user_id'];
+                  $check_review = mysqli_query($db, $check_review_query);
+                  if (mysqli_num_rows($check_review) == 0) {
+                    echo "<a href=\"postreviewpage.php?book_id=".$book['book_id']."\" class=\"btn btn-outline-success btn-block\" style=\"margin-left:10px;\">Post Review</a>";
+                  }
                 }
             echo "</div>";
             echo "<div class=\"button\" style=\"padding-top:18px\">";

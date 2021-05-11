@@ -1,6 +1,5 @@
 <?php
 include('config.php');
-session_start();
 require_once "navbar.php";
 
 if(isset($_GET['list_id'])) {
@@ -26,6 +25,11 @@ if(isset($_GET['list_id'])) {
   if(mysqli_num_rows($follow_query) == 1)
     $follows = true;
 
+  if (isset($_POST['remove_book_button'])) {
+    $book_id = $_POST['remove_book_button'];
+    $remove_book_query = "delete from contains where list_id = $list_id and book_id = $book_id";
+    $remove_book = mysqli_query($db, $remove_book_query);
+  }
 }
 else {
   echo "<script type='text/javascript'>alert('Bad credentials!');window.location.href='home.php';</script>";
@@ -54,27 +58,39 @@ else {
 
                 <div class="row justify-content-center" style="margin-top:20px;">
                     <div class="col-md-3"> <!-- Image -->
-                      <h2 style="text-align: center;"> <strong><?php echo $list['list_name']; ?></strong></h2>
+                      <h2 style="text-align: center;"><strong><?php echo $list['list_name']; ?></strong></h2>
                       <h5 style="text-align: center;">Book List by <strong><?php echo $list['name']. " " . $list['surname']; ?></strong></h5>
                     </div>
-
-                    <div class="col-md-3">
-                    <?php  if(!$follows) {?>
-                      <form style="display:inline;" action="" method="post">
-                      <div class="button" style="float:right; margin-left: 10px; padding-top:18px;">
-                        <button href="#" value= <?php echo "\"$list_id\""; ?> name="follow_but" class="btn btn-outline-success btn-sm">Follow </button>
+                </div>
+                <div class="row justify-content-center" style="margin-top:20px;">
+                    <div class="col-md-9"> <!-- Image -->
+                      <h5 style="text-align: center;">Description:</strong></h5>
+                      <p style="text-align: center;"><?php echo $list['description'];?></p>
+                    </div>
+                </div>
+                <div class="row justify-content-center" style="margin-top:20px;">
+                  <div class="col-md-1"> <!-- Image -->
+                    <?php  if(!$follows && $list['user_id'] != $_SESSION['user_id']) {?>
+                      <form action="" method="post">
+                      <div class="button">
+                        <button href="#" value= <?php echo "\"$list_id\""; ?> name="follow_but" class="btn btn-outline-success">Follow </button>
                       </div>
                     </form>
                   <?php }
-                  else { ?>
-                    <form style="display:inline;" action="" method="post">
-                    <div class="button" style="float:right; margin-left: 10px; padding-top:18px;">
-                      <button href="#" value= <?php echo "\"home.php-$list_id\""; ?> name="unfol_but" class="btn btn-outline-success btn-sm">Unfollow </button>
+                  else if ($list['user_id'] != $_SESSION['user_id']) { ?>
+                    <form action="" method="post">
+                    <div class="button">
+                      <button href="#" value= <?php echo "\"home.php-$list_id\""; ?> name="unfol_but" class="btn btn-outline-success">Unfollow </button>
                     </div>
                     </form>
-                  <?php } ?>
+                  <?php }
+                  else  { ?>
+                    <div class="button">
+                      <a style="text-decoration:none;" class="btn btn-sm btn-outline-success" href="addtobooklist.php?list_id=<?php echo $list_id;?>">Add Book</a>
                     </div>
+                  <?php } ?>
                   </div>
+              </div>
             </div>
         </header>
         <div class="container bootstrap snippets bootdey">
@@ -104,8 +120,15 @@ else {
                               echo "<br>";
                               echo "<p>Average Ratings (3.2)</p>";
                               echo "<br/>";
-                              echo "<br/>";
                               echo "<a href=\"bookprofile.php?book_id=" .$row['book_id']. "\" class=\"btn btn-warning\" role=\"button\">Show Detailed Info</a>";
+                              if ($list['user_id'] == $_SESSION['user_id']) {
+                                echo "<form action=\"\" method=\"post\" style=\"display:inline;\">";
+                                  echo "<div class=\"button\" style=\"margin-left:10px; display:inline;\">";
+                                    echo "<button href=\"#\" class=\"btn btn-danger\" name=\"remove_book_button\" value=".$row['book_id'].">Remove Book</button>";
+                                  echo "<div>";
+                                  echo "<br>";
+                                echo "</form>";
+                              }
                           echo "</div>";
                       echo "</div>";
                   echo "</div>";

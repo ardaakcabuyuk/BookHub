@@ -87,7 +87,6 @@ if (isset($_GET['uname'])) {
                         <th scope="col">Year</th>
                         <th scope="col">Title</th>
                         <th scope="col"></th>
-                        <th scope="col"></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -104,9 +103,9 @@ if (isset($_GET['uname'])) {
                             while ($row = mysqli_fetch_array($get_books)) {
                               echo "<tr>";
                               echo "<th scope=\"row\">".$row['year']."</th>";
-                              echo "<td>".$row['book_name']."</td>";
-                              echo "<td><a href=\"reviews.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">List Reviews </a></td>";
-                              echo "<td><a href=\"#\" class=\"btn btn-outline-success btn-sm pull-right\">Create Edition </a></td>";
+                              echo "<td><a style=\"color:black; text-decoration: none;\" href=\"bookprofile.php?book_id=".$row['book_id']."\">".$row['book_name']."</a></td>";
+                              echo "<td><a href=\"reviews.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-left:10px;\">List Reviews </a>";
+                              echo "<a href=\"#\" class=\"btn btn-outline-success btn-sm pull-right\">Create Edition </a></td>";
                               echo "</tr>";
                             }
                           }
@@ -120,9 +119,9 @@ if (isset($_GET['uname'])) {
                             while ($row = mysqli_fetch_array($get_books)) {
                               echo "<tr>";
                               echo "<th scope=\"row\">".$row['year']."</th>";
-                              echo "<td>".$row['book_name']."</td>";
-                              echo "<td><a href=\"reviews.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">List Reviews </a></td>";
-                              echo "<td><a href=\"#\" class=\"btn btn-outline-success btn-sm pull-right\">Create Edition </a></td>";
+                              echo "<td><a style=\"color:black; text-decoration: none;\" href=\"bookprofile.php?book_id=".$row['book_id']."\">".$row['book_name']."</a></td>";
+                              echo "<td><a href=\"reviews.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-left:10px;\">List Reviews </a>";
+                              echo "<a href=\"addedition.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">Create Edition </a></td>";
                               echo "</tr>";
                             }
                           }
