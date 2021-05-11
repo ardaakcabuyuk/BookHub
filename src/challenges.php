@@ -68,20 +68,18 @@ if(isset($_POST['join_challenge_button'])) {
                                         $fetch_progress = mysqli_fetch_array($result);
                                         echo "<p style = \"font-size:15px;\" ><span style = \"font-weight: bold;\" > Progress: </span >" .$fetch_progress['challlenge_progress']." / ".$row['goal']." </p >";
                                         if (mysqli_num_rows($result_succeeded) == 0) {
-                                            echo "<button class=\"btn btn-success\" name = \"already_joined_button\" value = \"\"" . $_SESSION['user_id'] . ">";
+                                            echo "<button class=\"btn btn-info\" name = \"already_joined_button\" value = \"\"" . $_SESSION['user_id'] . ">";
                                             echo "Joined";
                                             echo "</button >";
                                         }
                                     }
-                                echo "</form>";
                                 if (mysqli_num_rows($result_succeeded) != 0) {
                                     echo "<button class=\"btn btn-success\" name = \"challenge_completed_button\" value = \"\"" . $_SESSION['user_id'] . ">";
                                     echo "Completed";
                                     echo "</button >";
                                 }
-
-
                                 echo "<label class=\"control-label\" style = \"float:right\" ><span style = \"font-weight: bold;\" > Start Date: </span >" .formattedDate($row['start_date']). "</label >";
+                                echo "</form>";
                             echo "</div >";
                         echo "</div >";
                     echo "</div >";
