@@ -18,7 +18,7 @@ if (isset($_GET['book_id'])) {
           $book = mysqli_fetch_array($get_book);
           echo "<div class=\"col-md-9\">";
             echo "<h2 style=\"font-size:38px\"><strong>".$book['book_name']."</strong></h2>";
-            echo "<h3>by <strong>". $book['author'] ."</strong></h3>";
+            echo "<h3>by <strong><a style=\"color:orange; text-decoration: none;\" href=\"authorprofile.php?uname=".mysqli_fetch_array(mysqli_query($db, "select * from author natural join user where author_id =".$book['author_id']))['username']."\">".$book['author']."</a></strong></h3>";
             echo "<h5>Genre: <strong>". $book['genre']. " </strong></h5>";
             echo "<h5>". $book['year'] ."</h5>";
           echo "</div>";

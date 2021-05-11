@@ -170,6 +170,9 @@ if (isset($_GET['post_id'])) {
                           echo "<br>";
                           echo "<hr>";
                         }
+                        if (mysqli_num_rows($comment_query_run) == 0) {
+                          echo "<p>No comments.</p>";
+                        }
                       ?>
                     </div>
                 </div>

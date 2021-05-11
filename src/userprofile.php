@@ -1,5 +1,6 @@
     <?php
-    session_start();
+    include_once "navbar.php";
+
     include('config.php');
     require_once "helper_functions.php";
 
@@ -8,7 +9,6 @@
     }
 
 
-    include_once "navbar.php";
 
 
 
@@ -121,8 +121,8 @@
                           $row_book = mysqli_fetch_array(mysqli_query($db, $current_book_sql));
                           echo "<tr>";
                           echo "<th scope=\"row\">". $row['date']. "</th>";
-                          echo "<td>". $row_book['book_name']. "</td>";
-                          echo "<td>". $row_book['author']. "</td>";
+                          echo "<td><a style=\"color:black; text-decoration: none;\" href=\"bookprofile.php?book_id=".$row_book['book_id']."\">".$row_book['book_name']."</a></td>";
+                          echo "<td><a style=\"color:black; text-decoration: none;\" href=\"authorprofile.php?uname=".$row_book['author_id']."\">".$row_book['author']."</a></td>";
                           echo "<td>". $row_book['page_count']. "</td>";
                           echo "<td>". $row['progress']. "</td>";
                           if($own_profile)
@@ -164,13 +164,13 @@
                       while( $row = mysqli_fetch_array($finished_book_query)) {
                       echo "<tr>";
                       echo "<th scope=\"row\">". $row["date"]. "</th>";
-                      echo "<td>". $row['book_name']. "</td>";
-                      echo "<td>". $row['author']. "</td>";
+                      echo "<td><a style=\"color:black; text-decoration: none;\" href=\"bookprofile.php?book_id=".$row['book_id']."\">".$row['book_name']."</a></td>";
+                      echo "<td><a style=\"color:black; text-decoration: none;\" href=\"authorprofile.php?uname=".mysqli_fetch_array(mysqli_query($db, "select * from author natural join user where author_id =".$row['author_id']))['username']."\">".$row_book['author']."</a></td>";
                         if($own_profile) {
                           $check_review_query = "select * from post where book_id =".$row['book_id']." and user_id =".$_SESSION['user_id'];
                           $check_review = mysqli_query($db, $check_review_query);
                           if (mysqli_num_rows($check_review) == 0) {
-                            echo "<td><a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-left:10px;\">Post Quote</a>"; 
+                            echo "<td><a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-left:10px;\">Post Quote</a>";
                             echo "<a href=\"postreviewpage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">Post Review</a></td>";
                           }
                           else {
@@ -211,8 +211,8 @@
                     while( $row = mysqli_fetch_array($post_query)) {
                     echo "<tr>";
                     echo "<th scope=\"row\">". $row['date']. "</th>";
-                    echo "<td>". $row['book_name']. "</td>";
-                    echo "<td>". $row['author']. "</td>";
+                    echo "<td><a style=\"color:black; text-decoration: none;\" href=\"bookprofile.php?book_id=".$row['book_id']."\">".$row['book_name']."</a></td>";
+                    echo "<td><a style=\"color:black; text-decoration: none;\" href=\"authorprofile.php?uname=".mysqli_fetch_array(mysqli_query($db, "select * from author natural join user where author_id =".$row['author_id']))['username']."\">".$row['author']."</a></td>";
                     echo "<td>". $row['like_count']. "</td>";
                     echo "<td>". $row['comment_count']. "</td>";
                     echo "<td>". $row['rate'] ."/5</td>";
