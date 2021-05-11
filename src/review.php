@@ -58,6 +58,9 @@ if (isset($_GET['post_id'])) {
                               $book_name_query = "select * from book where book_id ='".$post['book_id']."'";
                               $result = mysqli_query($db, $book_name_query);
                               $book = mysqli_fetch_array($result);
+                              $own_book = false;
+                              if(!empty($_SESSION['type']) && $_SESSION['type'] == "author" && $_SESSION['a_id'] == $book['author_id'])
+                                $own_book = true;
                               echo "<h5 class=\"card-title\">".$book['book_name']."</h5>";
                           echo "</a>";
                           echo "<p class=\"card-text\">";
@@ -79,11 +82,17 @@ if (isset($_GET['post_id'])) {
                           $liked_sql = "select * from likes_post where post_id = " . $post['post_id']. " and user_id = ". $_SESSION['user_id'];
                           echo "<p style=\"vertical-align: middle; display:inline;\"><i class=\"fa fa-thumbs-o-up\" style=\"color:orange;\"></i> ".$post['like_count']." likes";
                           echo "&emsp;<i class=\"fa fa-comment-o\" style=\"color:orange;\"></i> ".$post['comment_count']." comments";
-                          echo "<form style=\"display:inline;\" action=\"comment_post.php\" method=\"post\">";
+                          if(!$own_book)
+                            echo "<form style=\"display:inline;\" action=\"comment_post.php\" method=\"post\">";
+                          else
+                            echo "<form style=\"display:inline;\" action=\"reply.php\" method=\"post\">";
                           echo "<div class=\"form-group\" style=\"margin-top:20px; margin-bottom:20px;\">";
                               echo "<textarea class=\"form-control\" id=\"message\" rows=\"3\" name=\"content\" placeholder=\"Comment here...\"></textarea>";
                           echo "</div>";
-                          echo "<button type=\"submit\" class=\"btn btn-warning pull-right\" value=\"review.php?post_id=".$post['post_id']."-".$post['post_id']. "\" style=\"margin-left: 10px; margin-bottom:10px;\" name=\"comment_button\"><i class=\"fa fa-comment-o\"></i> Comment</button>";
+                          if(!$own_book)
+                            echo "<button type=\"submit\" class=\"btn btn-warning pull-right\" value=\"review.php?post_id=".$post['post_id']."-".$post['post_id']. "\" style=\"margin-left: 10px; margin-bottom:10px;\" name=\"comment_button\"><i class=\"fa fa-comment-o\"></i> Comment</button>";
+                          else
+                            echo "<button type=\"submit\" class=\"btn btn-warning pull-right\" value=\"review.php?post_id=".$post['post_id']."-".$post['post_id']. "\" style=\"margin-left: 10px; margin-bottom:10px;\" name=\"reply_button\"><i class=\"fa fa-comment-o\"></i> Reply</button>";
                           echo "</form>";
                           if(mysqli_num_rows(mysqli_query($db,$liked_sql)) == 0) {
                             echo "<form style=\"display:inline;\" action=\"like.php\" method=\"post\">";

@@ -116,14 +116,23 @@
                               echo "<div class=\"text-muted h7 mb-2 pull-right\"> <i class=\"fa fa-clock-o\"></i> ".$row['date']."</div>";
                           echo "</div>";
                           echo "<div class=\"card-footer\">";
+                          $own_book = false;
+                          if(!empty($_SESSION['type']) && $_SESSION['type'] == "author" && $_SESSION['a_id'] == $book['author_id'])
+                            $own_book = true;
                               $liked_sql = "select * from likes_post where post_id = " . $row['post_id']. " and user_id = ". $_SESSION['user_id'];
                               echo "<p style=\"vertical-align: middle; display:inline;\"><i class=\"fa fa-thumbs-o-up\" style=\"color:orange;\"></i> ".$row['like_count']." likes";
                               echo "&emsp;<i class=\"fa fa-comment-o\" style=\"color:orange;\"></i> ".$row['comment_count']." comments";
-                              echo "<form style=\"display:inline;\" action=\"comment_post.php\" method=\"post\">";
+                              if(!$own_book)
+                                echo "<form style=\"display:inline;\" action=\"comment_post.php\" method=\"post\">";
+                              else
+                                echo "<form style=\"display:inline;\" action=\"reply.php\" method=\"post\">";
                               echo "<div class=\"form-group\" style=\"margin-top:20px; margin-bottom:20px;\">";
                                   echo "<input class=\"form-control\" name=\"content\" id=\"message\" rows=\"3\" placeholder=\"Comment here...\"></input>";
                               echo "</div>";
-                              echo "<button type=\"submit\" name=\"comment_button\" value=\"home.php-". $row['post_id']. "\" class=\"btn btn-warning pull-right\" style=\"margin-left: 10px; margin-bottom:10px;\"><i class=\"fa fa-comment-o\"></i> Comment</button>";
+                              if(!$own_book)
+                                echo "<button type=\"submit\" name=\"comment_button\" value=\"home.php-". $row['post_id']. "\" class=\"btn btn-warning pull-right\" style=\"margin-left: 10px; margin-bottom:10px;\"><i class=\"fa fa-comment-o\"></i> Comment</button>";
+                              else
+                                echo "<button type=\"submit\" name=\"reply_button\" value=\"home.php-". $row['post_id']. "\" class=\"btn btn-warning pull-right\" style=\"margin-left: 10px; margin-bottom:10px;\"><i class=\"fa fa-comment-o\"></i> Reply</button>";
                               echo "</form>";
                               if(mysqli_num_rows(mysqli_query($db,$liked_sql)) == 0) {
                                 echo "<form style=\"display:inline;\" action=\"like.php\" method=\"post\">";
