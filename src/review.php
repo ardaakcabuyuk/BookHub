@@ -146,17 +146,25 @@ if (isset($_GET['post_id'])) {
                                       $is_librarian_query = "select * from librarian where user_id =" . $row['user_id'];
                                       if (mysqli_num_rows(mysqli_query($db, $is_author_query)) == 1) {
                                         echo "<img class=\"rounded-circle\" height=\"40\" src=\"images/writer.png\" alt=\"\" style=\"margin-right:10px; margin-top:5px;\"\>";
+                                        echo "</div>";
+                                        echo "<div class=\"mr-2\">";
+                                          echo "<div class=\"h5 m-0\"><a style=\"color:orange; text-decoration: none;\" href=\"authorprofile.php?uname=".$row['username']."\">".$row['name']." ". $row['surname']."</a></div>";
+                                          echo "<div class=\"h7 text-muted\"><a style=\"text-decoration: none;color:#A9A9A9;\" href=\"authorprofile.php?uname=".$row['username']."\">@".$row['username']."</a></div>";
                                       }
                                       else if (mysqli_num_rows(mysqli_query($db, $is_librarian_query)) == 1) {
                                         echo "<img class=\"rounded-circle\" height=\"40\" src=\"images/librarian.png\" alt=\"\" style=\"margin-right:10px; margin-top:5px;\"\>";
+                                        echo "</div>";
+                                        echo "<div class=\"mr-2\">";
+                                          echo "<div class=\"h5 m-0\"><a style=\"color:orange; text-decoration: none;\" href=\"librarianprofile.php?uname=".$row['username']."\">".$row['name']." ". $row['surname']."</a></div>";
+                                          echo "<div class=\"h7 text-muted\"><a style=\"text-decoration: none;color:#A9A9A9;\" href=\"librarianprofile.php?uname=".$row['username']."\">@".$row['username']."</a></div>";
                                       }
                                       else {
                                         echo "<img class=\"rounded-circle\" height=\"40\" src=\"images/reader.png\" alt=\"\" style=\"margin-right:10px; margin-top:5px;\"\>";
+                                        echo "</div>";
+                                        echo "<div class=\"mr-2\">";
+                                          echo "<div class=\"h5 m-0\"><a style=\"color:orange; text-decoration: none;\" href=\"userprofile.php?uname=".$row['username']."\">".$row['name']." ". $row['surname']."</a></div>";
+                                          echo "<div class=\"h7 text-muted\"><a style=\"text-decoration: none;color:#A9A9A9;\" href=\"userprofile.php?uname=".$row['username']."\">@".$row['username']."</a></div>";
                                       }
-                                  echo "</div>";
-                                  echo "<div class=\"mr-2\">";
-                                    echo "<div class=\"h5 m-0\"><a style=\"color:orange; text-decoration: none;\" href=\"userprofile.php?uname=".$row['username']."\">".$row['name']." ". $row['surname']."</a></div>";
-                                    echo "<div class=\"h7 text-muted\"><a style=\"text-decoration: none;color:#A9A9A9;\" href=\"userprofile.php?uname=".$row['username']."\">@".$row['username']."</a></div>";
                                       //echo "<h5 class=\"mr-2\">".$author_reply['name']." ". $author_reply['surname']."</h5><span class=\"dot mb-1\"></span>";
                                     echo "</div>";
                                   echo "</div>";
