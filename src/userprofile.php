@@ -191,17 +191,18 @@
         <div class="row">
             <div class="col-md-12">
             <div class="card card-block text-xs-left">
-                <h3 class="card-title" style="color:#009688"> Posts</h3>
+                <h3 class="card-title" style="color:#009688"> Reviews</h3>
                 <div style="height: 15px"></div>
                 <table class="table">
                     <thead class="thead-dark">
                     <tr>
-                        <th scope="col">Last Update</th>
+                        <th scope="col">Date</th>
                         <th scope="col">Title</th>
                         <th scope="col">Author</th>
                         <th scope="col">Likes</th>
                         <th scope="col">Comments</th>
                         <th scope="col">Ratings</th>
+                        <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -216,6 +217,7 @@
                     echo "<td>". $row['like_count']. "</td>";
                     echo "<td>". $row['comment_count']. "</td>";
                     echo "<td>". $row['rate'] ."/5</td>";
+                    echo "<td><a href=\"review.php?post_id=".$row['post_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">Go to Review</a></td>";
                     echo "</tr>";
                     }
                     ?>
