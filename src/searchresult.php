@@ -107,7 +107,6 @@ if (isset($_POST['add_friend_button'])) {
                                           echo "<br>";
                                           echo "<p>Average Ratings (3.2)</p>";
                                           echo "<br/>";
-                                          echo "<br/>";
                                           echo "<a href=\"bookprofile.php?book_id=" .$row['book_id']. "\" class=\"btn btn-warning\" role=\"button\">Show Detailed Info</a>";
                                       echo "</div>";
                                   echo "</div>";
