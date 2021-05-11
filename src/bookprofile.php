@@ -5,7 +5,23 @@ include_once "bookheader.php";
 
 if (isset($_GET['book_id'])) {
   $book_id = $_GET['book_id'];
+
+  if (isset($_POST['addProgressButton'])) {
+    list($edition_no, $page_count) = explode("-", $_POST['addProgressButton'], 2);
+    $page_no = $_POST['pageno'];
+    $add_progress_query = "insert into reads_book (book_id, edition_no, user_id, progress)
+                            values ($book_id, $edition_no, ".$_SESSION['user_id'].", $page_no)";
+
+    if ($page_no < 0 || $page_no > $page_count) {
+      echo "<script type='text/javascript'>alert('Bad credentials!');window.location.href='bookprofile.php?book_id=$book_id';</script>";
+    }
+    else {
+      $query_run = mysqli_query($db, $add_progress_query);
+    }
+  }
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +35,9 @@ if (isset($_GET['book_id'])) {
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/searchresult.css" />
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -46,6 +65,7 @@ if (isset($_GET['book_id'])) {
                       <?php
                         $edition_query = "select * from book natural join edition where book_id = $book_id";
                         $edition_run = mysqli_query($db, $edition_query);
+                        $i = 0;
                         while ($edition = mysqli_fetch_array($edition_run)) {
                           echo "<tr>";
                             echo "<th scope=\"row\">".$edition['edition_no']."</th>";
@@ -57,12 +77,34 @@ if (isset($_GET['book_id'])) {
                               echo "<td>";
                               echo "<div class=\"button\">";
                                   echo "<a href=\"erroneousinforequest.php?book_id=".$book_id."&edition_no=".$edition['edition_no']."\" class=\"btn btn-sm btn-outline-success pull-right\">Erroneous Info Request</a>";
+                                  if ($_SESSION['type'] == "user") echo "<button type=\"button\" data-toggle=\"modal\" data-target=\"#addProgress$i\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-right:10px;\">Add Progress</button>";
                               echo "</div>";
                               echo "</td>";
                             }
                           echo "</tr>";
-                        }
-                      ?>
+                          echo "<div class=\"modal fade\" id=\"addProgress$i\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"addProgressLabel\" aria-hidden=\"true\">"; $i++; ?>
+                            <form id="add_form" action="" method="POST">
+                              <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="addProgressLabel">Add Progress</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                            		    <label for="pageno">Page Number</label><br/>
+                            		    <input type="text" class="form-control" id="pageno" name="pageno" required/><br/>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" name="addProgressButton" value="<?php echo $edition['edition_no']. "-" . $edition['page_count']; ?>" class="btn btn-success">Add</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                      <?php } ?>
                     </tbody>
                   </table>
               </div>
@@ -75,8 +117,7 @@ if (isset($_GET['book_id'])) {
     <div class="row">
         <div class="col-md-12">
           <div class="card card-block text-xs-left">
-            <h2 class="card-title" style="color:#009688"><i class="fa fa-newspaper-o fa-fw"></i> Progress Steps<?php
-            if ($_SESSION['type'] == "user") echo "<a href=\"#\" class=\"btn btn-outline-success btn-sm\" style=\"margin-left:10px;\">Add Progress</a>"?></h2>
+            <h2 class="card-title" style="color:#009688"><i class="fa fa-newspaper-o fa-fw"></i> Progress Steps</h2>
             <div style="height: 15px"></div>
             <table class="table">
                 <thead class="thead-dark">
@@ -87,11 +128,18 @@ if (isset($_GET['book_id'])) {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">10.02.2021</th>
-                    <td>249</td>
-                    <td>217</td>
-                  </tr>
+
+                    <?php
+                    $progress_query = "select * from reads_book where user_id =".$_SESSION['user_id']." and book_id = $book_id";
+                    $query_run = mysqli_query($db, $progress_query);
+                    while ($row = mysqli_fetch_array($query_run)) {
+                      echo "<tr>";
+                      echo "<th scope=\"row\">".$row['date']."</th>";
+                      echo "<td>".$row['edition_no']."</td>";
+                      echo "<td>".$row['progress']."</td>";
+                      echo "</tr>";
+                    }
+                    ?>
                 </tbody>
               </table>
           </div>

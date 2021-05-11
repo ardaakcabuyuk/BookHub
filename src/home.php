@@ -25,20 +25,23 @@
           <div class="input-group">
             <div class="col-xs-4">
               <input type="search" class="form-control rounded" placeholder="Search Books" aria-label="Search"
-              aria-describedby="search-addon" name="search_book" id="search1">
+              aria-describedby="search-addon" name="search_book" id="search1" required>
             </div>
-              <span class="input-group-addon"><button class="btn btn-warning mb-2 pull-right" type="submit" name="search_book_button">
+                <span class="input-group-addon"><button class="btn btn-warning mb-2 pull-right" type="submit" name="search_book_button" style="margin-left:10px;">
                  Search
               </button></span>
           </div>
         </form>
+        <form class="form-inline" action="rangesearchbook.php" method="post" style="margin-left:-140px;"><button class="btn btn-warning mb-2" type="submit" name="range_search_book_button">
+           Range Search
+        </button></form>
         <form class="form-inline" action="searchresult.php" method="post">
           <div class="input-group">
             <div class="col-xs-3">
               <input type="search" class="form-control rounded" placeholder="Search Authors" aria-label="Search"
-              aria-describedby="search-addon" name="search_author">
+              aria-describedby="search-addon" name="search_author" required>
             </div>
-              <span class="input-group-addon"><button class="btn btn-warning mb-2 pull-right" type="submit" name="search_author_button">
+              <span class="input-group-addon" style="margin-left:10px;"><button class="btn btn-warning mb-2 pull-right" type="submit" name="search_author_button">
                    Search
               </button></span>
             </div>
@@ -47,14 +50,20 @@
           <div class="input-group">
             <div class="col-xs-3">
               <input type="search" class="form-control rounded" placeholder="Search Users" aria-label="Search"
-              aria-describedby="search-addon" name="search_user">
+              aria-describedby="search-addon" name="search_user" required>
             </div>
-              <span class="input-group-addon"><button class="btn btn-warning mb-2 pull-right" type="submit" name="search_user_button">
+              <span class="input-group-addon" style="margin-left:10px;"><button class="btn btn-warning mb-2 pull-right" type="submit" name="search_user_button">
                      Search
               </button></span>
           </div>
         </form>
       </div>
+      <div class="row">
+        <div class="col" style="margin-left:170px;">
+
+        </div>
+      </div>
+
 
       <br/>
       <br/>

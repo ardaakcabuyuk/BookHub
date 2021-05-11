@@ -111,20 +111,27 @@ else {
                               echo "<h5>by ".$row['author']."</h5>";
                               echo "<p>".$row['description']."</p>";
 
-                              echo "<!-- todo post post gezip rating hesapla -->";
-                              echo "<span class=\"fa fa-star checked\"></span>";
-                              echo "<span class=\"fa fa-star checked\"></span>";
-                              echo "<span class=\"fa fa-star checked\"></span>";
-                              echo "<span class=\"fa fa-star\"></span>";
-                              echo "<span class=\"fa fa-star\"></span>";
-                              echo "<br>";
-                              echo "<p>Average Ratings (3.2)</p>";
+                              $rating_query = "select ifnull(avg(rate),0) as rating
+                                                from book
+                                                left join post
+                                                on book.book_id = post.book_id
+                                                where book.book_id =".$row['book_id']."
+                                                group by book.book_id";
+                              $query_run = mysqli_query($db, $rating_query);
+                              $rate = mysqli_fetch_array($query_run)['rating'];
+                              for ($i = 0; $i < (int)$rate; $i++) {
+                                echo "<i class=\"fa fa-star fa-lg checked\"></i>";
+                              }
+                              for ($i = 0; $i < 5 - (int)$rate; $i++) {
+                                echo "<i class=\"fa fa-star fa-lg\"></i>";
+                              }
+                              echo "  (".number_format($rate, 2, '.', '').")";
                               echo "<br/>";
-                              echo "<a href=\"bookprofile.php?book_id=" .$row['book_id']. "\" class=\"btn btn-warning\" role=\"button\">Show Detailed Info</a>";
+                              echo "<a href=\"bookprofile.php?book_id=" .$row['book_id']. "\" class=\"btn btn-warning\" role=\"button\" style=\"margin-top:20px;\">Show Detailed Info</a>";
                               if ($list['user_id'] == $_SESSION['user_id']) {
                                 echo "<form action=\"\" method=\"post\" style=\"display:inline;\">";
                                   echo "<div class=\"button\" style=\"margin-left:10px; display:inline;\">";
-                                    echo "<button href=\"#\" class=\"btn btn-danger\" name=\"remove_book_button\" value=".$row['book_id'].">Remove Book</button>";
+                                    echo "<button href=\"#\" class=\"btn btn-danger\" name=\"remove_book_button\" value=".$row['book_id']." style=\"margin-top:20px;\">Remove Book</button>";
                                   echo "<div>";
                                   echo "<br>";
                                 echo "</form>";

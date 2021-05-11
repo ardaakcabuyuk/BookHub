@@ -67,18 +67,26 @@ if (isset($_GET['list_id'])) {
                                           echo "<h5>by ".$row['author']."</h5>";
                                           echo "<p>".$row['description']."</p>";
 
-                                          echo "<!-- todo post post gezip rating hesapla -->";
-                                          echo "<i class=\"fa fa-star checked\"></i>";
-                                          echo "<span class=\"fa fa-star checked\"></span>";
-                                          echo "<span class=\"fa fa-star checked\"></span>";
-                                          echo "<span class=\"fa fa-star\"></span>";
-                                          echo "<span class=\"fa fa-star\"></span>";
-                                          echo "<br>";
-                                          echo "<p>Average Ratings (3.2)</p>";
-                                          echo "<a href=\"bookprofile.php?book_id=" .$row['book_id']. "\" class=\"btn btn-warning\" role=\"button\">Show Detailed Info</a>";
+                                          $rating_query = "select ifnull(avg(rate),0) as rating
+                                                            from book
+                                                            left join post
+                                                            on book.book_id = post.book_id
+                                                            where book.book_id =".$row['book_id']."
+                                                            group by book.book_id";
+                                          $query_run = mysqli_query($db, $rating_query);
+                                          $rate = mysqli_fetch_array($query_run)['rating'];
+                                          for ($i = 0; $i < (int)$rate; $i++) {
+                                            echo "<i class=\"fa fa-star fa-lg checked\"></i>";
+                                          }
+                                          for ($i = 0; $i < 5 - (int)$rate; $i++) {
+                                            echo "<i class=\"fa fa-star fa-lg\"></i>";
+                                          }
+                                          echo "  (".number_format($rate, 2, '.', '').")";
+                                          echo "<br/>";
+                                          echo "<a href=\"bookprofile.php?book_id=" .$row['book_id']. "\" class=\"btn btn-warning\" role=\"button\" style=\"margin-top:20px;\">Show Detailed Info</a>";
                                           echo "<form action=\"\" method=\"post\" style=\"display:inline;\">";
                                             echo "<div class=\"button\" style=\"margin-left:10px; display:inline;\">";
-                                              echo "<button href=\"#\" class=\"btn btn-success\" name=\"add_book_button\" value=".$row['book_id'].">Add Book</button>";
+                                              echo "<button href=\"#\" class=\"btn btn-success\" name=\"add_book_button\" value=".$row['book_id']." style=\"margin-top:20px;\">Add Book</button>";
                                             echo "<div>";
                                             echo "<br>";
                                           echo "</form>";
@@ -93,7 +101,53 @@ if (isset($_GET['list_id'])) {
                           }
                         }
                       }
-                    ?>
+                      else {
+                        $search_book_query = "select *
+                                              from book
+                                              where book_id not in (select book_id
+                                                                  from contains
+                                                                  where list_id = $list_id)";
+                        $search_book = mysqli_query($db, $search_book_query);
+                        if (mysqli_num_rows($search_book) != 0) {
+                          while ($row = mysqli_fetch_array($search_book)) {
+                            echo "<div class=\"well search-result\">";
+                                echo "<div class=\"row\">";
+                                    echo "<div class=\"col-xs-6 col-sm-9 col-md-9 col-lg-10 title\">";
+                                        echo "<h3>".$row['book_name']."</h3>";
+                                        echo "<h5>by ".$row['author']."</h5>";
+                                        echo "<p>".$row['description']."</p>";
+
+                                        $rating_query = "select ifnull(avg(rate),0) as rating
+                                                          from book
+                                                          left join post
+                                                          on book.book_id = post.book_id
+                                                          where book.book_id =".$row['book_id']."
+                                                          group by book.book_id";
+                                        $query_run = mysqli_query($db, $rating_query);
+                                        $rate = mysqli_fetch_array($query_run)['rating'];
+                                        for ($i = 0; $i < (int)$rate; $i++) {
+                                          echo "<i class=\"fa fa-star fa-lg checked\"></i>";
+                                        }
+                                        for ($i = 0; $i < 5 - (int)$rate; $i++) {
+                                          echo "<i class=\"fa fa-star fa-lg\"></i>";
+                                        }
+                                        echo "  (".number_format($rate, 2, '.', '').")";
+                                        echo "<br/>";
+                                        echo "<a href=\"bookprofile.php?book_id=" .$row['book_id']. "\" class=\"btn btn-warning\" role=\"button\" style=\"margin-top:20px;\">Show Detailed Info</a>";
+                                        echo "<form action=\"\" method=\"post\" style=\"display:inline;\">";
+                                          echo "<div class=\"button\" style=\"margin-left:10px; display:inline;\">";
+                                            echo "<button href=\"#\" class=\"btn btn-success\" name=\"add_book_button\" value=".$row['book_id']." style=\"margin-top:20px;\">Add Book</button>";
+                                          echo "<div>";
+                                          echo "<br>";
+                                        echo "</form>";
+                                    echo "</div>";
+                                echo "</div>";
+                            echo "</div>";
+                            echo "<hr>";
+                            }
+                          }
+                        }
+                      ?>
                   </div>
                 </div>
               </div>

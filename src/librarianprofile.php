@@ -104,7 +104,7 @@ if (isset($_GET['uname'])) {
                             echo "<tr>";
                             echo "<td scope=\"col\">".$row['date']."</th>";
                             echo "<td scope=\"col\">".$row['name']. " " .$row['surname']."</th>";
-                            echo "<td scope=\"col\">".$row['book_name']."</th>";
+                            echo "<td><a style=\"color:black; text-decoration: none;\" href=\"bookprofile.php?book_id=".$row['book_id']."\">".$row['book_name']."</a></td>";
                             echo "<td><a href=\"#\" class=\"btn btn-outline-success btn-sm pull-right\">Details</a></td>";
                             echo "</tr>";
                           }

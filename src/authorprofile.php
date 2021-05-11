@@ -105,7 +105,6 @@ if (isset($_GET['uname'])) {
                               echo "<th scope=\"row\">".$row['year']."</th>";
                               echo "<td><a style=\"color:black; text-decoration: none;\" href=\"bookprofile.php?book_id=".$row['book_id']."\">".$row['book_name']."</a></td>";
                               echo "<td><a href=\"reviews.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-left:10px;\">List Reviews </a>";
-                              echo "<a href=\"#\" class=\"btn btn-outline-success btn-sm pull-right\">Create Edition </a></td>";
                               echo "</tr>";
                             }
                           }

@@ -5,7 +5,7 @@ if (isset($_POST['search_user_button'])) {
   $_SESSION['search_post'] = $_POST;
   $local_post = $_POST;
 }
-else {
+else if (!isset($_POST['search_book_button']) && !isset($_POST['search_author_button'])){
   $local_post = $_SESSION['search_post'];
 }
 
@@ -98,16 +98,23 @@ if (isset($_POST['add_friend_button'])) {
                                           echo "<h5>by ".$row['author']."</h5>";
                                           echo "<p>".$row['description']."</p>";
 
-                                          echo "<!-- todo post post gezip rating hesapla -->";
-                                          echo "<span class=\"fa fa-star checked\"></span>";
-                                          echo "<span class=\"fa fa-star checked\"></span>";
-                                          echo "<span class=\"fa fa-star checked\"></span>";
-                                          echo "<span class=\"fa fa-star\"></span>";
-                                          echo "<span class=\"fa fa-star\"></span>";
-                                          echo "<br>";
-                                          echo "<p>Average Ratings (3.2)</p>";
+                                          $rating_query = "select ifnull(avg(rate),0) as rating
+                                                            from book
+                                                            left join post
+                                                            on book.book_id = post.book_id
+                                                            where book.book_id =".$row['book_id']."
+                                                            group by book.book_id";
+                                          $query_run = mysqli_query($db, $rating_query);
+                                          $rate = mysqli_fetch_array($query_run)['rating'];
+                                          for ($i = 0; $i < (int)$rate; $i++) {
+                                            echo "<i class=\"fa fa-star fa-lg checked\"></i>";
+                                          }
+                                          for ($i = 0; $i < 5 - (int)$rate; $i++) {
+                                            echo "<i class=\"fa fa-star fa-lg\"></i>";
+                                          }
+                                          echo "  (".number_format($rate, 2, '.', '').")";
                                           echo "<br/>";
-                                          echo "<a href=\"bookprofile.php?book_id=" .$row['book_id']. "\" class=\"btn btn-warning\" role=\"button\">Show Detailed Info</a>";
+                                          echo "<a href=\"bookprofile.php?book_id=" .$row['book_id']. "\" class=\"btn btn-warning\" role=\"button\" style=\"margin-top:20px;\">Show Detailed Info</a>";
                                       echo "</div>";
                                   echo "</div>";
                               echo "</div>";
@@ -122,7 +129,7 @@ if (isset($_POST['add_friend_button'])) {
                       else if(isset($_POST['search_author_button'])) {
                         $searchkey = $_POST['search_author'];
                         if ($searchkey != "") {
-                          $search_author_query = "select * from author natural join user where name or surname like '%$searchkey%'";
+                          $search_author_query = "select * from author natural join user where name like '%$searchkey%' or surname like '%$searchkey%' or username like '%$searchkey%'";
                           $search_author = mysqli_query($db, $search_author_query);
                           if (mysqli_num_rows($search_author) != 0) {
                             while ($row = mysqli_fetch_array($search_author)) {

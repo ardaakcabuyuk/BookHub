@@ -50,13 +50,6 @@ if (isset($_GET['book_id'])) {
         echo "<div class=\"col-md-3 text-center\"> <!-- Phone & Social -->";
             echo "<div class=\"button\" style=\"padding-top:18px\">";
                 echo "<a href=\"reviews.php?book_id=".$book['book_id']."\" class=\"btn btn-outline-success btn-block\">Reviews</a>";
-                if ($_SESSION['user_id'] != $book['user_id']) {
-                  $check_review_query = "select * from post where book_id =".$book['book_id']." and user_id =".$_SESSION['user_id'];
-                  $check_review = mysqli_query($db, $check_review_query);
-                  if (mysqli_num_rows($check_review) == 0) {
-                    echo "<a href=\"postreviewpage.php?book_id=".$book['book_id']."\" class=\"btn btn-outline-success btn-block\" style=\"margin-left:10px;\">Post Review</a>";
-                  }
-                }
             echo "</div>";
             echo "<div class=\"button\" style=\"padding-top:18px\">";
                 echo "<a href=\"quotes.php?book_id=".$book['book_id']."\" class=\"btn btn-outline-success btn-block\">Quotes</a>";
