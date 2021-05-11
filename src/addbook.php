@@ -24,7 +24,7 @@ if(isset($_POST['p_button'])) {
   ", \"". $_POST['desc']. "\", ". $_SESSION['a_id']. ")";
   echo $add_book_sql;
   mysqli_query($db,$add_book_sql);
-  echo "<script type='text/javascript'>alert('New book named ". $_POST['title']. " added for author ". $cur_us['name'] . " ". $cur_us['surname']. "!');window.location.href='addbook.php';</script>";
+  echo "<script type='text/javascript'>alert('New book named ". $_POST['title']. " added for author ". $cur_us['name'] . " ". $cur_us['surname']. "!');window.location.href='authorprofile.php?uname=".$cur_us['username']."';</script>";
 }
 ?>
 
@@ -53,33 +53,33 @@ if(isset($_POST['p_button'])) {
             <hr>
             <div class="form-group">
                 <label for="password" class="col-sm-3 control-label">Title</label>
-                <div class="col-sm-9">
+                <div class="col-sm-13">
                     <input type="text" name="title" id="password" placeholder="Title" class="form-control" autofocus>
                 </div>
             </div>
             <br>
             <div class="form-group">
                 <label for="password" class="col-sm-3 control-label">Genre</label>
-                <div class="col-sm-9">
+                <div class="col-sm-13">
                     <input type="text" name="genre" id="password" placeholder="Genre" class="form-control" name= "email">
                 </div>
             </div>
             <br>
             <div class="form-group">
                 <label for="password" class="col-sm-3 control-label">Description</label>
-                <div class="col-sm-9">
+                <div class="col-sm-13">
                     <input type="text" name="desc" id="password" placeholder="Description" class="form-control">
                 </div>
             </div>
             <br>
             <div class="form-group">
                 <label for="password" class="col-sm-3 control-label">Publication Year</label>
-                <div class="col-sm-9">
+                <div class="col-sm-13">
                     <input type="number" name="year" id="password" placeholder="Year" class="form-control">
                 </div>
             </div>
             <br>
-            <button type="submit" name="p_button" class="btn btn-primary btn-block col-md-9">Publish</button>
+            <button type="submit" name="p_button" class="btn btn-primary btn-warning btn-lg pull-right">Publish</button>
 
             <br>
             <br>
