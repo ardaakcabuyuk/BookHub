@@ -88,7 +88,6 @@ if(isset($_POST['join_challenge_button'])) {
             ?>
         </div>
     </div>
-
 </div>
 </body>
 </html>
