@@ -324,7 +324,7 @@
                         $friend_query = mysqli_query($db, $friend_sql);
                         while( $row = mysqli_fetch_array($friend_query)) {
                           echo "<tr>";
-                          echo "<th scope=\"row\">". $row['name'] ." ". $row['surname']. "</th>";
+                          echo "<td><a style=\"color:black; text-decoration: none;\" href=\"userprofile.php?uname=".$row['username']."\">".$row['name']." ".$row['surname']."</a></td>";
                           echo "</tr>";
                         }
                         ?>
