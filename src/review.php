@@ -110,7 +110,7 @@ if (isset($_GET['post_id'])) {
                                                                                       and P.post_id = $post_id)
                                         and A.user_id = U.user_id";
 
-                        $comment_query = "select * from comment natural join user where post_id = $post_id";
+                        $comment_query = "select * from comment natural join user where post_id = $post_id order by date desc;";
 
                         $reply_query_run = mysqli_query($db, $reply_query);
                         $comment_query_run = mysqli_query($db, $comment_query);
