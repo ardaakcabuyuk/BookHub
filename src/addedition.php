@@ -30,7 +30,7 @@ if(isset($_POST['p_button'])) {
         echo "<script type='text/javascript'>alert('Format cannot be empty!');window.location.href='addedition.php';</script>";
     }
     $photo = 1010;
-    $add_edition_sql = "insert into edition(book_id, page_count, publisher, language, format, cover_photo, translator) values(\"" .
+    $add_edition_sql = "insert into edition(edition_no, book_id, page_count, publisher, language, format, cover_photo, translator) values(\"".$_POST['eno']."\", \"".
         $book_id_glb. "\", \"". $_POST['pcount']. "\", \"". $_POST['publisher']. "\", \"".$_POST['language']. "\", \"".$_POST['format'].
         "\", \"" . $photo. "\", \"". $_POST['translator']. "\")";
     $query_result = mysqli_query($db,$add_edition_sql);
