@@ -81,11 +81,11 @@ if (isset($_GET['book_id'])) {
                         echo "<div class=\"card-footer\">";
                             echo "<p style=\"vertical-align: middle; display:inline;\"><i class=\"fa fa-thumbs-o-up\" style=\"color:orange;\"></i> ".$row['like_count']." likes";
                             echo "&emsp;<i class=\"fa fa-comment-o\" style=\"color:orange;\"></i> ".$row['comment_count']." comments";
-                            echo "<form style=\"display:inline;\" action=\"like.php\" method=\"post\">";
+                            echo "<form style=\"display:inline;\" action=\"comment_post.php\" method=\"post\">";
                             echo "<div class=\"form-group\" style=\"margin-top:20px; margin-bottom:20px;\">";
-                                echo "<textarea class=\"form-control\" id=\"message\" rows=\"3\" placeholder=\"Comment here...\"></textarea>";
+                                echo "<textarea class=\"form-control\" id=\"message\" rows=\"3\" name=\"content\" placeholder=\"Comment here...\"></textarea>";
                             echo "</div>";
-                            echo "<button type=\"submit\" class=\"btn btn-warning pull-right\" style=\"margin-left: 10px; margin-bottom:10px;\"><i class=\"fa fa-comment-o\"></i> Comment</button>";
+                            echo "<button type=\"submit\" class=\"btn btn-warning pull-right\" value=\"reviews.php?book_id=".$row['book_id']."-".$row['post_id'] ."\" style=\"margin-left: 10px; margin-bottom:10px;\" name=\"comment_button\"<i class=\"fa fa-comment-o\"></i> Comment</button>";
                             echo "</form>";
                             $liked_sql = "select * from likes_post where post_id = " . $row['post_id']. " and user_id = ". $_SESSION['user_id'];
                             if(mysqli_num_rows(mysqli_query($db,$liked_sql)) == 0) {

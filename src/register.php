@@ -42,7 +42,7 @@ if(isset($_POST['button'])) {
         $librarian = mysqli_query($db, $insert_librarian_sql);
       }
 
-      echo "<script type='text/javascript'>alert('Success!, $log_in_type');window.location.href='register.php';</script>";
+      echo "<script type='text/javascript'>alert('Success!, $log_in_type');window.location.href='index.php';</script>";
     }
   }
 }
