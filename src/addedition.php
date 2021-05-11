@@ -33,13 +33,12 @@ if(isset($_POST['p_button'])) {
     $add_edition_sql = "insert into edition(book_id, page_count, publisher, language, format, cover_photo, translator) values(\"" .
         $book_id_glb. "\", \"". $_POST['pcount']. "\", \"". $_POST['publisher']. "\", \"".$_POST['language']. "\", \"".$_POST['format'].
         "\", \"" . $photo. "\", \"". $_POST['translator']. "\")";
-    echo $add_edition_sql;
     $query_result = mysqli_query($db,$add_edition_sql);
     if(!$query_result) {
         printf("Error: %s\n", mysqli_error($db));
         exit();
     }
-    echo "<script type='text/javascript'>alert('New edition added for book id ". $book_id_glb. "!');window.location.href='addedition.php';</script>";
+    echo "<script type='text/javascript'>alert('New edition added for book id ". $book_id_glb. "!');window.location.href='bookprofile.php?book_id=$book_id_glb';</script>";
 }
 ?>
 
@@ -62,77 +61,61 @@ if(isset($_POST['p_button'])) {
 <br/>
 <br/>
 
-<div class="container col-md-5">
-    <form class="form-horizontal" action ="" method="post" role="form">
-        <h2>Add Edition</h2>
+<div class="container">
+    <form class="form-inline" method="POST" action="">
+        <h2>Create Edition</h2>
         <hr>
-        <div class="form-group">
-            <label for="password" class="col-sm-3 control-label">Genre</label>
-            <div class="col-sm-9">
-                <input type="text" name = "genre" id="password" placeholder="Genre" class="form-control">
-            </div>
+        <br>
+        <div class="row">
+          <div class="col">
+              <label for="genre" class="col-xs-6 control-label">Genre</label>
+              <input type="text" name = "genre" id="genre" placeholder="Genre" class="form-control">
+          </div>
+          <div class="col">
+              <label for="year" class="col-xs-6 control-label">Year</label>
+              <input type="text" name = "year" id="year" placeholder = "Year" class="form-control">
+          </div>
         </div>
         <br>
-        <div class="form-group">
-            <label for="password" class="col-sm-3 control-label">Year</label>
-            <div class="col-sm-9">
-                <input type="date" name = "year" id="birthDate" class="form-control">
-            </div>
+        <div class="row">
+          <div class="col">
+              <label for="page_count" class="col-xs-6 control-label">Page Count</label>
+              <input type="text" name = "pcount" id="page_count" placeholder="Page Count" class="form-control">
+          </div>
+          <div class="col">
+              <label for="Height" class="col-xs-6 control-label">Edition No</label>
+              <input type="text" name = "eno" id="password" placeholder="Edition No" class="form-control">
+          </div>
         </div>
         <br>
-        <div class="form-group">
-            <label for="birthDate" class="col-sm-3 control-label">Page Count</label>
-            <div class="col-sm-9">
-                <input type="text" name = "pcount" id="password" placeholder="Page Count" class="form-control">
-            </div>
+        <div class="row">
+          <div class="col">
+            <label for="password" class="col-xs-6 control-label">Publisher</label>
+            <input type="text" name = "publisher" id="height" placeholder="Publisher" class="form-control">
+          </div>
+          <div class="col">
+            <label for="weight" class="col-xs-6 control-label">Language</label>
+            <input type="text" name = "language" id="weight" placeholder="Language" class="form-control">
+          </div>
         </div>
         <br>
-        <div class="form-group">
-            <label for="phoneNumber" class="col-sm-3 control-label">Edition No </label>
-            <div class="col-sm-9">
-                <input type="text" name = "eno" id="password" placeholder="Edition No" class="form-control">
-            </div>
+        <div class="row">
+          <div class="col">
+            <label for="password" class="col-xs-6 control-label">Format</label>
+            <input type="text" name = "format" id="weight" placeholder="Format" class="form-control">
+          </div>
+          <div class="col">
+            <label for="weight" class="col-xs-6 control-label">Translator</label>
+            <input type="text" name = "translator" id="weight" placeholder="Translator" class="form-control">
+          </div>
         </div>
         <br>
-        <div class="form-group">
-            <label for="Height" class="col-sm-3 control-label">Publisher </label>
-            <div class="col-sm-9">
-                <input type="text" name = "publisher" id="height" placeholder="Publisher" class="form-control">
-            </div>
-        </div>
-        <br>
-        <div class="form-group">
-            <label for="weight" class="col-sm-3 control-label">Language</label>
-            <div class="col-sm-9">
-                <input type="text" name = "language" id="weight" placeholder="Language" class="form-control">
-            </div>
-        </div>
-        <br>
-        <div class="form-group">
-            <label for="weight" class="col-sm-3 control-label">Format</label>
-            <div class="col-sm-9">
-                <input type="text" name = "format" id="weight" placeholder="Format" class="form-control">
-            </div>
-        </div>
-        <br>
-        <div class="form-group">
-            <label for="weight" class="col-sm-3 control-label">Translator</label>
-            <div class="col-sm-9">
-                <input type="text" name = "translator" id="weight" placeholder="Translator" class="form-control">
-            </div>
-        </div>
-        <br>
-
-        <br>
-
-        <button type="submit" name = "p_button" class="btn btn-primary btn-block col-md-9">Done</button>
-
+        <?php
+          echo "<button type=\"submit\" name=\"p_button\" class=\"btn btn-warning pull-right\">Create</button>";
+        ?>
         <br>
         <br>
     </form> <!-- /form -->
 </div> <!-- ./container -->
-
-
-
 </body>
 </html>

@@ -75,8 +75,8 @@ if (isset($_GET['book_id'])) {
     <div class="row">
         <div class="col-md-12">
           <div class="card card-block text-xs-left">
-            <h2 class="card-title" style="color:#009688"><i class="fa fa-newspaper-o fa-fw"></i> Progress Steps
-            <a href="#" class="btn btn-outline-success btn-sm" style="margin-left:10px;">Add Progress</a></h2>
+            <h2 class="card-title" style="color:#009688"><i class="fa fa-newspaper-o fa-fw"></i> Progress Steps<?php
+            if ($_SESSION['type'] == "user") echo "<a href=\"#\" class=\"btn btn-outline-success btn-sm\" style=\"margin-left:10px;\">Add Progress</a>"?></h2>
             <div style="height: 15px"></div>
             <table class="table">
                 <thead class="thead-dark">
