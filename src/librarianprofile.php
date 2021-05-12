@@ -1,7 +1,7 @@
 <?php
 include('config.php');
 include_once "navbar.php";
-
+require_once "helper_functions.php";
 $own_profile = false;
 if (isset($_GET['uname'])) {
   if ($_GET['uname'] == $_SESSION['username']) {
@@ -83,7 +83,7 @@ if (isset($_GET['uname'])) {
       <div class="row">
             <div class="col-md-12">
               <div class="card card-block text-xs-left">
-                <h3 class="card-title" style="color:#009688">Erroneous Information Correction Request</h2>
+                <h3 class="card-title" style="color:#009688">Erroneous Information Correction Request</h3>
                 <div style="height: 15px"></div>
                 <table class="table">
                     <thead class="thead-dark">
@@ -126,26 +126,39 @@ if (isset($_GET['uname'])) {
             <table class="table">
                 <thead class="thead-dark">
                   <tr>
-                    <th scope="col">Start Date</th>
-                    <th scope="col">Deadline</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Book Count</th>
-                    <th scope="col"></th>
+                      <th scope="col">Title</th>
+                      <th scope="col">Start Date</th>
+                      <th scope="col">Deadline</th>
+                      <th scope="col">Book Count</th>
+                      <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">07.01.2021</th>
-                    <td>01.04.2021</td>
-                    <td>Minik Kitap Kurtları</td>
-                    <td>Bookssss</td>
-                    <td>30</td>
-                    <td><a href="#" class="btn btn-outline-success btn-sm">Details</a></td>
-                  </tr>
+                <?php
+                  $librarian_challenges_query = "select L.librarian_id
+                                                 from librarian L natural join user U
+                                                 where username = '".$_GET['uname']."'";
+                  $result_librarian_challenge_query = mysqli_query($db, $librarian_challenges_query);
+                  $cur_librarian_id = mysqli_fetch_array($result_librarian_challenge_query);
+
+                  $get_librarian_challenges_query = "select *
+                                                     from challenge C 
+                                                     where C.librarian_id = '" .$cur_librarian_id['librarian_id'] ."'
+                                                     order by C.start_date asc";
+                  $get_librarian_challenges = mysqli_query($db, $get_librarian_challenges_query);
+                  while ($row_challenges = mysqli_fetch_array($get_librarian_challenges)) {
+                      echo "<tr >";
+                      echo "<th scope = \"row\" >" .$row_challenges['challenge_name']. "</th >";
+                      echo "<td >" .formattedDate($row_challenges['start_date']). "</td >";
+                      echo "<td >" .formattedDate($row_challenges['end_date']). "</td >";
+                      echo "<td >" .$row_challenges['goal']. "</td >";
+                      echo "<td ><a href = \"#\" class=\"btn btn-outline-success btn-sm\" > Details</a ></td >";
+                      echo "</tr >";
+                  }
+                ?>
                 </tbody>
               </table>
-              <a href="#" class="btn btn-outline-success btn-sm">Create</a>
+              <a href="createchallenge.php" class="btn btn-outline-success btn-sm">Create</a>
           </div>
         </div>
       </div>
