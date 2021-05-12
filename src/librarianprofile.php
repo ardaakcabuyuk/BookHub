@@ -135,15 +135,11 @@ if (isset($_GET['uname'])) {
                 </thead>
                 <tbody>
                 <?php
-                  $librarian_challenges_query = "select L.librarian_id
-                                                 from librarian L natural join user U
-                                                 where username = '".$_GET['uname']."'";
-                  $result_librarian_challenge_query = mysqli_query($db, $librarian_challenges_query);
-                  $cur_librarian_id = mysqli_fetch_array($result_librarian_challenge_query);
-
                   $get_librarian_challenges_query = "select *
                                                      from challenge C 
-                                                     where C.librarian_id = '" .$cur_librarian_id['librarian_id'] ."'
+                                                     where C.librarian_id = (select L.librarian_id
+                                                                             from librarian L natural join user U
+                                                                             where username = '".$_GET['uname']."')
                                                      order by C.start_date asc";
                   $get_librarian_challenges = mysqli_query($db, $get_librarian_challenges_query);
                   while ($row_challenges = mysqli_fetch_array($get_librarian_challenges)) {
