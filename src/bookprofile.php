@@ -11,6 +11,18 @@ if (isset($_GET['book_id'])) {
     $page_no = $_POST['pageno'];
     $add_progress_query = "insert into reads_book (book_id, edition_no, user_id, progress)
                             values ($book_id, $edition_no, ".$_SESSION['user_id'].", $page_no)";
+    $update_challenge_progress = "update participate P
+                                  set P.challlenge_progress = P.challlenge_progress +1
+                                  where P.user_id = ".$_SESSION['user_id'] ." and exists (select *
+                                                from book B natural join edition E
+                                                where B.book_id = " .$book_id."
+                                                and E.page_count = " .$page_no.")";
+
+    $result_update_challenge_progress = mysqli_query($db, $update_challenge_progress);
+    if(!$result_update_challenge_progress) {
+        printf("Error: %s\n", mysqli_error($db));
+        exit();
+    }
 
     if ($page_no < 0 || $page_no > $page_count) {
       echo "<script type='text/javascript'>alert('Bad credentials!');window.location.href='bookprofile.php?book_id=$book_id';</script>";
