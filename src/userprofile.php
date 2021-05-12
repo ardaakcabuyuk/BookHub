@@ -165,7 +165,7 @@
                       echo "<tr>";
                       echo "<th scope=\"row\">". $row["date"]. "</th>";
                       echo "<td><a style=\"color:black; text-decoration: none;\" href=\"bookprofile.php?book_id=".$row['book_id']."\">".$row['book_name']."</a></td>";
-                      echo "<td><a style=\"color:black; text-decoration: none;\" href=\"authorprofile.php?uname=".mysqli_fetch_array(mysqli_query($db, "select * from author natural join user where author_id =".$row['author_id']))['username']."\">".$row_book['author']."</a></td>";
+                      echo "<td><a style=\"color:black; text-decoration: none;\" href=\"authorprofile.php?uname=".mysqli_fetch_array(mysqli_query($db, "select * from author natural join user where author_id =".$row['author_id']))['username']."\">".$row['author']."</a></td>";
                         if($own_profile) {
                           $check_review_query = "select * from post where book_id =".$row['book_id']." and user_id =".$_SESSION['user_id'];
                           $check_review = mysqli_query($db, $check_review_query);
