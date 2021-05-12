@@ -64,7 +64,7 @@ if(isset($_POST['join_challenge_button'])) {
                                           from participate P natural join challenge C
                                           where P.challenge_id = " . $row['challenge_id'] . " 
                                           and P.user_id = " . $_SESSION['user_id'] . "
-                                          and P.challlenge_progress = C.goal ";
+                                          and P.challlenge_progress >= C.goal ";
                             $result_succeeded = mysqli_query($db, $succeeded);
                             if (mysqli_num_rows($result) == 0) {
                                 $result_started = mysqli_query($db, $started_query);
