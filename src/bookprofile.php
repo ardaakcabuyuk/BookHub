@@ -16,6 +16,7 @@ if (isset($_GET['book_id'])) {
                                   where P.user_id = ".$_SESSION['user_id'] ." and exists (select *
                                                 from book B natural join edition E
                                                 where B.book_id = " .$book_id."
+                                                and E.edition_no = " .$edition_no ."
                                                 and E.page_count = " .$page_no.")";
 
     $result_update_challenge_progress = mysqli_query($db, $update_challenge_progress);
