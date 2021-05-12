@@ -14,7 +14,7 @@ if(isset($_POST['p_button'])) {
   if(empty($_POST['year'])) {
     echo "<script type='text/javascript'>alert('Year cannot be empty!');window.location.href='addbook.php';</script>";
   }
-  if(empty($_POST['genre'])) {
+  if(empty($_POST[ 'genre'])) {
     echo "<script type='text/javascript'>alert('Genre cannot be empty!');window.location.href='addbook.php';</script>";
   }
   $user_sql = "select * from user where user_id=" . $_SESSION['user_id'];
@@ -25,24 +25,27 @@ if(isset($_POST['p_button'])) {
   echo $add_book_sql;
   mysqli_query($db,$add_book_sql);
 
-  $find_sequel_id_query = "select *
+  # if original movie exists, create a series entry
+  if (substr_compare($_POST['sequel_of'], "none", 0)) {
+      $find_sequel_id_query = "select *
                      from book B
-                     where B.book_name = '".$_POST['title']. "'
-                     and B.author_id = '".$_SESSION['a_id']."' 
-                     and B.genre = '".$_POST['genre']."' 
-                     and B.year = '". $_POST['year']."'
-                     and B.description = '". $_POST['desc']."'";
+                     where B.book_name = '" . $_POST['title'] . "'
+                     and B.author_id = '" . $_SESSION['a_id'] . "' 
+                     and B.genre = '" . $_POST['genre'] . "' 
+                     and B.year = '" . $_POST['year'] . "'
+                     and B.description = '" . $_POST['desc'] . "'";
 
-  $find_sequel_id = mysqli_query($db, $find_sequel_id_query);
-  $row_sequel_id = mysqli_fetch_array($find_sequel_id);
+      $find_sequel_id = mysqli_query($db, $find_sequel_id_query);
+      $row_sequel_id = mysqli_fetch_array($find_sequel_id);
 
-  $add_series_query = "insert into series(sequel_id, original_id, series_name) values(\""
-  .$row_sequel_id['book_id']. "\", \"". $_POST['sequel_of'].  "\", \"". $_POST['series_name']. "\")";
+      $add_series_query = "insert into series(sequel_id, original_id, series_name) values(\""
+          . $row_sequel_id['book_id'] . "\", \"" . $_POST['sequel_of'] . "\", \"" . $_POST['series_name'] . "\")";
 
-  $result_add_series_query = mysqli_query($db, $add_series_query);
-  if (!$result_add_series_query) {
-      printf("Error 1:  %s\n", mysqli_error($db));
-      exit();
+      $result_add_series_query = mysqli_query($db, $add_series_query);
+      if (!$result_add_series_query) {
+          printf("Error 1:  %s\n", mysqli_error($db));
+          exit();
+      }
   }
 
   echo "<script type='text/javascript'>alert('New book named ". $_POST['title']. " added for author ". $cur_us['name'] . " ". $cur_us['surname']. "!');window.location.href='authorprofile.php?uname=".$cur_us['username']."';</script>";
@@ -105,7 +108,7 @@ if(isset($_POST['p_button'])) {
                 <?php
                 echo "<div class=\"col-sm-13\">";
                     echo "<select name=\"sequel_of\" class=\"form-control\">";
-                        echo "<option value=\"none\" selected=\"selected\"> None </option>";
+                        echo "<option value=\"none\" selected=\"selected\"> Sequel does not exist! </option>";
                             $get_author_books_query = "select B.book_id, B.book_name
                                                        from book b
                                                        where B.author_id = (select A.author_id
