@@ -39,47 +39,57 @@ if(isset($_POST['join_challenge_button'])) {
             <?php
                 $challenge_query = "select *
                                     from challenge C 
-                                    where C.end_date > CURRENT_DATE";
+                                    where C.end_date > CURRENT_DATE
+                                    order by C.start_date asc";
                 $run_query = mysqli_query($db, $challenge_query);
 
                 while($row = mysqli_fetch_array($run_query)) {
+                    $started_query = "select *
+                                      from challenge C
+                                      where C.challenge_id = " . $row['challenge_id'] . " 
+                                      and C.start_date > CURRENT_DATE";
                     echo "<div class=\"well search-result\">";
                         echo "<div class=\"row\" >";
                             echo "<div class=\"col-xs-6 col-sm-9 col-md-9 col-lg-10 title\" >";
                                 echo "<h3 >" .$row['challenge_name']. "</h3 >";
                                 echo "<p style = \"font-size:15px;\" ><span style = \"font-weight: bold;\" > Book Count: </span >" .$row['goal']. "</p >";
                                 echo "<p style = \"font-size:15px;\" ><span style = \"font-weight: bold;\" > Deadline: </span >" .formattedDate($row['end_date']). "</p >";
-                                echo "<form action=\"\" method=\"post\">";
-                                    $joined = "select * 
-                                               from participate P
-                                               where P.challenge_id = " .$row['challenge_id']. " and P.user_id = " .$_SESSION['user_id'];
-                                    $result = mysqli_query($db, $joined);
-                                    $succeeded = "select * 
-                                              from participate P natural join challenge C
-                                              where P.challenge_id = " .$row['challenge_id']. " 
-                                              and P.user_id = " .$_SESSION['user_id']. "
-                                              and P.challlenge_progress = C.goal ";
-                                    $result_succeeded = mysqli_query($db, $succeeded);
-                                    if (mysqli_num_rows($result) == 0) {
-                                        echo "<button class=\"btn btn-warning\" type = \"submit\" name = \"join_challenge_button\" value = \"" . $row['challenge_id'] . "\">";
-                                        echo "Join";
-                                        echo "</button >";
-                                    } else {
-                                        $fetch_progress = mysqli_fetch_array($result);
-                                        echo "<p style = \"font-size:15px;\" ><span style = \"font-weight: bold;\" > Progress: </span >" .$fetch_progress['challlenge_progress']." / ".$row['goal']." </p >";
-                                        if (mysqli_num_rows($result_succeeded) == 0) {
-                                            echo "<button class=\"btn btn-info\" name = \"already_joined_button\" value = \"\"" . $_SESSION['user_id'] . ">";
-                                            echo "Joined";
-                                            echo "</button >";
-                                        }
-                                    }
-                                if (mysqli_num_rows($result_succeeded) != 0) {
-                                    echo "<button class=\"btn btn-success\" name = \"challenge_completed_button\" value = \"\"" . $_SESSION['user_id'] . ">";
-                                    echo "Completed";
+
+                            echo "<form action=\"\" method=\"post\">";
+                            $joined = "select * 
+                                       from participate P
+                                       where P.challenge_id = " . $row['challenge_id'] . " and P.user_id = " . $_SESSION['user_id'];
+                            $result = mysqli_query($db, $joined);
+                            $succeeded = "select * 
+                                          from participate P natural join challenge C
+                                          where P.challenge_id = " . $row['challenge_id'] . " 
+                                          and P.user_id = " . $_SESSION['user_id'] . "
+                                          and P.challlenge_progress = C.goal ";
+                            $result_succeeded = mysqli_query($db, $succeeded);
+                            if (mysqli_num_rows($result) == 0) {
+                                $result_started = mysqli_query($db, $started_query);
+                                if (mysqli_num_rows($result_started) == 0) {
+                                    echo "<button class=\"btn btn-warning\" type = \"submit\" name = \"join_challenge_button\" value = \"" . $row['challenge_id'] . "\">";
+                                    echo "Join";
                                     echo "</button >";
                                 }
-                                echo "<label class=\"control-label\" style = \"float:right\" ><span style = \"font-weight: bold;\" > Start Date: </span >" .formattedDate($row['start_date']). "</label >";
-                                echo "</form>";
+                            } else {
+                                $fetch_progress = mysqli_fetch_array($result);
+                                echo "<p style = \"font-size:15px;\" ><span style = \"font-weight: bold;\" > Progress: </span >" . $fetch_progress['challlenge_progress'] . " / " . $row['goal'] . " </p >";
+                                if (mysqli_num_rows($result_succeeded) == 0) {
+                                    echo "<button class=\"btn btn-info\" name = \"already_joined_button\" value = \"\"" . $_SESSION['user_id'] . ">";
+                                    echo "Joined";
+                                    echo "</button >";
+                                }
+                            }
+                            if (mysqli_num_rows($result_succeeded) != 0) {
+                                echo "<button class=\"btn btn-success\" name = \"challenge_completed_button\" value = \"\"" . $_SESSION['user_id'] . ">";
+                                echo "Completed";
+                                echo "</button >";
+                            }
+                            echo "<label class=\"control-label\" style = \"float:right\" ><span style = \"font-weight: bold;\" > Start Date: </span >" . formattedDate($row['start_date']) . "</label >";
+                            echo "</form>";
+
                             echo "</div >";
                         echo "</div >";
                     echo "</div >";
