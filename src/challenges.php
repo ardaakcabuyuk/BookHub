@@ -38,7 +38,7 @@ if(isset($_POST['join_challenge_button'])) {
             <form class="form-inline" action="challenges.php" method="post">
             <?php
                 $challenge_query = "select *
-                                    from challenge C 
+                                    from challenge C
                                     where C.end_date > CURRENT_DATE
                                     order by C.start_date asc";
                 $run_query = mysqli_query($db, $challenge_query);
@@ -46,7 +46,7 @@ if(isset($_POST['join_challenge_button'])) {
                 while($row = mysqli_fetch_array($run_query)) {
                     $started_query = "select *
                                       from challenge C
-                                      where C.challenge_id = " . $row['challenge_id'] . " 
+                                      where C.challenge_id = " . $row['challenge_id'] . "
                                       and C.start_date > CURRENT_DATE";
                     echo "<div class=\"well search-result\">";
                         echo "<div class=\"row\" >";
@@ -56,13 +56,13 @@ if(isset($_POST['join_challenge_button'])) {
                                 echo "<p style = \"font-size:15px;\" ><span style = \"font-weight: bold;\" > Deadline: </span >" .formattedDate($row['end_date']). "</p >";
 
                             echo "<form action=\"\" method=\"post\">";
-                            $joined = "select * 
+                            $joined = "select *
                                        from participate P
                                        where P.challenge_id = " . $row['challenge_id'] . " and P.user_id = " . $_SESSION['user_id'];
                             $result = mysqli_query($db, $joined);
-                            $succeeded = "select * 
+                            $succeeded = "select *
                                           from participate P natural join challenge C
-                                          where P.challenge_id = " . $row['challenge_id'] . " 
+                                          where P.challenge_id = " . $row['challenge_id'] . "
                                           and P.user_id = " . $_SESSION['user_id'] . "
                                           and P.challlenge_progress >= C.goal ";
                             $result_succeeded = mysqli_query($db, $succeeded);

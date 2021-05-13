@@ -147,11 +147,13 @@
                 <table class="table">
                     <thead class="thead-dark">
                       <tr>
-                        <th scope="col">Finished</th>
+                        <th scope="col">Finished Date</th>
                         <th scope="col">Title</th>
+                        <th scope="col">Edition</th>
                         <th scope="col">Author</th>
                         <?php
                           if($own_profile) {
+                            echo "<th scope=\"col\"></th>";
                             echo "<th scope=\"col\"></th>";
                           }
                         ?>
@@ -165,16 +167,19 @@
                       echo "<tr>";
                       echo "<th scope=\"row\">". $row["date"]. "</th>";
                       echo "<td><a style=\"color:black; text-decoration: none;\" href=\"bookprofile.php?book_id=".$row['book_id']."\">".$row['book_name']."</a></td>";
+                      echo "<td><a style=\"color:black; text-decoration: none;\" href=\"bookprofile.php?book_id=".$row['book_id']."\">".$row['edition_no']."</a></td>";
                       echo "<td><a style=\"color:black; text-decoration: none;\" href=\"authorprofile.php?uname=".mysqli_fetch_array(mysqli_query($db, "select * from author natural join user where author_id =".$row['author_id']))['username']."\">".$row['author']."</a></td>";
                         if($own_profile) {
                           $check_review_query = "select * from post where book_id =".$row['book_id']." and user_id =".$_SESSION['user_id'];
                           $check_review = mysqli_query($db, $check_review_query);
                           if (mysqli_num_rows($check_review) == 0) {
-                            echo "<td><a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-left:10px;\">Post Quote</a>";
-                            echo "<a href=\"postreviewpage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">Post Review</a></td>";
+                            echo "<td><a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-left:20px;\">Post Quote</a>";
+                            echo "<a href=\"postreviewpage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-left:20px;\">Post Review</a>";
+                            echo "<a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">Recommend</a></td>";
                           }
                           else {
-                            echo "<td><a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">Post Quote</a></td>";
+                            echo "<td><a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-left:20px;\">Post Quote</a>";
+                            echo "<a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">Recommend</a></td>";
                           }
                         }
                       echo "</tr>";
