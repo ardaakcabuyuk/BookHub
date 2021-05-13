@@ -173,14 +173,13 @@
                           $check_review_query = "select * from post where book_id =".$row['book_id']." and user_id =".$_SESSION['user_id'];
                           $check_review = mysqli_query($db, $check_review_query);
                           if (mysqli_num_rows($check_review) == 0) {
-                            echo "<td><a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-left:10px;\">Post Quote</a>";
-                            echo "<a href=\"postreviewpage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">Post Review</a></td>";
-                            echo "<a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">Recommend</a>";
+                            echo "<td><a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-left:20px;\">Post Quote</a>";
+                            echo "<a href=\"postreviewpage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-left:20px;\">Post Review</a>";
+                            echo "<a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">Recommend</a></td>";
                           }
                           else {
-                            echo "<a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">Recommend</a>";
-                            echo "<td><a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">Post Quote</a></td>";
-
+                            echo "<td><a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-left:20px;\">Post Quote</a>";
+                            echo "<a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">Recommend</a></td>";
                           }
                         }
                       echo "</tr>";
