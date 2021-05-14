@@ -41,6 +41,9 @@
         <link rel="stylesheet" href="css/bootstrap.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="css/searchresult.css" />
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </head>
 
     <body>
@@ -113,8 +116,7 @@
                         </thead>
                         <tbody>
                           <?php
-                          $reads_sql = "select * from reads_book R where R.user_id = $user_id ".
-                           "and R.progress < (select E.page_count from edition E where E.edition_no = R.edition_no and E.book_id = R.book_id)";
+                          $reads_sql = "select * from reads_book R where R.user_id = $user_id and R.progress < (select E.page_count from edition E where E.edition_no = R.edition_no and E.book_id = R.book_id) and R.date in (select max(date) from reads_book R1 where R1.user_id = $user_id group by R1.book_id, R1.edition_no)";
                           $reads_user = mysqli_query($db, $reads_sql);
                           while( $row = mysqli_fetch_array($reads_user)) {
                           $current_book_sql = "select * from book natural join edition where book_id =" . $row['book_id'];
@@ -163,6 +165,7 @@
                       <?php
                       $finished_book_sql = "select * from reads_book R natural join book Where R.user_id = $user_id AND progress = ( Select page_count From Edition Where edition_no = R. edition_no AND book_id = R.book_id)";
                       $finished_book_query = mysqli_query($db, $finished_book_sql);
+                      $i = 0;
                       while( $row = mysqli_fetch_array($finished_book_query)) {
                       echo "<tr>";
                       echo "<th scope=\"row\">". $row["date"]. "</th>";
@@ -175,16 +178,37 @@
                           if (mysqli_num_rows($check_review) == 0) {
                             echo "<td><a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-left:20px;\">Post Quote</a>";
                             echo "<a href=\"postreviewpage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-left:20px;\">Post Review</a>";
-                            echo "<a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">Recommend</a></td>";
+                            echo "<button type=\"button\" data-toggle=\"modal\" data-target=\"#recommend$i\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-right:10px;\">Recommend</button></td>";
                           }
                           else {
                             echo "<td><a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-left:20px;\">Post Quote</a>";
-                            echo "<a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">Recommend</a></td>";
+                            echo "<a type=\"button\" data-toggle=\"modal\" data-target=\"#recommend$i\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-right:10px;\">Recommend</a></td>";
                           }
                         }
                       echo "</tr>";
-                      }
-                    ?>
+                      echo "<div class=\"modal fade\" id=\"recommend$i\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"addProgressLabel\" aria-hidden=\"true\">"; $i++;
+                        echo "<form id=\"add_form\" action=\"\" method=\"POST\">";
+                        echo "<div class=\"modal-dialog modal-lg\" role=\"document\">";
+                        echo "<div class=\"modal-content\">";
+                        echo "<div class=\"modal-header\">";
+                                echo "<h5 class=\"modal-title\" id=\"addProgressLabel\">Add Progress</h5>";
+                                echo "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">";
+                                  echo "<span aria-hidden=\"true\">&times;</span>";
+                                echo "</button>";
+                              echo "</div>";
+                              echo "<div class=\"modal-body\">";
+                              echo "<label for=\"pageno\">Page Number</label><br/>";
+                                echo "<input type=\"text\" class=\"form-control\" id=\"pageno\" name=\"pageno\" required/><br/>";
+                              echo "</div>";
+                              echo "<div class=\"modal-footer\">";
+                                echo "<button type=\"button\" class=\"btn btn-danger\" data-dismiss=\"modal\">Cancel</button>";
+                                echo "<button type=\"submit\" name=\"addProgressButton\" value=\"". $edition['edition_no']. "-" . $edition['page_count'] ."\" class=\"btn btn-success\">Add</button>";
+                              echo "</div>";
+                            echo "</div>";
+                          echo "</div>";
+                        echo "</form>";
+                    } ?>
+
                     </tbody>
                   </table>
               </div>
@@ -336,8 +360,11 @@
                         </tbody>
                     </table>
                     <?php
-                      if($own_profile)
-                        echo "<a href=\"#\" class=\"btn btn-outline-success btn-sm pull-right\">Add </a>";
+                      if($own_profile) {
+                        echo "<form action=\"searchresult.php\" method=\"post\">";
+                        echo "<button href=\"#\" name=\"search_user_button\" class=\"btn btn-outline-success btn-sm pull-right\">Add </button>";
+                        echo "</form>";
+                      }
                     ?>
 
                 </div>

@@ -154,7 +154,7 @@ if (isset($_POST['add_friend_button'])) {
                           }
                         }
                       }
-                      else if(isset($local_post['search_user_button'])) {
+                      else if(isset($local_post['search_user_button']) && isset($local_post['search_user'])) {
                         $searchkey = $local_post['search_user'];
                         if ($searchkey != "") {
                           $search_user_query = "select * from user
