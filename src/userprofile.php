@@ -178,11 +178,11 @@
                           if (mysqli_num_rows($check_review) == 0) {
                             echo "<td><a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-left:20px;\">Post Quote</a>";
                             echo "<a href=\"postreviewpage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-left:20px;\">Post Review</a>";
-                            echo "<button type=\"button\" data-toggle=\"modal\" data-target=\"#recommend$i\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-right:10px;\">Recommend</button></td>";
+                            echo "<a type=\"button\" href=\"recommend.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-right:10px;\">Recommend</a></td>";
                           }
                           else {
                             echo "<td><a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-left:20px;\">Post Quote</a>";
-                            echo "<a type=\"button\" data-toggle=\"modal\" data-target=\"#recommend$i\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-right:10px;\">Recommend</a></td>";
+                            echo "<a type=\"button\" href=\"recommend.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-right:10px;\">Recommend</a></td>";
                           }
                         }
                       echo "</tr>";
