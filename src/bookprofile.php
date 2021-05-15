@@ -177,6 +177,43 @@ if (isset($_GET['book_id'])) {
           </div>
         </div>
       </div>
+
+      <div class="row">
+          <div class="col-md-12">
+            <div class="card card-block text-xs-left" style="border:none;">
+              <h2 class="card-title" style="color:#009688"><i class="fa fa-newspaper-o fa-fw"></i>Sequels</h2>
+              <div style="height: 15px"></div>
+              <table class="table">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">Year</th>
+                      <th scope="col">Series Name</th>
+                      <th scope="col">Title</th>
+                      <th scope="col">Author</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                      <?php
+                      $sequel_query = "select *
+                                      from series natural join book
+                                      on series.original_id = book.book_id
+                                      where original_id = $book_id
+                                      order by year desc";
+                      $query_run = mysqli_query($db, $sequel_query);
+                      while ($row = mysqli_fetch_array($query_run)) {
+                        echo "<tr>";
+                        echo "<th scope=\"row\">".$row['year']."</th>";
+                        echo "<td>".$row['edition_no']."</td>";
+                        echo "<td>".$row['progress']."</td>";
+                        echo "</tr>";
+                      }
+                      ?>
+                  </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
 <!-- End:Biography -->
 <br>
 <br>

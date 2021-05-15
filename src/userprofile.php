@@ -421,8 +421,14 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <th scope="row">Bozcaada'nın En Hızlı Üzümü</th>
-                            <td>32</td>
+                          <?php
+                            $challenge_completed_query = "select * from participate natural join challenge where user_id = $user_id and challlenge_progress >= goal";
+                            $query_run = mysqli_query($db, $challenge_completed_query);
+                            while ($row = mysqli_fetch_array($query_run)) {
+                              echo "<th scope=\"row\">".$row['challenge_name']."</th>";
+                              echo "<td>".$row['goal']."</td>";
+                            }
+                          ?>
                         </tr>
                         </tbody>
                     </table>
