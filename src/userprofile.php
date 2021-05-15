@@ -287,9 +287,33 @@
                 </table>
                 <?php
                   if($own_profile)
-                    echo "<a href=\"\" class=\"btn btn-outline-success btn-sm pull-right\">Create </a>";
+                    echo "<a href=\"\" data-toggle=\"modal\" data-target=\"#createBooklist\" class=\"btn btn-outline-success btn-sm pull-right\">Create </a>";
                 ?>
             </div>
+            </div>
+            <div class="modal fade" id="createBooklist" tabindex="-1" role="dialog" aria-labelledby="createBooklist" aria-hidden="true">
+              <form id="add_form" action="create_booklist.php" method="POST">
+                <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="createBooklist">Create Booklist</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <label for="list_name">List Name</label><br/>
+                      <input type="text" class="form-control" id="list_name" name="list_name" required/><br/>
+                      <label for="list_name">Description</label><br/>
+                      <input type="text" class="form-control" id="desc" name="desc"/><br/>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" name="create" value="" class="btn btn-outline-success">Create</button>
+                      <button type="submit" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
             </div>
         </div>
         <!-- End:Biography -->
