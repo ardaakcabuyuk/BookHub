@@ -17,7 +17,7 @@ session_start();
                             <a class="nav-link active" aria-current="page" href="home.php">Home Page</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="challenges.php">Challenges</a>
+                            <a class="nav-link active" aria-current="page" href="searchbook.php">Search Book</a>
                         </li>
                         <li class="nav-item">
                             <?php
@@ -31,6 +31,9 @@ session_start();
                               echo "<a class=\"nav-link active\" href=\"./userprofile.php?uname=". $_SESSION['username']. "\">Profile (". $_SESSION['username']. ")</a>";
                             }
                             ?>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="challenges.php">Challenges</a>
                         </li>
                     </ul>
                     <form class="d-flex" action="logout.php">
