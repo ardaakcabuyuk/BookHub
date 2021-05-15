@@ -32,6 +32,11 @@ session_start();
                             }
                             ?>
                         </li>
+                        <?php if($_SESSION['type'] == "user") { ?>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="./recommendations.php">Recommendations</a>
+                        </li>
+                      <?php } ?>
                     </ul>
                     <form class="d-flex" action="logout.php">
                         <button class="btn btn-outline-success" type="submit">Logout</button>
