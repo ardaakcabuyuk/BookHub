@@ -5,6 +5,7 @@ include_once "bookheader.php";
 
 if (isset($_GET['book_id'])) {
   $book_id = $_GET['book_id'];
+  $user_id = $_SESSION['user_id'];
 
   if (isset($_POST['addProgressButton'])) {
     list($edition_no, $page_count) = explode("-", $_POST['addProgressButton'], 2);
@@ -21,14 +22,22 @@ if (isset($_GET['book_id'])) {
                                                 and P.challenge_id in (select C.challenge_id
                                                                       from challenge C
                                                                       where C.end_date > CURRENT_DATE)";
-
     $result_update_challenge_progress = mysqli_query($db, $update_challenge_progress);
+
+    $read = false;
+    $read_sql = "select * from reads_book natural join edition where user_id = $user_id and edition_no = $edition_no and book_id = $book_id and page_count = progress";
+    $read_query = mysqli_query($db,$read_sql);
+
+    if(mysqli_num_rows($read_query) != 0) {
+      $read = true;
+    }
+
     if(!$result_update_challenge_progress) {
         printf("Error: %s\n", mysqli_error($db));
         exit();
     }
 
-    if ($page_no < 0 || $page_no > $page_count) {
+    if ($page_no < 0 || $page_no > $page_count || $read) {
       echo "<script type='text/javascript'>alert('Bad credentials!');window.location.href='bookprofile.php?book_id=$book_id';</script>";
     }
     else {
@@ -84,6 +93,13 @@ if (isset($_GET['book_id'])) {
                         $i = 0;
                         while ($edition = mysqli_fetch_array($edition_run)) {
                           echo "<tr>";
+                          $read = false;
+                          $read_sql = "select * from reads_book natural join edition where user_id = $user_id and edition_no =". $edition['edition_no'] ." and book_id = $book_id and page_count = progress";
+                          $read_query = mysqli_query($db,$read_sql);
+
+                          if(mysqli_num_rows($read_query) != 0) {
+                            $read = true;
+                          }
                             echo "<th scope=\"row\">".$edition['edition_no']."</th>";
                             echo "<td>".$edition['publisher']."</td>";
                             echo "<td>".$edition['page_count']."</td>";
@@ -93,7 +109,7 @@ if (isset($_GET['book_id'])) {
                               echo "<td>";
                               echo "<div class=\"button\">";
                                   echo "<a href=\"erroneousinforequest.php?book_id=".$book_id."&edition_no=".$edition['edition_no']."\" class=\"btn btn-sm btn-outline-success pull-right\">Erroneous Info Request</a>";
-                                  if ($_SESSION['type'] == "user") echo "<button type=\"button\" data-toggle=\"modal\" data-target=\"#addProgress$i\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-right:10px;\">Add Progress</button>";
+                                  if ($_SESSION['type'] == "user" && !$read) echo "<button type=\"button\" data-toggle=\"modal\" data-target=\"#addProgress$i\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-right:10px;\">Add Progress</button>";
                               echo "</div>";
                               echo "</td>";
                             }
@@ -146,7 +162,7 @@ if (isset($_GET['book_id'])) {
                 <tbody>
 
                     <?php
-                    $progress_query = "select * from reads_book where user_id =".$_SESSION['user_id']." and book_id = $book_id";
+                    $progress_query = "select * from reads_book where user_id =".$_SESSION['user_id']." and book_id = $book_id order by date desc";
                     $query_run = mysqli_query($db, $progress_query);
                     while ($row = mysqli_fetch_array($query_run)) {
                       echo "<tr>";
