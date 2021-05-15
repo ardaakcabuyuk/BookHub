@@ -100,7 +100,7 @@
         <!-- Section:Biography -->
           <div class="row">
                 <div class="col-md-12">
-                  <div class="card card-block text-xs-left">
+                  <div class="card card-block text-xs-left" style="border: none;">
                     <h3 class="card-title" style="color:#009688">Currently Reading</h2>
                     <div style="height: 15px"></div>
                     <table class="table">
@@ -143,7 +143,7 @@
 
         <div class="row">
             <div class="col-md-12">
-              <div class="card card-block text-xs-left">
+              <div class="card card-block text-xs-left" style="border: none;">
                 <h3 class="card-title" style="color:#009688"> Read</h3>
                 <div style="height: 15px"></div>
                 <table class="table">
@@ -155,7 +155,6 @@
                         <th scope="col">Author</th>
                         <?php
                           if($own_profile) {
-                            echo "<th scope=\"col\"></th>";
                             echo "<th scope=\"col\"></th>";
                           }
                         ?>
@@ -178,11 +177,11 @@
                           if (mysqli_num_rows($check_review) == 0) {
                             echo "<td><a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-left:20px;\">Post Quote</a>";
                             echo "<a href=\"postreviewpage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-left:20px;\">Post Review</a>";
-                            echo "<a type=\"button\" href=\"recommend.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-right:10px;\">Recommend</a></td>";
+                            echo "<a type=\"button\" href=\"recommend.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-left:20px;\">Recommend</a></td>";
                           }
                           else {
                             echo "<td><a href=\"postquotepage.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-left:20px;\">Post Quote</a>";
-                            echo "<a type=\"button\" href=\"recommend.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-right:10px;\">Recommend</a></td>";
+                            echo "<a type=\"button\" href=\"recommend.php?book_id=".$row['book_id']."\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-left:20px;\">Recommend</a></td>";
                           }
                         }
                       echo "</tr>";
@@ -219,7 +218,7 @@
     <br>
         <div class="row">
             <div class="col-md-12">
-            <div class="card card-block text-xs-left">
+            <div class="card card-block text-xs-left" style="border: none;">
                 <h3 class="card-title" style="color:#009688"> Reviews</h3>
                 <div style="height: 15px"></div>
                 <table class="table">
@@ -261,7 +260,7 @@
 
         <div class="row">
             <div class="col-md-12">
-            <div class="card card-block text-xs-left">
+            <div class="card card-block text-xs-left" style="border: none;">
                 <h3 class="card-title" style="color:#009688"> Owned Book Lists</h3>
                 <div style="height: 15px"></div>
                 <table class="table">
@@ -302,7 +301,7 @@
 
         <div class="row">
             <div class="col-md-12">
-            <div class="card card-block text-xs-left">
+            <div class="card card-block text-xs-left" style="border: none;">
                 <h3 class="card-title" style="color:#009688"> Followed Book Lists</h3>
                 <div style="height: 15px"></div>
                 <table class="table">
@@ -338,7 +337,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                <div class="card card-block text-xs-left">
+                <div class="card card-block text-xs-left" style="border: none;">
                     <h3 class="card-title" style="color:#009688"> Friends</h3>
                     <div style="height: 15px"></div>
                     <table class="table">
@@ -376,7 +375,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                <div class="card card-block text-xs-right">
+                <div class="card card-block text-xs-right" style="border: none;">
                     <h3 class="card-title" style="color:#009688"> Challenges Succeeded</h3>
                     <div style="height: 15px"></div>
                     <table class="table">

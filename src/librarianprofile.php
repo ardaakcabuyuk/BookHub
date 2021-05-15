@@ -89,7 +89,7 @@ if (isset($_GET['uname'])) {
     <!-- Section:Biography -->
     <div class="row">
         <div class="col-md-12">
-            <div class="card card-block text-xs-left">
+            <div class="card card-block text-xs-left" style="border: none;">
                 <h3 class="card-title" style="color:#009688">Erroneous Information Correction Request</h3>
                 <div style="height: 15px"></div>
                 <table class="table">
@@ -127,7 +127,7 @@ if (isset($_GET['uname'])) {
 
     <div class="row">
         <div class="col-md-12">
-            <div class="card card-block text-xs-left">
+            <div class="card card-block text-xs-left" style="border: none;">
                 <h3 class="card-title" style="color:#009688"> Reading Challenges</h3>
                 <div style="height: 15px"></div>
                 <table class="table">
@@ -143,7 +143,7 @@ if (isset($_GET['uname'])) {
                     <tbody>
                     <?php
                     $get_librarian_challenges_query = "select *
-                                                     from challenge C 
+                                                     from challenge C
                                                      where C.librarian_id = (select L.librarian_id
                                                                              from librarian L natural join user U
                                                                              where username = '".$_GET['uname']."')
@@ -179,7 +179,7 @@ if (isset($_GET['uname'])) {
                         echo "<tbody>";
 
                         $get_challenge_details_query = "select U.username, P.challlenge_progress, C.challenge_name, C.goal
-                                                                             from challenge C inner join participate P on C.challenge_id = P.challenge_id 
+                                                                             from challenge C inner join participate P on C.challenge_id = P.challenge_id
                                                                              inner join user U on P.user_id = U.user_id
                                                                              where C.challenge_name = '".$row_challenges['challenge_name']."'";
                         $get_challenge_details = mysqli_query($db, $get_challenge_details_query);
@@ -221,6 +221,3 @@ if (isset($_GET['uname'])) {
 <script src="js/bootstrap.min.js"></script>
 </body>
 </html>
-
-
-
