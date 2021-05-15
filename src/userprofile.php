@@ -408,15 +408,37 @@
                         <?php
                         $friend_sql = "select * from friends F, user U where F.user_id = $user_id and F.friend_id = U.user_id";
                         $friend_query = mysqli_query($db, $friend_sql);
+                        $i = 0;
                         while( $row = mysqli_fetch_array($friend_query)) {
                           echo "<tr>";
                           echo "<td><a style=\"color:black; text-decoration: none;\" href=\"userprofile.php?uname=".$row['username']."\">".$row['name']." ".$row['surname']."</a></td>";
                           if($own_profile) {
-                            echo "<td><form action=\"removefriend.php\" method=\"post\">";
-                            echo "<button name=\"remove_button\" value=\"". $row['friend_id'] ."\" class=\"btn btn-outline-danger btn-sm pull-right\">Remove</button>";
-                            echo "</form></td>";
+                            echo "<td><button type=\"button\" data-toggle=\"modal\" data-target=\"#removeFriend$i\" class=\"btn btn-outline-danger btn-sm pull-right\">Remove</button></td>";
+                            echo "</tr>";
+                            echo "<form action=\"removefriend.php\" method=\"post\">";
+                              echo "<div class=\"modal fade\" id=\"removeFriend$i\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"removeFriendLabel\" aria-hidden=\"true\">"; $i++;
+                            ?>
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="removeFriendLabel">Are you sure?</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="submit" name="remove_button" value= "<?php echo $row['friend_id']; ?>" class="btn btn-outline-success" href="#">Yes</a>
+                                      <button type="button" class="btn btn-outline-danger" data-dismiss="modal">No</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                          <?php
+                            echo "</form>";
                           }
-                          echo "</tr>";
+                          else {
+                            echo "</tr>";
+                          }
                         }
                         ?>
                         </tbody>
@@ -424,7 +446,7 @@
                     <?php
                       if($own_profile) {
                         echo "<form action=\"searchresult.php\" method=\"post\">";
-                        echo "<button href=\"#\" name=\"search_user_button\" class=\"btn btn-outline-success pull-right\">Add Friends</button>";
+                        echo "<button href=\"\" name=\"search_user_button\" class=\"btn btn-outline-success pull-right\">Add Friends</button>";
                         echo "</form>";
                       }
                     ?>

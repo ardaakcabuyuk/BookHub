@@ -48,7 +48,7 @@ if( sessionNotExists()) {
                       <?php } ?>
                     </ul>
                     <form class="d-flex" action="logout.php">
-                        <button class="btn btn-outline-success" type="submit">Logout</button>
+                        <button class="btn btn-outline-danger" type="submit">Logout</button>
                     </form>
                 </div>
             </div>
