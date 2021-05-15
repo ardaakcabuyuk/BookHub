@@ -8,10 +8,6 @@
       echo "<script type='text/javascript'>alert('Please login first!');window.location.href='index.php';</script>";
     }
 
-
-
-
-
     $own_profile = false;
 
     if (isset($_GET['uname'])) {
@@ -338,7 +334,7 @@
             <div class="row">
                 <div class="col-md-12">
                 <div class="card card-block text-xs-left" style="border: none;">
-                    <h3 class="card-title" style="color:#009688"> Friends</h3>
+                    <h3 class="card-title" style="color:#009688"> Friends
                     <div style="height: 15px"></div>
                     <table class="table">
                         <thead class="thead-dark">
@@ -361,7 +357,7 @@
                     <?php
                       if($own_profile) {
                         echo "<form action=\"searchresult.php\" method=\"post\">";
-                        echo "<button href=\"#\" name=\"search_user_button\" class=\"btn btn-outline-success btn-sm pull-right\">Add </button>";
+                        echo "<button href=\"#\" name=\"search_user_button\" class=\"btn btn-outline-success pull-right\">Add Friends</button>";
                         echo "</form>";
                       }
                     ?>
