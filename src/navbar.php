@@ -1,6 +1,11 @@
 <?php
 include('config.php');
 session_start();
+require_once "helper_functions.php";
+
+if( sessionNotExists()) {
+  echo "<script type='text/javascript'>alert('Please login first!');window.location.href='index.php';</script>";
+}
  ?>
 
 <div class="container-fluid">
@@ -35,7 +40,7 @@ session_start();
                         <li class="nav-item">
                             <a class="nav-link active" href="challenges.php">Challenges</a>
                         </li>
-                        
+
                         <?php if($_SESSION['type'] == "user") { ?>
                         <li class="nav-item">
                             <a class="nav-link active" href="./recommendations.php">Recommendations</a>

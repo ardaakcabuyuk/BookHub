@@ -2,11 +2,6 @@
     include_once "navbar.php";
 
     include('config.php');
-    require_once "helper_functions.php";
-
-    if( sessionNotExists()) {
-      echo "<script type='text/javascript'>alert('Please login first!');window.location.href='index.php';</script>";
-    }
 
     $own_profile = false;
 

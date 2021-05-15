@@ -2,7 +2,7 @@
 #session_start();
 require_once "navbar.php";
 if(empty($_SESSION['type']) || $_SESSION['type'] != "author") {
-    echo "<script type='text/javascript'>alert('Bad credentials!');window.location.href='addbook.php';</script>";
+    echo "<script type='text/javascript'>alert('Only authors can add edition!');window.location.href='addbook.php';</script>";
 }
 if(isset($_GET['book_id'])) {
     $book_id_glb = $_GET['book_id'];
