@@ -95,12 +95,12 @@ if (isset($_GET['book_id']) & isset($_GET['edition_no'])) {
             <div class="row">
               <div class="col">
                 <label for="weight" class="col-xs-6 control-label">Additional Note</label>
-                <input type="text" id="weight" name="additional" placeholder="Additional Note" class="form-control">
+                <input type="text" id="weight" value=" " name="additional" placeholder="Additional Note" class="form-control">
               </div>
             </div>
             <br>
             <?php
-              echo "<button type=\"submit\" name=\"request_button\" value=\"bookprofile.php"."-".$book_id."\"class=\"btn btn-warning pull-right\">Request</button>";
+              echo "<button type=\"submit\" name=\"request_button\" value=\"bookprofile.php"."-".$book_id."-".$edition_no."\"class=\"btn btn-warning pull-right\">Request</button>";
             ?>
             <br>
             <br>
