@@ -31,7 +31,7 @@ if (isset($_GET['edit_id'])) {
         <form class="form-inline" method="POST" action="actionreq.php">
             <h2>Erroneous Information Request from <?php echo " ". $edit['name']. " ". $edit['surname']; ?></h2>
             <?php
-              echo "<h5><strong>".$edit['book_name']."</strong> by <strong>".$edit['author']." Edition no: ". $edit['old_edition_no']. "</strong></h5>";
+              echo "<h5><strong>".$edit['book_name']."</strong> by <strong>".$edit['author']."<br><br>Edition: ". $edit['old_edition_no']. "</strong></h5>";
             ?>
             <br>
             <div class="row">
