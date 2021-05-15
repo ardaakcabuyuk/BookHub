@@ -112,7 +112,8 @@
                         </thead>
                         <tbody>
                           <?php
-                          $reads_sql = "select * from reads_book R where R.user_id = $user_id and R.progress < (select E.page_count from edition E where E.edition_no = R.edition_no and E.book_id = R.book_id) and R.date in (select max(date) from reads_book R1 where R1.user_id = $user_id group by R1.book_id, R1.edition_no)";
+                          $reads_sql = "select * from reads_book R where R.user_id = $user_id and R.progress < (select E.page_count from edition E where E.edition_no = R.edition_no and E.book_id = R.book_id) and R.date in (select max(date) from reads_book R1 where R1.user_id = $user_id and R1.edition_no = R.edition_no ".
+                          " and R1.book_id = R.book_id)";
                           $reads_user = mysqli_query($db, $reads_sql);
                           while( $row = mysqli_fetch_array($reads_user)) {
                           $current_book_sql = "select * from book natural join edition where book_id =" . $row['book_id'];
