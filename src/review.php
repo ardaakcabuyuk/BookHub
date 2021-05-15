@@ -17,7 +17,7 @@ if (isset($_GET['post_id'])) {
     <link rel="stylesheet" href="js/bootstrap.bundle.js">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="searchresult.css" />
+    <link rel="stylesheet" href="css/searchresult.css" />
 </head>
 
 <body>
@@ -70,10 +70,10 @@ if (isset($_GET['post_id'])) {
                           echo "<p class=\"card-text\">";
                               echo "<div class=\"h7 mb-1\"><strong>Rating:</strong></div>";
                               for ($i = 0; $i < $post['rate']; $i++) {
-                                echo "<span style=\"font-size:30px\" class=\"fa fa-star checked\"></span>";
+                                echo "<span class=\"fa fa-star checked\" style=\"font-size:30px\"></span>";
                               }
                               for ($i = 0; $i < 5 - $post['rate']; $i++) {
-                                echo "<span style=\"font-size:30px\" class=\"fa fa-star\"></span>";
+                                echo "<span class=\"fa fa-star\" style=\"font-size:30px\"></span>";
                               }
                           echo "</p>";
                           echo "<div class=\"text-muted h7 mb-2 pull-right\"> <i class=\"fa fa-clock-o\"></i> ".$post['date']."</div>";
