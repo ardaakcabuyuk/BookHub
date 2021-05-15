@@ -31,9 +31,13 @@ if (isset($_GET['book_id'])) {
             echo "<div class=\"button\" style=\"float:right; margin-left: 10px;\">";
               echo "<a href=\"#\" class=\"btn btn-outline-success btn-sm\">Quiz </a>";
             echo "</div>";
-            echo "<div class=\"button\" style=\"float:right;\">";
-              echo "<a href=\"#\" class=\"btn btn-outline-success btn-sm\">Recommend </a>";
-            echo "</div>";
+            $finished_book_sql = "select * from reads_book R natural join book Where book_id =".$book['book_id']." and R.user_id = ".$_SESSION['user_id']." and progress = ( Select page_count From Edition Where edition_no = R. edition_no AND book_id = R.book_id)";
+            $finished_book_query = mysqli_query($db, $finished_book_sql);
+            if (mysqli_num_rows($finished_book_query) != 0) {
+              echo "<div class=\"button\" style=\"float:right;\">";
+                echo "<a href=\"#\" class=\"btn btn-outline-success btn-sm\">Recommend </a>";
+              echo "</div>";
+            }
           echo "</div>";
           echo "</div>";
         echo "</div>";

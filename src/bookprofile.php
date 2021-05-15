@@ -72,7 +72,7 @@ if (isset($_GET['book_id'])) {
     <!-- Section:Biography -->
       <div class="row">
             <div class="col-md-12">
-              <div class="card card-block text-xs-left">
+              <div class="card card-block text-xs-left" style="border:none;">
                 <h2 class="card-title" style="color:#009688">Editions</h2>
                 <div style="height: 15px"></div>
                 <table class="table">
@@ -148,7 +148,7 @@ if (isset($_GET['book_id'])) {
 
     <div class="row">
         <div class="col-md-12">
-          <div class="card card-block text-xs-left">
+          <div class="card card-block text-xs-left" style="border:none;">
             <h2 class="card-title" style="color:#009688"><i class="fa fa-newspaper-o fa-fw"></i> Progress Steps</h2>
             <div style="height: 15px"></div>
             <table class="table">

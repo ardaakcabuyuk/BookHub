@@ -78,8 +78,10 @@ if (isset($_GET['uname'])) {
       <div class="row">
             <div class="col-md-12">
               <div class="card card-block text-xs-left" style="border: none;">
-                <h3 class="card-title" style="color:#009688">Published Books
-                <a href="addbook.php" class="btn btn-outline-success btn-sm" style="margin-left:10px;">Publish Book</a></h3>
+                  <h3 class="card-title" style="color:#009688">Published Books
+                <?php if ($_SESSION['type'] == "author") { ?>
+                    <a href="addbook.php" class="btn btn-outline-success btn-sm" style="margin-left:10px;">Publish Book</a></h3>
+                <?php } ?>
                 <div style="height: 15px"></div>
                 <table class="table">
                     <thead class="thead-dark">

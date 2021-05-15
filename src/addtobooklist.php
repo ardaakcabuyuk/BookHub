@@ -45,8 +45,6 @@ if (isset($_GET['list_id'])) {
                     </form>
                     <br/>
                     <br/>
-                    <h2>Add Book</h2>
-                    <hr>
                     <?php
                       if(isset($_POST['search_book_button'])) {
                         $searchkey = $_POST['search_book'];
@@ -59,6 +57,7 @@ if (isset($_GET['list_id'])) {
                                                                     where list_id = $list_id)";
                           $search_book = mysqli_query($db, $search_book_query);
                           if (mysqli_num_rows($search_book) != 0) {
+                            echo "<h2>Add Book</h2><hr>";
                             while ($row = mysqli_fetch_array($search_book)) {
                               echo "<div class=\"well search-result\">";
                                   echo "<div class=\"row\">";
@@ -109,6 +108,7 @@ if (isset($_GET['list_id'])) {
                                                                   where list_id = $list_id)";
                         $search_book = mysqli_query($db, $search_book_query);
                         if (mysqli_num_rows($search_book) != 0) {
+                          echo "<h2>Add Book</h2><hr>";
                           while ($row = mysqli_fetch_array($search_book)) {
                             echo "<div class=\"well search-result\">";
                                 echo "<div class=\"row\">";
@@ -145,6 +145,9 @@ if (isset($_GET['list_id'])) {
                             echo "</div>";
                             echo "<hr>";
                             }
+                          }
+                          else {
+                            echo "<p>There are no books left in the database to add to the booklist.</p>";
                           }
                         }
                       ?>
