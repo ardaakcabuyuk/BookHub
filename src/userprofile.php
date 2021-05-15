@@ -369,6 +369,10 @@
                         <thead class="thead-dark">
                         <tr>
                             <th scope="col">Name</th>
+                            <?php
+                            if($own_profile)
+                              echo "<th scope=\"col\">Name</th>";
+                             ?>
                         </tr>
                         </thead>
                         <tbody>
@@ -378,6 +382,11 @@
                         while( $row = mysqli_fetch_array($friend_query)) {
                           echo "<tr>";
                           echo "<td><a style=\"color:black; text-decoration: none;\" href=\"userprofile.php?uname=".$row['username']."\">".$row['name']." ".$row['surname']."</a></td>";
+                          if($own_profile) {
+                            echo "<td><form action=\"removefriend.php\" method=\"post\">";
+                            echo "<button name=\"remove_button\" value=\"". $row['friend_id'] ."\" class=\"btn btn-outline-danger btn-sm pull-right\">Remove</button>";
+                            echo "</form></td>";
+                          }
                           echo "</tr>";
                         }
                         ?>
