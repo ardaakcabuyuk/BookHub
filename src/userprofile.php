@@ -271,7 +271,10 @@
                     </thead>
                     <tbody>
                     <?php
-                      $booklist_sql = "select * from booklist, (select count(*) as cnt From Booklist inner join follows on booklist.list_id = follows.list_id Where booklist.user_id = $user_id) as cnt where booklist.user_id = $user_id";
+                    $booklist_sql = "select * from booklist b, (select ifnull(count(follows.list_id),0) as cnt, bl.list_id
+                                      From Booklist bl left join follows on bl.list_id = follows.list_id
+                                      where bl.user_id = $user_id group by bl.list_id) as cnto
+                                      where b.user_id = $user_id and cnto.list_id = b.list_id";
                       $booklist_query = mysqli_query($db, $booklist_sql);
 
                       while($row = mysqli_fetch_array($booklist_query)) {
@@ -337,6 +340,7 @@
                     <tbody>
                     <?php
                       $booklist_sql = "Select * From Booklist inner join follows on booklist.list_id = follows.list_id, user Where follows.user_id = $user_id and user.user_id = booklist.user_id";
+
                       $booklist_query = mysqli_query($db, $booklist_sql);
 
                       while($row = mysqli_fetch_array($booklist_query)) {
