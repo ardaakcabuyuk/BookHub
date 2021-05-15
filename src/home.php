@@ -17,7 +17,6 @@
       </head>
 
       <body>
-
       <br/>
       <br/>
       <div class="d-flex justify-content-around align-items-center">
@@ -72,6 +71,9 @@
                                       order by P.date desc";
 
                     $query_run = mysqli_query($db, $friends_query);
+                    if (mysqli_num_rows($query_run) == 0) {
+                      echo "<p style=\"text-align: center;\">No posts available.</p>";
+                    }
                     while ($row = mysqli_fetch_array($query_run)) {
                       echo "<div class=\"card gedf-card\">";
                           echo "<div class=\"card-header\">";

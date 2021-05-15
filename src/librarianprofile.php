@@ -74,62 +74,63 @@ if (isset($_GET['uname'])) {
                 ?>
             </div>
         </div>
-
-
-
     </div>
-</header>
-<!--End of Header-->
 
-<br>
-<br>
+<?php if ($_SESSION['type'] == "librarian") { ?>
+  <br>
+  <br>
+<?php } ?>
 <!-- Main container -->
 <div class="container">
 
     <!-- Section:Biography -->
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card card-block text-xs-left" style="border: none;">
-                <h3 class="card-title" style="color:#009688">Erroneous Information Correction Request</h3>
-                <div style="height: 15px"></div>
-                <table class="table">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Date</th>
-                        <th scope="col">User</th>
-                        <th scope="col">Book</th>
-                        <th scope="col"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                    $request_query = "select *
-                                            from edit_request E natural join user U, Book B
-                                            where E.book_id = B.book_id";
-                    $query_run = mysqli_query($db, $request_query);
-                    while ($row = mysqli_fetch_array($query_run)) {
-                        echo "<tr>";
-                        echo "<td scope=\"col\">".$row['date']."</th>";
-                        echo "<td scope=\"col\">".$row['name']. " " .$row['surname']."</th>";
-                        echo "<td><a style=\"color:black; text-decoration: none;\" href=\"bookprofile.php?book_id=".$row['book_id']."\">".$row['book_name']."</a></td>";
-                        echo "<td><a href=\"erronousdetails.php?edit_id=".$row['edit_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">Details</a></td>";
-                        echo "</tr>";
-                    }
-                    ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <!-- End:Biography -->
-    <br>
-    <br>
+    <?php if ($_SESSION['type'] == "librarian") { ?>
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card card-block text-xs-left" style="border: none;">
+                  <h3 class="card-title" style="color:#009688">Erroneous Information Correction Request</h3>
+                  <div style="height: 15px"></div>
+                  <table class="table">
+                      <thead class="thead-dark">
+                      <tr>
+                          <th scope="col">Date</th>
+                          <th scope="col">User</th>
+                          <th scope="col">Book</th>
+                          <th scope="col"></th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <?php
+                      $request_query = "select *
+                                              from edit_request E natural join user U, Book B
+                                              where E.book_id = B.book_id";
+                      $query_run = mysqli_query($db, $request_query);
+                      while ($row = mysqli_fetch_array($query_run)) {
+                          echo "<tr>";
+                          echo "<td scope=\"col\">".$row['date']."</th>";
+                          echo "<td scope=\"col\">".$row['name']. " " .$row['surname']."</th>";
+                          echo "<td><a style=\"color:black; text-decoration: none;\" href=\"bookprofile.php?book_id=".$row['book_id']."\">".$row['book_name']."</a></td>";
+                          echo "<td><a href=\"erronousdetails.php?edit_id=".$row['edit_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">Details</a></td>";
+                          echo "</tr>";
+                      }
+                      ?>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+    <?php }
+    echo "<br>";
+    echo "<br>";
+    ?>
 
     <div class="row">
         <div class="col-md-12">
             <div class="card card-block text-xs-left" style="border: none;">
                 <h3 class="card-title" style="color:#009688"> Reading Challenges
-                <a href="createchallenge.php" class="btn btn-outline-success btn-sm" style="margin-left:10px;">Create</a></h3>
+                  <?php if ($_SESSION['type'] == "librarian") {?>
+                    <a href="createchallenge.php" class="btn btn-outline-success btn-sm" style="margin-left:10px;">Create</a></h3>
+                  <?php } ?>
                 <div style="height: 15px"></div>
                 <table class="table">
                     <thead class="thead-dark">
@@ -195,7 +196,6 @@ if (isset($_GET['uname'])) {
                             echo "</tr>";
                         }
 
-
                         echo "</tbody>";
                         echo "</table>";
                         echo "</div>";
@@ -215,7 +215,9 @@ if (isset($_GET['uname'])) {
         </div>
     </div>
 
-</div> <!--End of Container-->
+  </div> <!--End of Container-->
+</header>
+<!--End of Header-->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
