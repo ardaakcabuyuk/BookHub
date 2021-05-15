@@ -128,7 +128,8 @@ if (isset($_GET['uname'])) {
     <div class="row">
         <div class="col-md-12">
             <div class="card card-block text-xs-left" style="border: none;">
-                <h3 class="card-title" style="color:#009688"> Reading Challenges</h3>
+                <h3 class="card-title" style="color:#009688"> Reading Challenges
+                <a href="createchallenge.php" class="btn btn-outline-success btn-sm" style="margin-left:10px;">Create</a></h3>
                 <div style="height: 15px"></div>
                 <table class="table">
                     <thead class="thead-dark">
@@ -156,7 +157,7 @@ if (isset($_GET['uname'])) {
                         echo "<td >" .formattedDate($row_challenges['start_date']). "</td >";
                         echo "<td >" .formattedDate($row_challenges['end_date']). "</td >";
                         echo "<td >" .$row_challenges['goal']. "</td >";
-                        echo "<td><button type=\"button\" class=\"btn btn-outline-success btn-sm\" data-toggle=\"modal\" data-target=\"#exampleModalLong$i\">";
+                        echo "<td><button type=\"button\" class=\"btn btn-outline-success btn-sm pull-right\" data-toggle=\"modal\" data-target=\"#exampleModalLong$i\">";
                         echo "Details";
                         echo "</button>";
                         echo "<div class=\"modal fade\" id=\"exampleModalLong$i\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLongTitle\" aria-hidden=\"true\">";$i++; ?>
@@ -210,7 +211,6 @@ if (isset($_GET['uname'])) {
                     ?>
                     </tbody>
                 </table>
-                <a href="createchallenge.php" class="btn btn-outline-success btn-sm">Create</a>
             </div>
         </div>
     </div>
