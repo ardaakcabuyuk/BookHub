@@ -29,7 +29,7 @@ if(isset($_POST['p_button'])) {
     $row = mysqli_fetch_array($result_find_librarian);
 
     $create_challenge_query = "insert into challenge(challenge_name, start_date, end_date, goal, librarian_id) values(
-        \"". $_POST['challenge_name']. "\", \"". $_POST['start_date']. "\", \"". $_POST['end_date']. "\", \"". $_POST['goal']. "\", \"". $row['librarian_id']. "\")";
+        \"". addslashes($_POST['challenge_name']). "\", \"". $_POST['start_date']. "\", \"". $_POST['end_date']. "\", \"". $_POST['goal']. "\", \"". $row['librarian_id']. "\")";
     $result_create_challenge_query = mysqli_query($db,$create_challenge_query);
     if (!$result_create_challenge_query) {
         printf("Error 2: %s\n", mysqli_error($db));
