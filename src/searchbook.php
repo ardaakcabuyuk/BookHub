@@ -6,7 +6,7 @@ if (isset($_POST['search_book_button'])) {
   $_SESSION['search'] = $_POST;
   $local_post = $_POST;
 }
-else if (isset($_POST['search_book_button']) && !empty($_SESSION['search'])){
+else if (!isset($_POST['search_book_button']) && !empty($_SESSION['search']) && isset($_POST['sort_by'])){
   $local_post = $_SESSION['search'];
 }
 ?>
@@ -25,13 +25,12 @@ else if (isset($_POST['search_book_button']) && !empty($_SESSION['search'])){
     </head>
 
     <body>
-
         <div class="container bootstrap snippets bootdey">
-
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <br/>
-                    <br/>
+                    <h1>Search Book</h1>
+                    <br>
                     <form class="form-inline" action="searchbook.php" method="post">
                       <div class="form-group mb-2">
                         <label for="min">Search:</label>
@@ -108,15 +107,15 @@ else if (isset($_POST['search_book_button']) && !empty($_SESSION['search'])){
                 }
                 else if ($_POST['sort_by'] == "rate") {
                   $type = "DESC";
-                  $rating_query = "select *, ifnull(avg(rate),0) as rating
+                  $search_book_query = "select book.*, ifnull(avg(rate),0) as rating
                                     from book
                                     left join post
                                     on book.book_id = post.book_id
+                                    where $search_by like '%$keyword%'
                                     group by book.book_id
                                     order by rating DESC";
                 }
               }
-              echo $search_book_query;
               $search_book = mysqli_query($db, $search_book_query);
               if (mysqli_num_rows($search_book) != 0) {
                 while ($row = mysqli_fetch_array($search_book)) {
