@@ -16,6 +16,7 @@ if (isset($_POST['add_friend_button'])) {
   $add_back_query = "insert into friends (user_id, friend_id) values ($friend_id, $user_id)";
   $add_friend = mysqli_query($db, $add_friend_query);
   $add_back = mysqli_query($db, $add_back_query);
+  echo "<script type='text/javascript'>alert('Friend added successfully!');</script>";
 }
 ?>
 
@@ -157,13 +158,17 @@ if (isset($_POST['add_friend_button'])) {
                       else if(isset($local_post['search_user_button']) && isset($local_post['search_user'])) {
                         $searchkey = $local_post['search_user'];
                         if ($searchkey != "") {
-                          $search_user_query = "select * from user
+                          $search_old = "select * from user
                                                 where user_id not in (select A.user_id
                                                                       from author A
                                                                       union
                                                                       select L.user_id
                                                                       from librarian L)
                                                 and (name like '%$searchkey%' or surname like '%$searchkey%' or username like '%$searchkey%')
+                                                and user_id <>'" .$_SESSION['user_id']. "'";
+                          $search_user_query = "select * from user
+                                                where
+                                                (name like '%$searchkey%' or surname like '%$searchkey%' or username like '%$searchkey%')
                                                 and user_id <>'" .$_SESSION['user_id']. "'";
                           $search_user = mysqli_query($db, $search_user_query);
                           if (mysqli_num_rows($search_user) != 0) {
