@@ -104,6 +104,7 @@
                           <tr>
                             <th scope="col">Last Update</th>
                             <th scope="col">Title</th>
+                            <th scope="col">Edition</th>
                             <th scope="col">Author</th>
                             <th scope="col">Total Page Count</th>
                             <th scope="col">Current Page</th>
@@ -112,23 +113,56 @@
                         </thead>
                         <tbody>
                           <?php
-                          $reads_sql = "select * from reads_book R where R.user_id = $user_id and R.progress < (select E.page_count from edition E where E.edition_no = R.edition_no and E.book_id = R.book_id) and R.date in (select max(date) from reads_book R1 where R1.user_id = $user_id and R1.edition_no = R.edition_no ".
-                          " and R1.book_id = R.book_id)";
+                          $reads_sql = "select *
+                                        from reads_book R
+                                        where R.user_id = $user_id
+                                        and R.progress < (select E.page_count
+                                                          from edition E
+                                                          where E.edition_no = R.edition_no
+                                                          and E.book_id = R.book_id)
+                                                          and R.date in (select max(date)
+                                                                        from reads_book R1
+                                                                        where R1.user_id = $user_id
+                                                                        and R1.edition_no = R.edition_no
+                                                                        and R1.book_id = R.book_id)";
                           $reads_user = mysqli_query($db, $reads_sql);
+                          $i = 0;
                           while( $row = mysqli_fetch_array($reads_user)) {
-                          $current_book_sql = "select * from book natural join edition where book_id =" . $row['book_id'];
+                          $current_book_sql = "select * from book natural join edition where book_id =" . $row['book_id']." and edition_no = ".$row['edition_no'];
                           $row_book = mysqli_fetch_array(mysqli_query($db, $current_book_sql));
                           echo "<tr>";
                           echo "<th scope=\"row\">". $row['date']. "</th>";
                           echo "<td><a style=\"color:black; text-decoration: none;\" href=\"bookprofile.php?book_id=".$row_book['book_id']."\">".$row_book['book_name']."</a></td>";
+                          echo "<td>". $row['edition_no']."</td>";
                           echo "<td><a style=\"color:black; text-decoration: none;\" href=\"authorprofile.php?uname=".$row_book['author_id']."\">".$row_book['author']."</a></td>";
                           echo "<td>". $row_book['page_count']. "</td>";
                           echo "<td>". $row['progress']. "</td>";
                           if($own_profile)
-                            echo "<td><a href=\"\" class=\"btn btn-outline-success btn-sm pull-right\">Edit </a></td>";
+                            echo "<td><button type=\"button\" data-toggle=\"modal\" data-target=\"#addProgress$i\" class=\"btn btn-outline-success btn-sm pull-right\" style=\"margin-right:10px;\">Edit Progress</button></td>";
                           echo "</tr>";
-                          }
-                        ?>
+                          echo "<div class=\"modal fade\" id=\"addProgress$i\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"addProgressLabel\" aria-hidden=\"true\">"; $i++; ?>
+                            <form id="add_form" action="editprogress.php" method="POST">
+                              <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="addProgressLabel">Edit Progress</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                            		    <label for="pageno">Page Number</label><br/>
+                            		    <input type="text" class="form-control" id="pageno" name="pageno" required/><br/>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" name="addProgressButton" value="<?php echo $row_book['book_id']. "-" . $row['edition_no']. "-" . $row_book['page_count']; ?>" class="btn btn-success">Add</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                      <?php } ?>
                         </tbody>
                       </table>
                   </div>
