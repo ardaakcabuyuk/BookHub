@@ -64,7 +64,8 @@ if(isset($_POST['recommend_button'])) {
         }
       }
       else {
-        echo "<p>No results.</p>";
+        echo "<br><p style=\"text-align: center;\">No friends to recommend.";
+        echo "<br><br><button style=\"margin:auto;\" onclick=\"history.go(-1);\" class=\"btn btn-danger\">Back</button></p>";
       } ?>
     </body>
     </html>
