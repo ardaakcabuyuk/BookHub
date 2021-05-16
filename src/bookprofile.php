@@ -145,7 +145,9 @@ if (isset($_GET['book_id'])) {
     <!-- End:Biography -->
     <br>
     <br>
-
+    <?php
+      if($_SESSION['type'] == "user") {
+     ?>
     <div class="row">
         <div class="col-md-12">
           <div class="card card-block text-xs-left" style="border:none;">
@@ -177,7 +179,9 @@ if (isset($_GET['book_id'])) {
           </div>
         </div>
       </div>
-
+      <?php
+        } 
+       ?>
       <br>
       <br>
       <?php
