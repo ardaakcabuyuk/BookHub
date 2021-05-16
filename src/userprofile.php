@@ -115,11 +115,11 @@
                                                           from edition E
                                                           where E.edition_no = R.edition_no
                                                           and E.book_id = R.book_id)
-                                                          and R.date in (select max(date)
-                                                                        from reads_book R1
-                                                                        where R1.user_id = $user_id
-                                                                        and R1.edition_no = R.edition_no
-                                                                        and R1.book_id = R.book_id)";
+                                        and R.date in (select max(date)
+                                                        from reads_book R1
+                                                        where R1.user_id = $user_id
+                                                        and R1.edition_no = R.edition_no
+                                                        and R1.book_id = R.book_id)";
                           $reads_user = mysqli_query($db, $reads_sql);
                           $i = 0;
                           while( $row = mysqli_fetch_array($reads_user)) {
@@ -476,8 +476,46 @@
                             $challenge_completed_query = "select * from participate natural join challenge where user_id = $user_id and challlenge_progress >= goal";
                             $query_run = mysqli_query($db, $challenge_completed_query);
                             while ($row = mysqli_fetch_array($query_run)) {
-                              echo "<th scope=\"row\">".$row['challenge_name']."</th>";
-                              echo "<td>".$row['goal']."</td>";
+                              echo "<tr>";
+                              echo "<td scope=\"row\">".$row['challenge_name']."</td>";
+                              echo "<td>". $row['challlenge_progress'] ." / ".$row['goal']."</td>";
+                              echo "</tr>";
+                            }
+                          ?>
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+                </div>
+            </div>
+
+            <br>
+            <br>
+
+            <div class="row">
+                <div class="col-md-12">
+                <div class="card card-block text-xs-right" style="border: none;">
+                    <h3 class="card-title" style="color:#009688"> Challenges Failed</h3>
+                    <div style="height: 15px"></div>
+                    <table class="table">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Title</th>
+                            <th scope="col">Book Count</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                          <?php
+                            $challenge_completed_query = "select * from participate natural join challenge where user_id = $user_id and challlenge_progress < goal and end_date < CURRENT_DATE()";
+                            $query_run = mysqli_query($db, $challenge_completed_query);
+                            while ($row = mysqli_fetch_array($query_run)) {
+                              echo "<tr>";
+                              echo "<td scope=\"row\">".$row['challenge_name']."</td>";
+                              echo "<td>". $row['challlenge_progress'] ." / ".$row['goal']."</td>";
+                              echo "</tr>";
                             }
                           ?>
                         </tr>
