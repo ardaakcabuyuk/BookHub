@@ -35,6 +35,7 @@ if(isset($_POST['recommend_button'])) {
     <br>
     <br>
       <?php
+      echo "<h1 style=\"text-align: center;\">Recommend</h1><br>";
       $friend_recommend_sql = "select * from friends F, user U where F.user_id = $user_id and F.friend_id = U.user_id" .
                                                 " and F.friend_id not in (select R.recommended_id from recommend_book R where R.book_id=$book_id and R.recommender_id = $user_id)".
                                                 " and F.friend_id not in (select user_id from reads_book RB where RB.book_id=$book_id)";
@@ -44,7 +45,7 @@ if(isset($_POST['recommend_button'])) {
           echo "<div class=\"well search-result\">";
               echo "<div class=\"row justify-content-center\">";
                   echo "<div class=\"col-xs-6 col-sm-9 col-md-9 col-lg-10 title\">";
-                  echo "<h1>Recommend</h1><br><hr>";
+                      echo "<hr>";
                       echo "<h3>".$row['name']." ".$row['surname']."</h3>";
                       echo "<h6 style=\"color:#A9A9A9;\"\">@".$row['username']."</h6>";
                       echo "<br/>";
@@ -56,16 +57,15 @@ if(isset($_POST['recommend_button'])) {
                                 echo "Recommend";
                           echo "</button>";
                       echo "</form>";
-                      echo "<hr>";
                   echo "</div>";
               echo "</div>";
           echo "</div>";
-
         }
       }
       else {
         echo "<br><p style=\"text-align: center;\">No friends to recommend.";
         echo "<br><br><button style=\"margin:auto;\" onclick=\"history.go(-1);\" class=\"btn btn-danger\">Back</button></p>";
-      } ?>
+      }
+      echo "<div class=\"row justify-content-center\"><div class=\"col-xs-6 col-sm-9 col-md-9 col-lg-10\"><hr></div></div>";?>
     </body>
     </html>

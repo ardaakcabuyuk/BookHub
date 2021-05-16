@@ -83,6 +83,8 @@ if (isset($_GET['book_id'])) {
                         <th scope="col">Page Count</th>
                         <th scope="col">Format</th>
                         <th scope="col">Language</th>
+                        <th scope="col">Translator</th>
+                        <?php if ($_SESSION['type'] != "librarian") ?>
                         <th scope="col"></th>
                       </tr>
                     </thead>
@@ -105,6 +107,7 @@ if (isset($_GET['book_id'])) {
                             echo "<td>".$edition['page_count']."</td>";
                             echo "<td>".$edition['format']."</td>";
                             echo "<td>".$edition["language"]."</td>";
+                            echo "<td>".$edition["translator"]."</td>";
                             if ($_SESSION['type'] != "librarian") {
                               echo "<td>";
                               echo "<div class=\"button\">";
@@ -180,7 +183,7 @@ if (isset($_GET['book_id'])) {
         </div>
       </div>
       <?php
-        } 
+        }
        ?>
       <br>
       <br>
