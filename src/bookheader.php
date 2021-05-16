@@ -27,7 +27,7 @@ if (isset($_GET['book_id'])) {
             $finished_book_query = mysqli_query($db, $finished_book_sql);
             if (mysqli_num_rows($finished_book_query) != 0) {
               echo "<div class=\"button\" style=\"float:right;\">";
-                echo "<a href=\"#\" class=\"btn btn-outline-success btn-sm\">Recommend </a>";
+                echo "<a href=\"recommend.php?book_id=".$book['book_id']."\" class=\"btn btn-outline-success btn-sm\">Recommend </a>";
               echo "</div>";
             }
           echo "</div>";

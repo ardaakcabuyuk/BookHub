@@ -32,7 +32,7 @@ session_start();
 <body>
 
 	<div class="limiter">
-		<div class="container-login100" style="background-image: url('images/reco.jpeg');">
+		<div class="container-login100" style="background-image: url('images/background.jpeg');">
 			<div class="wrap-login100 p-t-80 p-b-30">
 				<form class="login100-form validate-form" action="login.php" method="post">
 					<span class="login100-form-title p-t-20 p-b-45">

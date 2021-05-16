@@ -79,7 +79,7 @@ if(isset($_POST['button'])) {
 <body>
 
 	<div class="limiter">
-		<div class="container-login100" style="background-image: url('images/reco.jpeg');">
+		<div class="container-login100" style="background-image: url('images/background.jpeg');">
 			<div class="wrap-login100 p-t-40 p-b-30">
 				<form class="login100-form validate-form" action="" method="post">
 					<span class="login100-form-title p-b-45">
