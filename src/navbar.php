@@ -59,6 +59,12 @@ if( sessionNotExists()) {
                             <a class="nav-link <?php if ($current_page == "recommendations.php") echo "active"; ?>" href="./recommendations.php">Recommendations</a>
                         </li>
                       <?php } ?>
+
+                      <?php if($_SESSION['type'] == "librarian") { ?>
+                      <li class="nav-item">
+                          <a class="nav-link <?php if ($current_page == "statistics.php") echo "active"; ?>" href="./statistics.php">Statistics</a>
+                      </li>
+                    <?php } ?>
                     </ul>
                     <form class="d-flex" action="logout.php" style="margin-top:20px;">
                         <button class="btn btn-outline-danger" type="submit">Logout</button>

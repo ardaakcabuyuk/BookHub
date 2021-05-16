@@ -214,7 +214,6 @@ if (isset($_GET['uname'])) {
             </div>
         </div>
     </div>
-
   </div> <!--End of Container-->
 </header>
 <!--End of Header-->
