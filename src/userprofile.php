@@ -11,6 +11,7 @@
       }
 
       $username = $_GET['uname'];
+
       $user_id_sql = "select user_id from user where username = \"$username\"";
       $usr_query = mysqli_query($db, $user_id_sql);
       if(mysqli_num_rows($usr_query) != 1) {
@@ -18,6 +19,19 @@
       }
 
       $user_id = mysqli_fetch_array($usr_query)['user_id'];
+
+      $author_check_sql = "select * from Author where user_id = '$user_id'";
+      $author = mysqli_query($db, $author_check_sql);
+
+      $librarian_check_sql = "select * from Librarian where user_id = '$user_id'";
+      $librarian = mysqli_query($db, $librarian_check_sql);
+
+      if(mysqli_num_rows($author) == 1) {
+        header("location: authorprofile.php?uname=$username");
+      }
+      else if(mysqli_num_rows($librarian) == 1) {
+        header("location: librarianprofile.php?uname=$username");
+      }
     }
     ?>
 

@@ -21,7 +21,7 @@ if(isset($_POST['button'])) {
       $_SESSION['username'] = $username;
       $_SESSION['user_id'] = mysqli_fetch_array($user)['user_id'];
       $user_id = $_SESSION['user_id'];
-      echo "<script type='text/javascript'>alert('Successfully logged in!, user_id = $user_id');window.location.href='home.php';</script>";
+      echo "<script type='text/javascript'>alert('Successfully logged in!');window.location.href='home.php';</script>";
     }
     else {
       echo "<script type='text/javascript'>alert('Invalid username or password!');window.location.href='index.php';</script>";
