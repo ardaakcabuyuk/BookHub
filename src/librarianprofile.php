@@ -158,56 +158,61 @@ if (isset($_GET['uname'])) {
                         echo "<td >" .formattedDate($row_challenges['start_date']). "</td >";
                         echo "<td >" .formattedDate($row_challenges['end_date']). "</td >";
                         echo "<td >" .$row_challenges['goal']. "</td >";
-                        echo "<td><button type=\"button\" class=\"btn btn-outline-success btn-sm pull-right\" data-toggle=\"modal\" data-target=\"#exampleModalLong$i\">";
-                        echo "Details";
-                        echo "</button>";
-                        echo "<div class=\"modal fade\" id=\"exampleModalLong$i\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLongTitle\" aria-hidden=\"true\">";$i++; ?>
-                        <?php
-                        echo "<div class=\"modal-dialog\" role=\"document\">";
-                        echo "<div class=\"modal-content\">";
-                        echo "<div class=\"modal-header\">";
-                        echo "<h5 class=\"modal-title\" id=\"exampleModalLongTitle\">Details: '".$row_challenges['challenge_name']."'</h5>";
-                        echo "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">";
-                        echo "<span aria-hidden=\"true\">&times;</span>";
-                        echo "</button>";
-                        echo "</div>";
-                        echo "<div class=\"modal-body\">";
-                        echo "<table class=\"table\">";
-                        echo "<thead class=\"thead-dark\">";
-                        echo "<tr>";
-                        echo "<th scope=\"col\">Username</th>";
-                        echo "<th scope=\"col\">Progress</th>";
-                        echo "</tr>";
-                        echo "</thead>";
-                        echo "<tbody>";
+                        if ($_SESSION['type'] == "librarian") {
+                          echo "<td><button type=\"button\" class=\"btn btn-outline-success btn-sm pull-right\" data-toggle=\"modal\" data-target=\"#exampleModalLong$i\">";
+                          echo "Details";
+                          echo "</button>";
+                          echo "<div class=\"modal fade\" id=\"exampleModalLong$i\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLongTitle\" aria-hidden=\"true\">";$i++; ?>
+                          <?php
+                          echo "<div class=\"modal-dialog\" role=\"document\">";
+                          echo "<div class=\"modal-content\">";
+                          echo "<div class=\"modal-header\">";
+                          echo "<h5 class=\"modal-title\" id=\"exampleModalLongTitle\">Details: '".$row_challenges['challenge_name']."'</h5>";
+                          echo "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">";
+                          echo "<span aria-hidden=\"true\">&times;</span>";
+                          echo "</button>";
+                          echo "</div>";
+                          echo "<div class=\"modal-body\">";
+                          echo "<table class=\"table\">";
+                          echo "<thead class=\"thead-dark\">";
+                          echo "<tr>";
+                          echo "<th scope=\"col\">Username</th>";
+                          echo "<th scope=\"col\">Progress</th>";
+                          echo "</tr>";
+                          echo "</thead>";
+                          echo "<tbody>";
 
-                        $get_challenge_details_query = "select U.username, P.challlenge_progress, C.challenge_name, C.goal
-                                                                             from challenge C inner join participate P on C.challenge_id = P.challenge_id
-                                                                             inner join user U on P.user_id = U.user_id
-                                                                             where C.challenge_name = '".$row_challenges['challenge_name']."'";
-                        $get_challenge_details = mysqli_query($db, $get_challenge_details_query);
-                        if (!$get_challenge_details) {
-                            printf("Error 1:  %s\n", mysqli_error($db));
-                            exit();
+                          $get_challenge_details_query = "select U.username, P.challlenge_progress, C.challenge_name, C.goal
+                                                                               from challenge C inner join participate P on C.challenge_id = P.challenge_id
+                                                                               inner join user U on P.user_id = U.user_id
+                                                                               where C.challenge_name = '".$row_challenges['challenge_name']."'";
+                          $get_challenge_details = mysqli_query($db, $get_challenge_details_query);
+                          if (!$get_challenge_details) {
+                              printf("Error 1:  %s\n", mysqli_error($db));
+                              exit();
+                          }
+                          while ($row_challenge_details = mysqli_fetch_array($get_challenge_details)) {
+                              echo "<tr >";
+                              echo "<th scope = \"row\" >" .$row_challenge_details['username']."</th >";
+                              echo "<td >" .$row_challenge_details['challlenge_progress']." / ".$row_challenge_details['goal']."</td >";
+                              echo "</tr>";
+                          }
+
+                          echo "</tbody>";
+                          echo "</table>";
+                          echo "</div>";
+                          echo "<div class=\"modal-footer\">";
+                          echo "<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>";
+
+                          echo "</div>";
+                          echo "</div>";
+                          echo "</div>";
+                          echo "</div>";
+                          echo "</td>";
                         }
-                        while ($row_challenge_details = mysqli_fetch_array($get_challenge_details)) {
-                            echo "<tr >";
-                            echo "<th scope = \"row\" >" .$row_challenge_details['username']."</th >";
-                            echo "<td >" .$row_challenge_details['challlenge_progress']." / ".$row_challenge_details['goal']."</td >";
-                            echo "</tr>";
+                        else {
+                          echo "<td></td>";
                         }
-
-                        echo "</tbody>";
-                        echo "</table>";
-                        echo "</div>";
-                        echo "<div class=\"modal-footer\">";
-                        echo "<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>";
-
-                        echo "</div>";
-                        echo "</div>";
-                        echo "</div>";
-                        echo "</div>";
-                        echo "</td>";
                     }
                     ?>
                     </tbody>

@@ -1,5 +1,4 @@
 <?php
-session_start();
 include('config.php');
 require_once "navbar.php";
 
@@ -54,7 +53,7 @@ if (isset($_GET['book_id'])) {
                   <div class="u-expanded-width u-form u-form-1">
                     <form action="post.php" method="POST" style="padding: 10px" source="custom" name="form-5">
                       <div class="u-form-group u-form-message">
-                        <textarea placeholder="Review" rows="4" cols="50" id="message-5359" name="content" class="u-border-1 u-border-grey-30 u-input u-input-rectangle" required=""></textarea>
+                        <textarea placeholder="Quote" rows="4" cols="50" id="message-5359" name="content" class="u-border-1 u-border-grey-30 u-input u-input-rectangle" required=""></textarea>
                         <br>
                         <textarea placeholder="Tags" rows="1" cols="50" id="message-5359" name="tags" class="u-border-1 u-border-grey-30 u-input u-input-rectangle" required=""></textarea>
                       </div>

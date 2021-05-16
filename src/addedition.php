@@ -8,9 +8,6 @@ if(isset($_GET['book_id'])) {
     $book_id_glb = $_GET['book_id'];
 }
 if(isset($_POST['p_button'])) {
-    if(empty($_POST['genre'])) {
-        echo "<script type='text/javascript'>alert('Genre cannot be empty!');window.location.href='addedition.php';</script>";
-    }
     if(empty($_POST['year'])) {
         echo "<script type='text/javascript'>alert('Year cannot be empty!');window.location.href='addedition.php';</script>";
     }
@@ -68,8 +65,8 @@ if(isset($_POST['p_button'])) {
         <br>
         <div class="row">
           <div class="col">
-              <label for="genre" class="col-xs-6 control-label">Genre</label>
-              <input type="text" name = "genre" id="genre" placeholder="Genre" class="form-control">
+              <label for="Height" class="col-xs-6 control-label">Edition No</label>
+              <input type="text" name = "eno" id="password" placeholder="Edition No" class="form-control">
           </div>
           <div class="col">
               <label for="year" class="col-xs-6 control-label">Year</label>
@@ -83,8 +80,8 @@ if(isset($_POST['p_button'])) {
               <input type="text" name = "pcount" id="page_count" placeholder="Page Count" class="form-control">
           </div>
           <div class="col">
-              <label for="Height" class="col-xs-6 control-label">Edition No</label>
-              <input type="text" name = "eno" id="password" placeholder="Edition No" class="form-control">
+            <label for="weight" class="col-xs-6 control-label">Translator</label>
+            <input type="text" name = "translator" id="weight" placeholder="Translator" class="form-control">
           </div>
         </div>
         <br>
@@ -103,10 +100,6 @@ if(isset($_POST['p_button'])) {
           <div class="col">
             <label for="password" class="col-xs-6 control-label">Format</label>
             <input type="text" name = "format" id="weight" placeholder="Format" class="form-control">
-          </div>
-          <div class="col">
-            <label for="weight" class="col-xs-6 control-label">Translator</label>
-            <input type="text" name = "translator" id="weight" placeholder="Translator" class="form-control">
           </div>
         </div>
         <br>
