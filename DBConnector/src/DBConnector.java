@@ -168,9 +168,10 @@ public class DBConnector {
                     "additional_notes varchar(300)," +
                     "user_id int NOT NULL," +
                     "book_id int NOT NULL," +
-                    "date date NOT NULL," +
+                    "old_edition_no int NOT NULL" +
+                    "date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP," +
                     "primary key( edit_id )," +
-                    "foreign key( new_book_edition_no, book_id ) references Edition(edition_no, book_id)," +
+                    "foreign key( old_edition_no, book_id ) references Edition(edition_no, book_id) ON DELETE CASCADE ON UPDATE CASCADE," +
                     "foreign key( book_id ) references Book(book_id)," +
                     "foreign key( user_id ) references User(user_id))" +
                     "engine=innodb;";
@@ -268,6 +269,8 @@ public class DBConnector {
                     "post_id int NOT NULL," +
                     "author_id int NOT NULL," +
                     "reply varchar(300) NOT NULL," +
+                    "date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP" +
+                    "reply_like_count INT NOT NULL DEFAULT 0" +
                     "primary key( post_id )," +
                     "foreign key( post_id) references Post(post_id)," +
                     "foreign key( author_id) references Author(author_id))" +
@@ -289,7 +292,7 @@ public class DBConnector {
             System.out.println("Creating table Comment...");
             String createCommentSQL = "create table Comment (" +
                     "comment_id int AUTO_INCREMENT," +
-                    "date date NOT NULL," +
+                    "date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP," +
                     "content varchar(300) NOT NULL," +
                     "user_id int NOT NULL," +
                     "post_id int NOT NULL," +
@@ -331,7 +334,7 @@ public class DBConnector {
                     "progress int NOT NULL," +
                     "date timestamp NOT NULL," +
                     "primary key( book_id, user_id, edition_no, date)," +
-                    "foreign key(edition_no, book_id) references Edition(edition_no, book_id)," +
+                    "foreign key(edition_no, book_id) references Edition(edition_no, book_id) ON DELETE CASCADE ON UPDATE CASCADE," +
                     "foreign key( user_id ) references User(user_id))" +
                     "ENGINE=innodb;";
             stmt.executeUpdate(createReadsSQL);
@@ -365,12 +368,10 @@ public class DBConnector {
 
             System.out.println("Creating table Participate...");
             String createParticipateSQL = "create table Participate(" +
-                    "list_id int NOT NULL," +
                     "challenge_id int NOT NULL," +
                     "user_id int NOT NULL," +
                     "challlenge_progress int NOT NULL," +
-                    "primary key( list_id, challenge_id, user_id )," +
-                    "foreign key( list_id ) references Booklist (list_id)," +
+                    "primary key( challenge_id, user_id )," +
                     "foreign key( challenge_id) references Challenge (challenge_id)," +
                     "foreign key( user_id ) references User (user_id))" +
                     "ENGINE=innodb;";
@@ -468,6 +469,12 @@ public class DBConnector {
                             "UPDATE quote SET quote.q_like_count = quote.q_like_count+1 where quote.quote_id = NEW.quote_id;";
             stmt.executeUpdate(likeQuoteTrigger);
             System.out.println("trigger \"like_add_quote\" is successfully created.");
+
+            System.out.println("Creating secondary indices...");
+
+            String usernameIndex = "create index uname on user(username);";
+            String bookYearIndex = "create index book_year on book(year);";
+            String bookNameIndex = "create index book_name on book(book_name);";
         }
         catch (SQLException e) {
             System.out.println("SQLException: " + e.getMessage());
