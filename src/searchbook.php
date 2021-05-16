@@ -36,7 +36,7 @@ else if (!isset($_POST['search_book_button']) && !empty($_SESSION['search']) && 
                         <label for="min">Search:</label>
                         <br>
                         <input type="search" id="min" class="form-control rounded" placeholder="Keyword" aria-label="Search"
-                          aria-describedby="search-addon" name="keyword" style="width:500px;" required>
+                          aria-describedby="search-addon" name="keyword" style="width:500px;">
                       </div>
                       <br>
                       <div class="form-group mb-2">
@@ -83,21 +83,34 @@ else if (!isset($_POST['search_book_button']) && !empty($_SESSION['search']) && 
                       </div>
                     </form>";
               echo "<hr>";
-              $keyword = $local_post['keyword'];
+              if(isset($local_post['keyword']))
+                $keyword = $local_post['keyword'];
               $search_by = $local_post['search_by'];
               if ($local_post['year_min'] != "" && $local_post['year_max'] != "") {
                 $year_min = $local_post['year_min'];
                 $year_max = $local_post['year_max'];
 
+                if(isset($local_post['keyword'])) {
                 $search_book_query = "select *
                                       from book
                                       where $search_by like '%$keyword%'
                                       and year between $year_min and $year_max";
+                }
+                else {
+                  $search_book_query = "select *
+                                        from book
+                                        where $search_by like '%$keyword%'
+                                        and year between $year_min and $year_max";
+                }
               }
-              else {
+              else if (isset($local_post['keyword'])){
                 $search_book_query = "select *
                                       from book
                                       where $search_by like '%$keyword%'";
+              }
+              else {
+                $search_book_query = "select *
+                                      from book";
               }
 
               if (isset($_POST['sort_by'])) {
