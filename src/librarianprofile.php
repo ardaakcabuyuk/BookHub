@@ -168,6 +168,7 @@ if (isset($_GET['uname'])) {
                         echo "<div class=\"modal-header\">";
                         echo "<h5 class=\"modal-title\" id=\"exampleModalLongTitle\">Details: '".$row_challenges['challenge_name']."'</h5>";
                         echo "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">";
+                        echo "<span aria-hidden=\"true\">&times;</span>";
                         echo "</button>";
                         echo "</div>";
                         echo "<div class=\"modal-body\">";
