@@ -180,30 +180,29 @@ if (isset($_GET['book_id'])) {
 
       <br>
       <br>
-
-      <div class="row">
-          <div class="col-md-12">
-            <div class="card card-block text-xs-left" style="border:none;">
-              <h2 class="card-title" style="color:#009688">Sequels</h2>
-              <div style="height: 15px"></div>
-              <table class="table">
-                  <thead class="thead-dark">
-                    <tr>
-                      <th scope="col">Year</th>
-                      <th scope="col">Series Name</th>
-                      <th scope="col">Title</th>
-                      <th scope="col">Author</th>
+      <?php
+        $sequel_query = "select *
+                        from series inner join book
+                        on series.sequel_id = book.book_id
+                        where original_id = $book_id
+                        order by year asc";
+        $query_run = mysqli_query($db, $sequel_query);
+        if(mysqli_num_rows($query_run) != 0) {
+        echo "<div class=\"row\">";
+          echo "<div class=\"col-md-12\">";
+            echo "<div class=\"card card-block text-xs-left\" style=\"border:none;\">";
+              echo "<h2 class=\"card-title\" style=\"color:#009688\">Sequels</h2>";
+              echo "<div style=\"height: 15px;\"></div>";
+              echo "<table class=\"table\">";
+                  echo "<thead class=\"thead-dark\">";
+                    echo "<tr>";
+                      echo "<th scope=\"col\">Year</th>
+                      <th scope=\"col\">Series Name</th>
+                      <th scope=\"col\">Title</th>
+                      <th scope=\"col\">Author</th>
                     </tr>
                   </thead>
-                  <tbody>
-
-                      <?php
-                      $sequel_query = "select *
-                                      from series inner join book
-                                      on series.sequel_id = book.book_id
-                                      where original_id = $book_id
-                                      order by year asc";
-                      $query_run = mysqli_query($db, $sequel_query);
+                  <tbody>";
                       while ($row = mysqli_fetch_array($query_run)) {
                         echo "<tr>";
                         echo "<th scope=\"row\">".$row['year']."</th>";
@@ -212,12 +211,58 @@ if (isset($_GET['book_id'])) {
                         echo "<td>".$row['author']."</td>";
                         echo "</tr>";
                       }
-                      ?>
-                  </tbody>
-                </table>
-            </div>
-          </div>
-        </div>
+                      echo "</tbody>";
+                    echo "</table>";
+                echo "</div>";
+              echo "</div>";
+            echo "</div>";
+            }
+            ?>
+        <?php
+          $orig_query = "select *
+                          from series inner join book
+                          on series.original_id = book.book_id
+                          where sequel_id = $book_id
+                          order by year asc";
+          $query_rrun = mysqli_query($db, $orig_query);
+          if(mysqli_num_rows($query_rrun) != 0) {
+          echo "<div class=\"row justify-content-center\">";
+            echo "<div class=\"col-md-12\">";
+              echo "<div class=\"card card-block text-xs-left\" style=\"border:none;\">";
+                echo "<h2 class=\"card-title\" style=\"color:#009688\">Sequel Of</h2>";
+                echo "<div style=\"height: 15px;\"></div>";
+                echo "<table class=\"table\">";
+                    echo "<thead class=\"thead-dark\">";
+                      echo "<tr>";
+                        echo "<th scope=\"col\">Year</th>
+                        <th scope=\"col\">Series Name</th>
+                        <th scope=\"col\">Title</th>
+                        <th scope=\"col\">Author</th>
+                      </tr>
+                    </thead>
+                    <tbody>";
+                        /*$sequel_query = "select *
+                                        from series inner join book
+                                        on series.sequel_id = book.book_id
+                                        where original_id = $book_id
+                                        order by year asc";
+                        $query_run = mysqli_query($db, $sequel_query);*/
+                        while ($row = mysqli_fetch_array($query_rrun)) {
+                          echo "<tr>";
+                          echo "<th scope=\"row\">".$row['year']."</th>";
+                          echo "<td>".$row['series_name']."</td>";
+                          echo "<td><a style=\"color:black; text-decoration: none;\" href=\"bookprofile.php?book_id=".$row['book_id']."\">".$row['book_name']."</a></td>";
+                          echo "<td>".$row['author']."</td>";
+                          echo "</tr>";
+                        }
+
+                    echo "</tbody>";
+                  echo "</table>";
+              echo "</div>";
+            echo "</div>";
+          echo "</div>";
+          }
+          ?>
 <!-- End:Biography -->
 <br>
 <br>
