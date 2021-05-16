@@ -202,7 +202,7 @@ if (isset($_GET['uname'])) {
                           echo "</table>";
                           echo "</div>";
                           echo "<div class=\"modal-footer\">";
-                          echo "<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>";
+                          echo "<button type=\"button\" class=\"btn btn-danger\" data-dismiss=\"modal\">Close</button>";
 
                           echo "</div>";
                           echo "</div>";
