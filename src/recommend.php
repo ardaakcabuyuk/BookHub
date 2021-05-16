@@ -32,8 +32,8 @@ if(isset($_POST['recommend_button'])) {
 
     </head>
     <body>
-      <h2>Search Results</h2>
-      <hr>
+    <br>
+    <br>
       <?php
       $friend_recommend_sql = "select * from friends F, user U where F.user_id = $user_id and F.friend_id = U.user_id" .
                                                 " and F.friend_id not in (select R.recommended_id from recommend_book R where R.book_id=$book_id and R.recommender_id = $user_id)".
@@ -42,8 +42,9 @@ if(isset($_POST['recommend_button'])) {
       if (mysqli_num_rows($search_user) != 0) {
         while ($row = mysqli_fetch_array($search_user)) {
           echo "<div class=\"well search-result\">";
-              echo "<div class=\"row\">";
+              echo "<div class=\"row justify-content-center\">";
                   echo "<div class=\"col-xs-6 col-sm-9 col-md-9 col-lg-10 title\">";
+                  echo "<h1>Recommend</h1><br><hr>";
                       echo "<h3>".$row['name']." ".$row['surname']."</h3>";
                       echo "<h6 style=\"color:#A9A9A9;\"\">@".$row['username']."</h6>";
                       echo "<br/>";
@@ -51,14 +52,15 @@ if(isset($_POST['recommend_button'])) {
                       echo "<form action=\"\" method=\"post\">";
                           echo "<a href=\"./userprofile.php?uname=".$row['username']."\" class=\"btn btn-warning\" role=\"button\">Profile</a>";
                           echo "   ";
-                          echo "<button class=\"btn btn-warning\" type=\"submit\" name=\"recommend_button\" value=\"". $row['user_id']. "\">";
+                          echo "<button class=\"btn btn-success\" type=\"submit\" name=\"recommend_button\" value=\"". $row['user_id']. "\">";
                                 echo "Recommend";
                           echo "</button>";
                       echo "</form>";
+                      echo "<hr>";
                   echo "</div>";
               echo "</div>";
           echo "</div>";
-          echo "<hr>";
+
         }
       }
       else {
