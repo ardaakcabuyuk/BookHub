@@ -52,13 +52,15 @@ if (isset($_GET['book_id'])) {
           $query_run = mysqli_query($db, $rating_query);
           $rate = mysqli_fetch_array($query_run)['rating'];
         echo "<div class=\"col-md-3 text-center\"> <!-- Phone & Social -->";
+          echo "<div style=\"margin-top: -10px;\">";
             for ($i = 0; $i < (int)$rate; $i++) {
               echo "<i class=\"fa fa-star fa-3x checked\"></i>";
             }
             for ($i = 0; $i < 5 - (int)$rate; $i++) {
               echo "<i class=\"fa fa-star fa-3x\"></i>";
             }
-            echo "<br>";
+            echo " <text style=\"font-size:30px;\"> (".number_format($rate, 2, '.', '').") </text>";
+          echo "</div>";
             echo "<div class=\"button\" style=\"padding-top:18px\">";
                 echo "<a href=\"reviews.php?book_id=".$book['book_id']."\" class=\"btn btn-outline-success btn-block\">Reviews</a>";
             echo "</div>";
