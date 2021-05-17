@@ -145,6 +145,88 @@ include_once "navbar.php";
       </div>
       <br>
       <br>
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card card-block text-xs-left" style="border: none;">
+                  <h3 class="card-title" style="color:orange;">Most Read Books</h3>
+                  <div style="height: 15px"></div>
+                  <table class="table">
+                      <thead class="thead-dark">
+                      <tr>
+                          <th scope="col">Year</th>
+                          <th scope="col">Title</th>
+                          <th scope="col">Author</th>
+                          <th scope="col">Read Count</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <?php
+                      $read_query = "select book.*, count(*) as read_count
+                                        from reads_book R natural join book
+                                        where progress = (Select page_count
+                                                        From Edition
+                                                        Where edition_no = R. edition_no
+                                                        AND book_id = R.book_id)
+                                        group by book_id, author
+                                        order by read_count desc
+                                        limit 5";
+
+                      $query_run = mysqli_query($db, $read_query);
+                      while ($row = mysqli_fetch_array($query_run)) {
+                          echo "<tr>";
+                          echo "<td scope=\"col\">".$row['year']."</th>";
+                          echo "<td><a style=\"color:black; text-decoration: none;\" href=\"bookprofile.php?book_id=".$row['book_id']."\">".$row['book_name']."</a></td>";
+                          echo "<td>".$row['author']."</td>";
+                          echo "<td>".$row['read_count']."</td>";
+                          echo "</tr>";
+                      }
+                      ?>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+        </div>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-block text-xs-left" style="border: none;">
+                    <h3 class="card-title" style="color:orange;">Most Read Genres</h3>
+                    <div style="height: 15px"></div>
+                    <table class="table">
+                        <thead class="thead-dark">
+                        <tr>
+                          <th scope="col">Genre</th>
+                          <th scope="col">Read Count</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        $read_query = "select genre, count(*) as read_count
+                                          from reads_book R natural join book
+                                          where progress = (Select page_count
+                                                          From Edition
+                                                          Where edition_no = R. edition_no
+                                                          AND book_id = R.book_id)
+                                          group by genre
+                                          order by read_count desc
+                                          limit 5";
+
+                        $query_run = mysqli_query($db, $read_query);
+                        while ($row = mysqli_fetch_array($query_run)) {
+                          echo "<tr>";
+                          echo "<td scope=\"col\">".$row['genre']."</th>";
+                          echo "<td>".$row['read_count']."</a></td>";
+                          echo "</tr>";
+                        }
+                        ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+          </div>
+          <br>
+          <br>
 </div>
 </body>
 </html>
