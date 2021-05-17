@@ -269,7 +269,7 @@
                         <th scope="col">Author</th>
                         <th scope="col">Likes</th>
                         <th scope="col">Comments</th>
-                        <th scope="col">Ratings</th>
+                        <th scope="col">Rating</th>
                         <th scope="col"></th>
                     </tr>
                     </thead>
@@ -284,7 +284,15 @@
                     echo "<td><a style=\"color:black; text-decoration: none;\" href=\"authorprofile.php?uname=".mysqli_fetch_array(mysqli_query($db, "select * from author natural join user where author_id =".$row['author_id']))['username']."\">".$row['author']."</a></td>";
                     echo "<td>". $row['like_count']. "</td>";
                     echo "<td>". $row['comment_count']. "</td>";
-                    echo "<td>". $row['rate'] ."/5</td>";
+                    $rate = $row['rate'];
+                    echo "<td>";
+                    for ($i = 0; $i < (int)$rate; $i++) {
+                      echo "<i class=\"fa fa-star fa-lg checked\"></i>";
+                    }
+                    for ($i = 0; $i < 5 - (int)$rate; $i++) {
+                      echo "<i class=\"fa fa-star fa-lg\"></i>";
+                    }
+                    echo "</td>";
                     echo "<td><a href=\"review.php?post_id=".$row['post_id']."\" class=\"btn btn-outline-success btn-sm pull-right\">Go to Review</a></td>";
                     echo "</tr>";
                     }
