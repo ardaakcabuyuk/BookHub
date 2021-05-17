@@ -127,11 +127,11 @@ if(isset($_POST['button'])) {
 						</span>
 					</div>
 
-						<div class="form-check form-check-inline m-t-20">
+						<div class="form-check form-check-inline m-t-20" style="margin-left: 80px;">
 						  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="User" required>
 						  <label class="form-check-label" for="inlineRadio1">User</label>
 						</div>
-						<div class="form-check form-check-inline m-t-20">
+						<div class="form-check form-check-inline m-t-20" style="margin-right: 80px;">
 						  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Author" required>
 						  <label class="form-check-label" for="inlineRadio2">Author</label>
 						</div>
