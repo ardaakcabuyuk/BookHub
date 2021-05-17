@@ -40,13 +40,13 @@ if( sessionNotExists()) {
                         <li class="nav-item">
                             <?php
                             if($_SESSION['type'] == "author") {
-                              echo "<a class=\"nav-link" ?> <?php if ($current_page == "authorprofile.php") echo "active";?> <?php echo "\" href=\"./authorprofile.php?uname=". $_SESSION['username']. "\">Profile (". $_SESSION['username']. ")</a>";
+                              echo "<a class=\"nav-link" ?> <?php if ($current_page == "authorprofile.php" && $_GET['uname'] == $_SESSION['username']) echo "active";?> <?php echo "\" href=\"./authorprofile.php?uname=". $_SESSION['username']. "\">Profile (". $_SESSION['username']. ")</a>";
                             }
                             else if($_SESSION['type'] == "librarian") {
-                              echo "<a class=\"nav-link" ?> <?php if ($current_page == "librarianprofile.php") echo "active";?> <?php echo "\" href=\"./librarianprofile.php?uname=". $_SESSION['username']. "\">Profile (". $_SESSION['username']. ")</a>";
+                              echo "<a class=\"nav-link" ?> <?php if ($current_page == "librarianprofile.php" && $_GET['uname'] == $_SESSION['username']) echo "active";?> <?php echo "\" href=\"./librarianprofile.php?uname=". $_SESSION['username']. "\">Profile (". $_SESSION['username']. ")</a>";
                             }
                             else {
-                              echo "<a class=\"nav-link" ?> <?php if ($current_page == "userprofile.php") echo "active";?> <?php echo "\" href=\"./userprofile.php?uname=". $_SESSION['username']. "\">Profile (". $_SESSION['username']. ")</a>";
+                              echo "<a class=\"nav-link" ?> <?php if ($current_page == "userprofile.php" && $_GET['uname'] == $_SESSION['username']) echo "active";?> <?php echo "\" href=\"./userprofile.php?uname=". $_SESSION['username']. "\">Profile (". $_SESSION['username']. ")</a>";
                             }
                             ?>
                         </li>

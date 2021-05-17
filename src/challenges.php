@@ -72,7 +72,7 @@ if(isset($_POST['join_challenge_button'])) {
                               if (mysqli_num_rows($result) == 0) {
                                   $result_started = mysqli_query($db, $started_query);
                                   if (mysqli_num_rows($result_started) == 0) {
-                                      echo "<button class=\"btn btn-warning\" type = \"submit\" name = \"join_challenge_button\" value = \"" . $row['challenge_id'] . "\">";
+                                      echo "<button class=\"btn btn-warning pull-right\" type = \"submit\" name = \"join_challenge_button\" value = \"" . $row['challenge_id'] . "\">";
                                       echo "Join";
                                       echo "</button >";
                                   }

@@ -59,7 +59,7 @@ if (isset($_GET['book_id'])) {
             for ($i = 0; $i < 5 - (int)$rate; $i++) {
               echo "<i class=\"fa fa-star fa-3x\"></i>";
             }
-            echo " <text style=\"font-size:30px;\"> (".number_format($rate, 2, '.', '').") </text>";
+            echo " <text style=\"font-size:31px;\"> (".number_format($rate, 2, '.', '').") </text>";
           echo "</div>";
             echo "<div class=\"button\" style=\"padding-top:18px\">";
                 echo "<a href=\"reviews.php?book_id=".$book['book_id']."\" class=\"btn btn-outline-success btn-block\">Reviews</a>";

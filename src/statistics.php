@@ -82,8 +82,8 @@ include_once "navbar.php";
                     $rating_query = "select *
                                     from user, author natural join (select author_rates_book.author_id, avg(rating) as author_rate
                                                     from author natural join (select author_id, ifnull(avg(rate),0) as rating
-                                                                              from book
-                                                                              left join post
+                                                                              from post
+                                                                              left join book
                                                                               on book.book_id = post.book_id
                                                                               group by book.book_id) as author_rates_book
                                                     group by author_id
