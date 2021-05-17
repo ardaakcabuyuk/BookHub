@@ -1,5 +1,6 @@
 import java.sql.*;
 import java.sql.Connection;
+import java.util.ArrayList;
 
 public class DBConnector {
     public static void main(String[] args) {
@@ -40,12 +41,8 @@ public class DBConnector {
 
             System.out.println("Dropping tables...");
             stmt.executeUpdate("DROP TABLE IF EXISTS Recommend_Book;");
-            stmt.executeUpdate("DROP TABLE IF EXISTS Participate_in;");
-            stmt.executeUpdate("DROP TABLE IF EXISTS Question;");
-            stmt.executeUpdate("DROP TABLE IF EXISTS Quiz;");
             stmt.executeUpdate("DROP TABLE IF EXISTS Participate;");
             stmt.executeUpdate("DROP TABLE IF EXISTS Challenge;");
-            stmt.executeUpdate("DROP TABLE IF EXISTS Responds;");
             stmt.executeUpdate("DROP TABLE IF EXISTS Reads_book;");
             stmt.executeUpdate("DROP TABLE IF EXISTS Likes_comment;");
             stmt.executeUpdate("DROP TABLE IF EXISTS Likes_quote;");
@@ -54,10 +51,8 @@ public class DBConnector {
             stmt.executeUpdate("DROP TABLE IF EXISTS Replies;");
             stmt.executeUpdate("DROP TABLE IF EXISTS Likes_post;");
             stmt.executeUpdate("DROP TABLE IF EXISTS Post;");
-            stmt.executeUpdate("DROP TABLE IF EXISTS Recommend_Booklist;");
             stmt.executeUpdate("DROP TABLE IF EXISTS Follows;");
             stmt.executeUpdate("DROP TABLE IF EXISTS Contains;");
-            stmt.executeUpdate("DROP TABLE IF EXISTS Librarian;");
             stmt.executeUpdate("DROP TABLE IF EXISTS Booklist;");
             stmt.executeUpdate("DROP TABLE IF EXISTS Edit_request;");
             stmt.executeUpdate("DROP TABLE IF EXISTS Quote;");
@@ -65,6 +60,7 @@ public class DBConnector {
             stmt.executeUpdate("DROP TABLE IF EXISTS Edition;");
             stmt.executeUpdate("DROP TABLE IF EXISTS Book;");
             stmt.executeUpdate("DROP TABLE IF EXISTS Author;");
+            stmt.executeUpdate("DROP TABLE IF EXISTS Librarian;");
             stmt.executeUpdate("DROP TABLE IF EXISTS User;");
 
             System.out.println("Creating table user...");
@@ -168,7 +164,7 @@ public class DBConnector {
                     "additional_notes varchar(300)," +
                     "user_id int NOT NULL," +
                     "book_id int NOT NULL," +
-                    "old_edition_no int NOT NULL" +
+                    "old_edition_no int NOT NULL, " +
                     "date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP," +
                     "primary key( edit_id )," +
                     "foreign key( old_edition_no, book_id ) references Edition(edition_no, book_id) ON DELETE CASCADE ON UPDATE CASCADE," +
@@ -223,19 +219,6 @@ public class DBConnector {
             stmt.executeUpdate(createFollowsSQL);
             System.out.println("Follows table is successfully created.\n");
 
-            System.out.println("Creating table Recommend_Booklist...");
-            String createRecommendBooklistSQL = "create table Recommend_Booklist (" +
-                    "list_id int NOT NULL," +
-                    "recommended_id int NOT NULL," +
-                    "recommender_id int NOT NULL," +
-                    "primary key( list_id, recommended_id, recommender_id )," +
-                    "foreign key( list_id ) references Booklist(list_id)," +
-                    "foreign key( recommended_id ) references User(user_id)," +
-                    "foreign key( recommender_id ) references User(user_id))" +
-                    "ENGINE=innodb;";
-            stmt.executeUpdate(createRecommendBooklistSQL);
-            System.out.println("Recommend_Booklist table is successfully created.\n");
-
             System.out.println("Creating table Post...");
             String createPostSQL = "create table Post (" +
                     "post_id int AUTO_INCREMENT," +
@@ -269,8 +252,8 @@ public class DBConnector {
                     "post_id int NOT NULL," +
                     "author_id int NOT NULL," +
                     "reply varchar(300) NOT NULL," +
-                    "date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP" +
-                    "reply_like_count INT NOT NULL DEFAULT 0" +
+                    "date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, " +
+                    "reply_like_count INT NOT NULL DEFAULT 0, " +
                     "primary key( post_id )," +
                     "foreign key( post_id) references Post(post_id)," +
                     "foreign key( author_id) references Author(author_id))" +
@@ -340,18 +323,6 @@ public class DBConnector {
             stmt.executeUpdate(createReadsSQL);
             System.out.println("Reads table is successfully created.\n");
 
-            System.out.println("Creating table Responds...");
-            String createRespondsSQL = "create table Responds(" +
-                    "edit_id int NOT NULL," +
-                    "librarian_id int NOT NULL," +
-                    "response char(1) NOT NULL," +
-                    "primary key( edit_id )," +
-                    "foreign key( edit_id ) references User(user_id)," +
-                    "foreign key( librarian_id ) references Librarian(librarian_id))" +
-                    "ENGINE=innodb;";
-            stmt.executeUpdate(createRespondsSQL);
-            System.out.println("Responds table is successfully created.");
-
             System.out.println("Creating table Challenge...");
             String createChallengeSQL = "create table Challenge(" +
                     "challenge_id int AUTO_INCREMENT," +
@@ -377,52 +348,6 @@ public class DBConnector {
                     "ENGINE=innodb;";
             stmt.executeUpdate(createParticipateSQL);
             System.out.println("Participate table is successfully created.");
-
-            System.out.println("Creating table Quiz...");
-            String createQuizSQL = "create table Quiz(" +
-                    "quiz_id int AUTO_INCREMENT," +
-                    "quiz_name varchar(300) NOT NULL," +
-                    "librarian_id int NOT NULL," +
-                    "start_date date NOT NULL," +
-                    "end_date date NOT NULL," +
-                    "primary key( quiz_id )," +
-                    "foreign key( librarian_id ) references Librarian (librarian_id))" +
-                    "ENGINE=innodb;";
-            stmt.executeUpdate(createQuizSQL);
-            System.out.println("Quiz table is successfully created.\n");
-
-            System.out.println("Creating table Question...");
-            String createQuestionSQL = "create table Question(" +
-                    "question_id int AUTO_INCREMENT," +
-                    "quiz_id int NOT NULL," +
-                    "librarian_id int NOT NULL," +
-                    "question_text varchar(300) NOT NULL," +
-                    "answer char(1) NOT NULL," +
-                    "option_a varchar(200) NOT NULL," +
-                    "option_b varchar(200) NOT NULL," +
-                    "option_c varchar(200) NOT NULL," +
-                    "option_d varchar(200) NOT NULL," +
-                    "points int NOT NULL," +
-                    "primary key( question_id)," +
-                    "foreign key( quiz_id ) references Quiz (quiz_id)," +
-                    "foreign key( librarian_id ) references Librarian (librarian_id))" +
-                    "ENGINE=innodb;";
-            stmt.executeUpdate(createQuestionSQL);
-            System.out.println("Question table is successfully created.\n");
-
-            System.out.println("Creating table Participate_in...");
-            String createParticipateInSQL = "create table Participate_in(" +
-                    "quiz_id int NOT NULL," +
-                    "user_id int NOT NULL," +
-                    "question_id int NOT NULL," +
-                    "user_answer char(1)," +
-                    "primary key( quiz_id, user_id, question_id)," +
-                    "foreign key( quiz_id) references Quiz( quiz_id)," +
-                    "foreign key( user_id) references User( user_id)," +
-                    "foreign key( question_id) references Question( question_id))" +
-                    "ENGINE=innodb;";
-            stmt.executeUpdate(createParticipateInSQL);
-            System.out.println("Participate_in table is successfully created.");
 
             System.out.println("Creating table Recommend_Book...");
             String createRecommendBookSQL = "create table Recommend_Book (" +
@@ -470,11 +395,43 @@ public class DBConnector {
             stmt.executeUpdate(likeQuoteTrigger);
             System.out.println("trigger \"like_add_quote\" is successfully created.");
 
+            String unlike_comment_trigger = "CREATE TRIGGER unlike_comment AFTER DELETE ON likes_comment FOR EACH ROW UPDATE comment SET comment.comment_like_count = comment.comment_like_count-1 where comment.comment_id = OLD.comment_id;";
+            stmt.executeUpdate(unlike_comment_trigger);
+            System.out.println("trigger \"unlike_comment\" is successfully created.");
+
+            String like_add_comment_trigger = "CREATE TRIGGER like_add_comment AFTER INSERT ON likes_comment FOR EACH ROW UPDATE comment SET comment.comment_like_count = comment.comment_like_count+1 where comment.comment_id = NEW.comment_id;";
+            stmt.executeUpdate(like_add_comment_trigger);
+            System.out.println("trigger \"like_add_comment\" is successfully created.");
+
+            String add_to_booklist = "CREATE TRIGGER add_to_booklist AFTER INSERT ON contains FOR EACH ROW UPDATE booklist SET booklist.num_books = booklist.num_books+1 where booklist.list_id = NEW.list_id;";
+            stmt.executeUpdate(add_to_booklist);
+            System.out.println("trigger \"add_to_booklist\" is successfully created.");
+
+            String remove_from_booklist = "CREATE TRIGGER remove_from_booklist AFTER DELETE ON contains FOR EACH ROW UPDATE booklist SET booklist.num_books = booklist.num_books-1 where booklist.list_id = OLD.list_id;";
+            stmt.executeUpdate(remove_from_booklist);
+            System.out.println("trigger \"remove_from_booklist\" is successfully created.");
+
+            String comment_add = "CREATE TRIGGER comment_add AFTER INSERT ON comment FOR EACH ROW UPDATE post SET post.comment_count = post.comment_count+1 where post.post_id = NEW.post_id;";
+            stmt.executeUpdate(comment_add);
+            System.out.println("trigger \"comment_add\" is successfully created.");
+
             System.out.println("Creating secondary indices...");
 
-            String usernameIndex = "create index uname on user(username);";
-            String bookYearIndex = "create index book_year on book(year);";
-            String bookNameIndex = "create index book_name on book(book_name);";
+            ArrayList<String> secondary_indices = new ArrayList<>();
+
+            secondary_indices.add("create index uname on user(username);");
+            secondary_indices.add("create index book_year on book(year);");
+            secondary_indices.add("create index book_name on book(book_name);");
+            secondary_indices.add("create index author_name on book(author);");
+            secondary_indices.add("create index p_date on post(date);");
+            secondary_indices.add("create index c_date on comment(date);");
+            secondary_indices.add("create index r_date on reads_book(date);");
+            secondary_indices.add("create index chal_date on challenge(start_date);");
+
+            for(String str : secondary_indices) {
+                stmt.executeUpdate(str);
+            }
+
         }
         catch (SQLException e) {
             System.out.println("SQLException: " + e.getMessage());

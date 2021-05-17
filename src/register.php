@@ -32,9 +32,10 @@ if(isset($_POST['button'])) {
       $user_id = mysqli_fetch_array($user_query)['user_id'];
 
       if ($log_in_type == "Author") {
-        echo "<script type='text/javascript'>alert('Author Ekledi!, $log_in_type');</script>";
+        #echo "<script type='text/javascript'>alert('Author Ekledi!, $log_in_type');</script>";
         $insert_author_sql = "insert into author (user_id) values (\"$user_id\")";
         $author = mysqli_query($db, $insert_author_sql);
+        echo "<script type='text/javascript'>alert('Successfully registered as an $log_in_type!');window.location.href='index.php';</script>";
       }
       else if ($log_in_type == "Librarian") {
         echo "<script type='text/javascript'>alert('Librarian Ekledi!, $log_in_type, $user_id');</script>";
@@ -42,7 +43,7 @@ if(isset($_POST['button'])) {
         $librarian = mysqli_query($db, $insert_librarian_sql);
       }
 
-      echo "<script type='text/javascript'>alert('Success!, $log_in_type');window.location.href='index.php';</script>";
+      echo "<script type='text/javascript'>alert('Successfully registered as a $log_in_type!');window.location.href='index.php';</script>";
     }
   }
 }
@@ -133,11 +134,6 @@ if(isset($_POST['button'])) {
 						<div class="form-check form-check-inline m-t-20">
 						  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Author" required>
 						  <label class="form-check-label" for="inlineRadio2">Author</label>
-						</div>
-						<div class="form-check form-check-inline m-t-20 m-b-20">
-						  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="Librarian" required>
-						  <label class="form-check-label" for="inlineRadio3">Librarian</label>
-							<div class="invalid-feedback" style="margin-left: 1em">Please choose an option</div>
 						</div>
 
 					<div class="container-login100-form-btn p-t-10">
